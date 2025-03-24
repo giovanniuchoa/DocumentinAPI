@@ -2,17 +2,16 @@
 
 namespace DocumentinAPI.Domain.Models
 {
-    public class Group
+    public class Folder
     {
 
         [Key]
-        public int GroupId { get; set; }
+        public int FolderId { get; set; }
 
         [Required]
         public string Name { get; set; }
 
-        [Required]
-        public string Description { get; set; }
+        public int ParentFolderId { get; set; }
 
     }
 }
