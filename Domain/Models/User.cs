@@ -6,14 +6,29 @@ namespace DocumentinAPI.Domain.Models
     {
         [Key]
         public int UserId { get; set; }
+
+        [Required]
         public string Name { get; set; }
+
+        [Required]
         public string Email { get; set; }
+
+        [Required]
         public string Password { get; set; }
+
+        [Required]
         public short Profile { get; set; }
+
         public short PreferredLanguage { get; set; }
+
         public short PreferredTheme { get; set; }
+
+        [Required]  
         public DateTime CreatedAt { get; set; }
+
+        [Required]  
         public DateTime UpdatedAt { get; set; }
+
         public DateTime LastLoginAt { get; set; }
 
     }

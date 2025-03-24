@@ -2,17 +2,14 @@
 
 namespace DocumentinAPI.Domain.Models
 {
-    public class Group
+    public class Tag
     {
 
         [Key]
-        public int GroupId { get; set; }
+        public int TagId { get; set; }
 
-        [Required]
+        [Required]  
         public string Name { get; set; }
-
-        [Required]
-        public string Description { get; set; }
 
     }
 }

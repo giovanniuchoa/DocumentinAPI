@@ -2,17 +2,17 @@
 
 namespace DocumentinAPI.Domain.Models
 {
-    public class Group
+    public class Template
     {
 
         [Key]
-        public int GroupId { get; set; }
+        public int TemplateId { get; set; }
 
         [Required]
         public string Name { get; set; }
 
-        [Required]
-        public string Description { get; set; }
+        [Required]  
+        public string Content { get; set; }
 
     }
 }
