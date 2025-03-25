@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DocumentinAPI.Domain.Models
 {
@@ -34,6 +35,15 @@ namespace DocumentinAPI.Domain.Models
         public int UserId { get; set; } /* Criado por */
 
         public int ParentTaskId { get; set; }
+
+        [ForeignKey(nameof(AssigneeId))]
+        public virtual User Assignee { get; set; }
+
+        [ForeignKey(nameof(UserId))]
+        public virtual User User { get; set; }
+
+        [ForeignKey(nameof(ParentTaskId))]
+        public virtual Task ParentTask { get; set; }
 
     }
 }

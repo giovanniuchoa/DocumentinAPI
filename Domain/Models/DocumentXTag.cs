@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DocumentinAPI.Domain.Models
 {
@@ -10,6 +11,12 @@ namespace DocumentinAPI.Domain.Models
 
         [Required]
         public int DocumentId { get; set; }
+
+        [ForeignKey(nameof(TagId))]
+        public virtual Tag Tag { get; set; }
+
+        [ForeignKey(nameof(DocumentId))]
+        public virtual Document Document { get; set; }
 
     }
 }
