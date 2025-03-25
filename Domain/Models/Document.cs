@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DocumentinAPI.Domain.Models
 {
@@ -27,6 +28,12 @@ namespace DocumentinAPI.Domain.Models
 
         [Required]
         public int FolderId { get; set; }
+
+        [ForeignKey(nameof(UserId))]
+        public virtual User User { get; set; }
+
+        [ForeignKey(nameof(FolderId))]
+        public virtual Folder Folder { get; set; }
 
     }
 }

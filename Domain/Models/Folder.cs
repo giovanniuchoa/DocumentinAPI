@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DocumentinAPI.Domain.Models
 {
@@ -12,6 +13,9 @@ namespace DocumentinAPI.Domain.Models
         public string Name { get; set; }
 
         public int ParentFolderId { get; set; }
+
+        [ForeignKey(nameof(ParentFolderId))]
+        public virtual Folder ParentFoler { get; set; }
 
     }
 }
