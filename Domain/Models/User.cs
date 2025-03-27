@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DocumentinAPI.Domain.Models
 {
@@ -30,6 +31,12 @@ namespace DocumentinAPI.Domain.Models
         public DateTime UpdatedAt { get; set; }
 
         public DateTime LastLoginAt { get; set; }
+
+        [Required]
+        public int CompanyId { get; set; }
+
+        [ForeignKey(nameof(CompanyId))]
+        public virtual Company Company { get; set; }
 
     }
 }

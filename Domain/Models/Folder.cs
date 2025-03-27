@@ -14,8 +14,20 @@ namespace DocumentinAPI.Domain.Models
 
         public int ParentFolderId { get; set; }
 
+        [Required]
+        public int UserId { get; set; }
+
+        [Required]
+        public int CompanyId { get; set; }
+
+        [ForeignKey(nameof(CompanyId))]
+        public virtual Company Company { get; set; }
+
         [ForeignKey(nameof(ParentFolderId))]
         public virtual Folder ParentFoler { get; set; }
+
+        [ForeignKey(nameof(UserId))]
+        public virtual User User { get; set; }
 
     }
 }
