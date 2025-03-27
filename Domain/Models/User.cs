@@ -9,12 +9,15 @@ namespace DocumentinAPI.Domain.Models
         public int UserId { get; set; }
 
         [Required]
+        [Column(TypeName = "varchar(20)")]
         public string Name { get; set; }
 
         [Required]
+        [Column(TypeName = "varchar(30)")]
         public string Email { get; set; }
 
         [Required]
+        [Column(TypeName = "varchar(20)")]
         public string Password { get; set; }
 
         [Required]
