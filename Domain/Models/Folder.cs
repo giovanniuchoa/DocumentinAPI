@@ -10,6 +10,7 @@ namespace DocumentinAPI.Domain.Models
         public int FolderId { get; set; }
 
         [Required]
+        [Column(TypeName = "varchar(20)")]
         public string Name { get; set; }
 
         public int ParentFolderId { get; set; }

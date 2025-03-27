@@ -10,9 +10,11 @@ namespace DocumentinAPI.Domain.Models
         public int TaskId { get; set; }
 
         [Required]
+        [Column(TypeName = "varchar(30)")]
         public string Title { get; set; }
 
         [Required]
+        [Column(TypeName = "varchar(255)")]
         public string Description { get; set; }
 
         [Required]
@@ -27,7 +29,7 @@ namespace DocumentinAPI.Domain.Models
         public short Priority { get; set; }
 
         [Required]
-        public string Status { get; set; }
+        public short Status { get; set; }
 
         public int AssigneeId { get; set; } /* Assinalado para */
 

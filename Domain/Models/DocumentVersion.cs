@@ -13,6 +13,7 @@ namespace DocumentinAPI.Domain.Models
         public int DocumentId { get; set; }
 
         [Required]
+        [Column(TypeName = "varchar(max)")]
         public string Content { get; set; }
 
         [Required]
@@ -21,6 +22,7 @@ namespace DocumentinAPI.Domain.Models
         [Required]
         public int UserId { get; set; }
 
+        [Column(TypeName = "varchar(255)")]
         public string Comment { get; set; }
 
         [ForeignKey(nameof(DocumentId))]

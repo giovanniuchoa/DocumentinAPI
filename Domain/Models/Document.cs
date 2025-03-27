@@ -10,11 +10,14 @@ namespace DocumentinAPI.Domain.Models
         public int DocumentId { get; set; }
 
         [Required]
+        [Column(TypeName = "varchar(50)")]
         public string Title { get; set; }
 
         [Required]
+        [Column(TypeName = "varchar(max)")]
         public string Content { get; set; }
 
+        [Column(TypeName = "char(5)")]
         public string Format { get; set; }
 
         [Required]

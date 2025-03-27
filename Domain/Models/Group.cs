@@ -10,9 +10,11 @@ namespace DocumentinAPI.Domain.Models
         public int GroupId { get; set; }
 
         [Required]
+        [Column(TypeName = "varchar(20)")]
         public string Name { get; set; }
 
         [Required]
+        [Column(TypeName = "varchar(255)")]
         public string Description { get; set; }
 
         [Required]

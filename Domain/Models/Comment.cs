@@ -10,6 +10,7 @@ namespace DocumentinAPI.Domain.Models
         public int CommentId { get; set; }
 
         [Required]
+        [Column(TypeName = "varchar(max)")]
         public string Content { get; set; }
 
         [Required]
