@@ -1,5 +1,13 @@
+using DocumentinAPI.Authentication;
 using DocumentinAPI.Data;
+using DocumentinAPI.Interfaces.IRepository;
+using DocumentinAPI.Interfaces.IServices;
+using DocumentinAPI.Repository;
+using DocumentinAPI.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +26,39 @@ builder.Services.AddDbContext<DBContext>(opt => opt.UseSqlServer(connectionStrin
 
 #endregion
 
+#region Dependency Injection
+
+/* Repository */
+builder.Services.AddTransient<IAuthRepository, AuthRepository>();
+
+/* Service */
+builder.Services.AddTransient<IAuthService, AuthService>();
+
+#endregion
+
+#region Authentication
+
+var key = Encoding.ASCII.GetBytes(Settings.Secret);
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.RequireHttpsMetadata = false;
+    options.SaveToken = true;
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ValidateIssuer = false,
+        ValidateAudience = false
+    };
+});
+
+#endregion
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -28,6 +69,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

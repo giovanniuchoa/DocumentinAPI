@@ -38,6 +38,9 @@ namespace DocumentinAPI.Domain.Models
         [Required]
         public int CompanyId { get; set; }
 
+        [Required]  
+        public bool IsActive { get; set; }
+
         [ForeignKey(nameof(CompanyId))]
         public virtual Company Company { get; set; }
 
