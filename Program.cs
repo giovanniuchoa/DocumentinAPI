@@ -30,9 +30,11 @@ builder.Services.AddDbContext<DBContext>(opt => opt.UseSqlServer(connectionStrin
 
 /* Repository */
 builder.Services.AddTransient<IAuthRepository, AuthRepository>();
+builder.Services.AddTransient<ICompanyRepository, CompanyRepository>();
 
 /* Service */
 builder.Services.AddTransient<IAuthService, AuthService>();
+builder.Services.AddTransient<ICompanyService, CompanyService>();
 
 #endregion
 
