@@ -9,6 +9,7 @@ namespace DocumentinAPI.Interfaces.IServices
         public Task<Retorno<CompanyResponseDTO>> GetCompanyByIdAsync(int companyId, UserSession ssn);
         public Task<Retorno<IEnumerable<CompanyResponseDTO>>> GetCompanyAsync();
         public Task<Retorno<CompanyResponseDTO>> AddCompanyAsync(CompanyRequestDTO company, UserSession ssn);
+        public Task<Retorno<CompanyResponseDTO>> UpdateCompanyAsync(CompanyRequestDTO company, UserSession ssn);
 
     }
 }
