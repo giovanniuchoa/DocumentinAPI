@@ -1,5 +1,6 @@
 ﻿using DocumentinAPI.Data;
 using DocumentinAPI.Domain.DTOs.Company;
+using DocumentinAPI.Domain.Models;
 using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IRepository;
 using Mapster;
@@ -59,6 +60,38 @@ namespace DocumentinAPI.Repository
                 {
                     throw new Exception("Company does not exists or user does not have access to it.");
                 }
+
+                oRetorno.Objeto = empresaDB.Adapt<CompanyResponseDTO>();
+                oRetorno.SetSucesso();
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
+
+        public async Task<Retorno<CompanyResponseDTO>> AddCompanyAsync(CompanyRequestDTO company, UserSession ssn)
+        {
+
+            Retorno<CompanyResponseDTO> oRetorno = new();
+
+            try
+            {
+
+                if (ssn.Profile != "1")
+                {
+                    throw new Exception("User does not have permission to create a company.");
+                }
+
+                var empresaDB = company.Adapt<Company>();
+
+                await _context.Companies.AddAsync(empresaDB);
+
+                await _context.SaveChangesAsync();
 
                 oRetorno.Objeto = empresaDB.Adapt<CompanyResponseDTO>();
                 oRetorno.SetSucesso();

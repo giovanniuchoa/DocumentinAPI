@@ -1,4 +1,5 @@
 ﻿using DocumentinAPI.Authentication;
+using DocumentinAPI.Domain.DTOs.Company;
 using DocumentinAPI.Interfaces.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -37,6 +38,23 @@ namespace DocumentinAPI.Controllers
         public async Task<IActionResult> GetCompaniesByIdAsync(int companyId)
         {
             var ret = await _service.GetCompanyByIdAsync(companyId, TokenService.GetClaimsData(HttpContext.User));
+
+            if (ret.Erro == true)
+            {
+                return BadRequest(ret);
+            }
+            else
+            {
+                return Ok(ret);
+            }
+
+        }
+
+        [HttpPost("AddCompany")]
+        public async Task<IActionResult> AddCompanyAsync([FromBody] CompanyRequestDTO company)
+        {
+
+            var ret = await _service.AddCompanyAsync(company, TokenService.GetClaimsData(HttpContext.User));
 
             if (ret.Erro == true)
             {
