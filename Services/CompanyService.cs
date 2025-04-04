@@ -81,5 +81,27 @@ namespace DocumentinAPI.Services
             return oRetorno;
 
         }
+
+        public async Task<Retorno<CompanyResponseDTO>> UpdateCompanyAsync(CompanyRequestDTO company, UserSession ssn)
+        {
+
+            Retorno<CompanyResponseDTO> oRetorno = new();
+
+            try
+            {
+
+                var ret = await _repository.UpdateCompanyAsync(company, ssn);
+
+                oRetorno = ret;
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
     }
 }
