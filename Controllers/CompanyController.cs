@@ -65,6 +65,23 @@ namespace DocumentinAPI.Controllers
                 return Ok(ret);
             }
 
+        }        
+        
+        [HttpPut("UpdateCompany")]
+        public async Task<IActionResult> UpdateCompanyAsync([FromBody] CompanyRequestDTO company)
+        {
+
+            var ret = await _service.UpdateCompanyAsync(company, TokenService.GetClaimsData(HttpContext.User));
+
+            if (ret.Erro == true)
+            {
+                return BadRequest(ret);
+            }
+            else
+            {
+                return Ok(ret);
+            }
+
         }
 
     }

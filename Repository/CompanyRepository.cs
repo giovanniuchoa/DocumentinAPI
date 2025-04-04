@@ -105,5 +105,47 @@ namespace DocumentinAPI.Repository
             return oRetorno;
 
         }
+
+        public async Task<Retorno<CompanyResponseDTO>> UpdateCompanyAsync(CompanyRequestDTO company, UserSession ssn)
+        {
+
+            Retorno<CompanyResponseDTO> oRetorno = new();
+
+            try
+            {
+
+                if (!("1,2").Contains(ssn.Profile)) /* Somente dev e adm podem alterar empresas */
+                {
+                    throw new Exception("User does not have permission to update a company.");
+                }
+
+                var empresaDB = await _context.Companies
+                    .Where(x => x.CompanyId == company.CompanyId)
+                    .FirstOrDefaultAsync();
+
+                if (empresaDB == null)
+                {
+                    throw new Exception("Company not found with the provided id");
+                }
+
+                empresaDB.Name = company.Name;
+                empresaDB.Phone = company.Phone;
+                empresaDB.Adress = company.Adress;
+                //empresaDB.UpdatedAt = DateTime.Now;
+
+                await _context.SaveChangesAsync();
+
+                oRetorno.Objeto = empresaDB.Adapt<CompanyResponseDTO>();
+                oRetorno.SetSucesso();
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
     }
 }
