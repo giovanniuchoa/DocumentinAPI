@@ -147,5 +147,39 @@ namespace DocumentinAPI.Repository
             return oRetorno;
 
         }
+
+        public async Task<Retorno<CompanyResponseDTO>> DeleteCompanyAsync(int companyId, UserSession ssn)
+        {
+
+            Retorno<CompanyResponseDTO> oRetorno = new();
+
+            try
+            {
+
+                if (ssn.Profile != "1")
+                {
+                    throw new Exception("User does not have permission to delete a company.");
+                }
+
+                var empresa = await _context.Companies
+                    .Where(e => e.CompanyId == companyId)
+                    .FirstOrDefaultAsync();
+
+                empresa.IsActive = false;
+
+                await _context.SaveChangesAsync();
+
+                oRetorno.Objeto = empresa.Adapt<CompanyResponseDTO>();
+                oRetorno.SetSucesso();
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
     }
 }
