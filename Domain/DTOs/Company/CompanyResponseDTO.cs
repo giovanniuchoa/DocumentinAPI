@@ -14,5 +14,7 @@ namespace DocumentinAPI.Domain.DTOs.Company
 
         public string Adress { get; set; }
 
+        public bool IsActive { get; set; }
+
     }
 }

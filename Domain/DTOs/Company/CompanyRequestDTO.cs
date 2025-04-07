@@ -11,5 +11,7 @@
 
         public string Adress { get; set; }
 
+        public bool IsActive { get; set; }
+
     }
 }
