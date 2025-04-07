@@ -10,6 +10,7 @@ namespace DocumentinAPI.Interfaces.IRepository
         public Task<Retorno<IEnumerable<CompanyResponseDTO>>> GetCompanyAsync();
         public Task<Retorno<CompanyResponseDTO>> AddCompanyAsync(CompanyRequestDTO company, UserSession ssn);
         public Task<Retorno<CompanyResponseDTO>> UpdateCompanyAsync(CompanyRequestDTO company, UserSession ssn);
+        public Task<Retorno<CompanyResponseDTO>> DeleteCompanyAsync(int companyId, UserSession ssn);
 
     }
 }

@@ -21,5 +21,8 @@ namespace DocumentinAPI.Domain.Models
         [Column(TypeName = "varchar(255)")]
         public string Adress { get; set; }
 
+        [Required]
+        public bool IsActive { get; set; }
+
     }
 }

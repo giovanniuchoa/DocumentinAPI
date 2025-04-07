@@ -103,5 +103,27 @@ namespace DocumentinAPI.Services
             return oRetorno;
 
         }
+
+        public async Task<Retorno<CompanyResponseDTO>> DeleteCompanyAsync(int companyId, UserSession ssn)
+        {
+
+            Retorno<CompanyResponseDTO> oRetorno = new();
+
+            try
+            {
+
+                var ret = await _repository.DeleteCompanyAsync(companyId, ssn);
+
+                oRetorno = ret;
+
+            }
+            catch(Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
     }
 }
