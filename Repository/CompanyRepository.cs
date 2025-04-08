@@ -131,7 +131,7 @@ namespace DocumentinAPI.Repository
                 empresaDB.Name = company.Name;
                 empresaDB.Phone = company.Phone;
                 empresaDB.Adress = company.Adress;
-                //empresaDB.UpdatedAt = DateTime.Now;
+                empresaDB.UpdatedAt = DateTime.Now;
 
                 await _context.SaveChangesAsync();
 
