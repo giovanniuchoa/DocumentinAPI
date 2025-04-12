@@ -16,7 +16,7 @@ namespace DocumentinAPI.Repository
         {
         }
 
-        public async Task<Retorno<IEnumerable<CompanyResponseDTO>>> GetCompanyAsync()
+        public async Task<Retorno<IEnumerable<CompanyResponseDTO>>> GetListCompanyAsync()
         {
 
             Retorno<IEnumerable<CompanyResponseDTO>> oRetorno = new();
@@ -166,6 +166,7 @@ namespace DocumentinAPI.Repository
                     .FirstOrDefaultAsync();
 
                 empresa.IsActive = false;
+                empresa.UpdatedAt = DateTime.Now;
 
                 await _context.SaveChangesAsync();
 
