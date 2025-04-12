@@ -21,7 +21,7 @@ namespace DocumentinAPI.Controllers
         [HttpGet("GetCompanies")]
         public async Task<IActionResult> GetCompaniesAsync()
         {
-            var ret = await _service.GetCompanyAsync();
+            var ret = await _service.GetListCompanyAsync();
 
             if (ret.Erro == true)
             {
