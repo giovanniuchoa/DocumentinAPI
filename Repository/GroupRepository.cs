@@ -1,0 +1,195 @@
+﻿using DocumentinAPI.Data;
+using DocumentinAPI.Domain.DTOs.Group;
+using DocumentinAPI.Domain.Models;
+using DocumentinAPI.Domain.Utils;
+using DocumentinAPI.Interfaces.IRepository;
+using Mapster;
+using Microsoft.EntityFrameworkCore;
+
+namespace DocumentinAPI.Repository
+{
+    public class GroupRepository : BaseRepository, IGroupRepository
+    {
+
+        public GroupRepository(DBContext context) : base(context)
+        {
+        }
+
+        public async Task<Retorno<GroupResponseDTO>> GetGroupByIdAsync(int groupId, UserSession ssn)
+        {
+
+            Retorno<GroupResponseDTO> oRetorno = new();
+            
+            try
+            {
+
+                var grupoDB = await _context.Groups
+                    .Where(g => g.GroupId == groupId
+                        && g.IsActive == true
+                        && g.CompanyId.ToString() == ssn.CompanyId)
+                    .FirstOrDefaultAsync();
+
+                if (grupoDB == null)
+                {
+                    throw new Exception("notFound");
+                }
+
+                oRetorno.Objeto = grupoDB.Adapt<GroupResponseDTO>();
+                oRetorno.SetSucesso();
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
+
+        public async Task<Retorno<IEnumerable<GroupResponseDTO>>> GetListGroupAsync(UserSession ssn)
+        {
+
+            Retorno<IEnumerable<GroupResponseDTO>> oRetorno = new();
+
+            try
+            {
+
+                var grupoListDB = await _context.Groups
+                    .Where(g => g.CompanyId.ToString() == ssn.CompanyId
+                        && g.IsActive == true)
+                    .ToListAsync();
+
+                oRetorno.Objeto = grupoListDB.Adapt<List<GroupResponseDTO>>();
+
+                oRetorno.SetSucesso();
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
+
+        public async Task<Retorno<GroupResponseDTO>> AddGroupAsync(GroupRequestDTO group, UserSession ssn)
+        {
+            
+            Retorno<GroupResponseDTO> oRetorno = new();
+
+            try
+            {
+
+                if (!("1,2").Contains(ssn.Profile))
+                {
+                    throw new Exception("noPermission");
+                }
+
+                var grupoDB = group.Adapt<Group>();
+
+                grupoDB.UserId = int.Parse(ssn.UserId);
+                grupoDB.IsActive = true;
+                grupoDB.CreatedAt = DateTime.Now;
+                grupoDB.UpdatedAt = DateTime.Now;
+                grupoDB.CompanyId = int.Parse(ssn.CompanyId);
+
+                await _context.Groups.AddAsync(grupoDB);
+
+                await _context.SaveChangesAsync();
+
+                oRetorno.Objeto = grupoDB.Adapt<GroupResponseDTO>();
+                oRetorno.SetSucesso();
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
+
+        public async Task<Retorno<GroupResponseDTO>> UpdateGroupAsync(GroupRequestDTO group, UserSession ssn)
+        {
+            
+            Retorno<GroupResponseDTO> oRetorno = new();
+
+            try
+            {
+
+                if (!("1,2").Contains(ssn.Profile))
+                {
+                    throw new Exception("noPermission");
+                }
+
+                var grupoDB = await _context.Groups
+                    .Where(g => g.GroupId == group.GroupId
+                        && g.CompanyId.ToString() == ssn.CompanyId)
+                    .FirstOrDefaultAsync();
+
+                if (grupoDB == null)
+                {
+                    throw new Exception("notFound");
+                }
+
+                grupoDB.Name = group.Name;
+                grupoDB.Description = group.Description;
+
+                await _context.SaveChangesAsync();
+
+                oRetorno.Objeto = grupoDB.Adapt<GroupResponseDTO>();
+                oRetorno.SetSucesso();
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
+
+        public async Task<Retorno<GroupResponseDTO>> DeleteGroupAsync(int groupId, UserSession ssn)
+        {
+            
+            Retorno<GroupResponseDTO> oRetorno = new();
+
+            try
+            {
+                if (!("1,2").Contains(ssn.Profile))
+                {
+                    throw new Exception("noPermission");
+                }
+
+                var grupoDB = await _context.Groups
+                    .Where(g => g.GroupId == groupId
+                        && g.CompanyId.ToString() == ssn.CompanyId)
+                    .FirstOrDefaultAsync();
+
+                if (grupoDB == null)
+                {
+                    throw new Exception("notFound");
+                }
+                
+                grupoDB.IsActive = false;
+                grupoDB.UpdatedAt = DateTime.Now;
+
+                await _context.SaveChangesAsync();
+
+                oRetorno.Objeto = grupoDB.Adapt<GroupResponseDTO>();
+                oRetorno.SetSucesso();
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
+    }
+}
