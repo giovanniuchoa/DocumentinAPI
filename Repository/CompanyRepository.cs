@@ -58,7 +58,7 @@ namespace DocumentinAPI.Repository
 
                 if (empresaDB == null)
                 {
-                    throw new Exception("Company does not exists or user does not have access to it.");
+                    throw new Exception("notFound");
                 }
 
                 oRetorno.Objeto = empresaDB.Adapt<CompanyResponseDTO>();
@@ -84,7 +84,7 @@ namespace DocumentinAPI.Repository
 
                 if (ssn.Profile != "1")
                 {
-                    throw new Exception("User does not have permission to create a company.");
+                    throw new Exception("noPermission");
                 }
 
                 var empresaDB = company.Adapt<Company>();
@@ -116,7 +116,7 @@ namespace DocumentinAPI.Repository
 
                 if (!("1,2").Contains(ssn.Profile)) /* Somente dev e adm podem alterar empresas */
                 {
-                    throw new Exception("User does not have permission to update a company.");
+                    throw new Exception("noPermission");
                 }
 
                 var empresaDB = await _context.Companies
@@ -125,7 +125,7 @@ namespace DocumentinAPI.Repository
 
                 if (empresaDB == null)
                 {
-                    throw new Exception("Company not found with the provided id");
+                    throw new Exception("notFound");
                 }
 
                 empresaDB.Name = company.Name;
@@ -148,7 +148,7 @@ namespace DocumentinAPI.Repository
 
         }
 
-        public async Task<Retorno<CompanyResponseDTO>> DeleteCompanyAsync(int companyId, UserSession ssn)
+        public async Task<Retorno<CompanyResponseDTO>> ToggleStatusCompanyAsync(int companyId, UserSession ssn)
         {
 
             Retorno<CompanyResponseDTO> oRetorno = new();
@@ -158,14 +158,14 @@ namespace DocumentinAPI.Repository
 
                 if (ssn.Profile != "1")
                 {
-                    throw new Exception("User does not have permission to delete a company.");
+                    throw new Exception("noPermission");
                 }
 
                 var empresa = await _context.Companies
                     .Where(e => e.CompanyId == companyId)
                     .FirstOrDefaultAsync();
 
-                empresa.IsActive = false;
+                empresa.IsActive = !empresa.IsActive;
                 empresa.UpdatedAt = DateTime.Now;
 
                 await _context.SaveChangesAsync();

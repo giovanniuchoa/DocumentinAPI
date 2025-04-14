@@ -84,10 +84,10 @@ namespace DocumentinAPI.Controllers
 
         }
 
-        [HttpPut("DeleteCompany/{companyId}")]
-        public async Task<IActionResult> DeleteCompanyAsync(int companyId)
+        [HttpPut("ToggleStatusCompany/{companyId}")]
+        public async Task<IActionResult> ToggleStatusCompanyAsync(int companyId)
         {
-            var ret = await _service.DeleteCompanyAsync(companyId, TokenService.GetClaimsData(HttpContext.User));
+            var ret = await _service.ToggleStatusCompanyAsync(companyId, TokenService.GetClaimsData(HttpContext.User));
 
             if (ret.Erro == true)
             {
