@@ -16,13 +16,18 @@ namespace DocumentinAPI.Repository
         {
         }
 
-        public async Task<Retorno<IEnumerable<CompanyResponseDTO>>> GetListCompanyAsync()
+        public async Task<Retorno<IEnumerable<CompanyResponseDTO>>> GetListCompanyAsync(UserSession ssn)
         {
 
             Retorno<IEnumerable<CompanyResponseDTO>> oRetorno = new();
 
             try
             {
+
+                if (ssn.Profile != "1")
+                {
+                    throw new Exception("noPermission");
+                }
 
                 var empresaDB = await _context.Companies
                     .ToListAsync();
