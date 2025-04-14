@@ -16,7 +16,7 @@ namespace DocumentinAPI.Services
             _repository = repository;
         }
 
-        public async Task<Retorno<IEnumerable<CompanyResponseDTO>>> GetListCompanyAsync()
+        public async Task<Retorno<IEnumerable<CompanyResponseDTO>>> GetListCompanyAsync(UserSession ssn)
         {
 
             Retorno<IEnumerable<CompanyResponseDTO>> oRetorno = new();
@@ -24,7 +24,7 @@ namespace DocumentinAPI.Services
             try
             {
 
-                var ret = await _repository.GetListCompanyAsync();
+                var ret = await _repository.GetListCompanyAsync(ssn);
 
                 oRetorno = ret;
 

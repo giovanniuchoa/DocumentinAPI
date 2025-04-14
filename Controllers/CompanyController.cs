@@ -18,10 +18,10 @@ namespace DocumentinAPI.Controllers
             _service = service;
         }
 
-        [HttpGet("GetCompanies")]
-        public async Task<IActionResult> GetCompaniesAsync()
+        [HttpGet("GetCompaniesById/{companyId}")]
+        public async Task<IActionResult> GetCompaniesByIdAsync(int companyId)
         {
-            var ret = await _service.GetListCompanyAsync();
+            var ret = await _service.GetCompanyByIdAsync(companyId, TokenService.GetClaimsData(HttpContext.User));
 
             if (ret.Erro == true)
             {
@@ -34,10 +34,10 @@ namespace DocumentinAPI.Controllers
 
         }
 
-        [HttpGet("GetCompaniesById/{companyId}")]
-        public async Task<IActionResult> GetCompaniesByIdAsync(int companyId)
+        [HttpGet("GetListCompanies")]
+        public async Task<IActionResult> GetCompaniesAsync()
         {
-            var ret = await _service.GetCompanyByIdAsync(companyId, TokenService.GetClaimsData(HttpContext.User));
+            var ret = await _service.GetListCompanyAsync(TokenService.GetClaimsData(HttpContext.User));
 
             if (ret.Erro == true)
             {
