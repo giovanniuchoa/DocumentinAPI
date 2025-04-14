@@ -55,8 +55,7 @@ namespace DocumentinAPI.Repository
             {
 
                 var userListDB = await _context.Users
-                    .Where(u => u.IsActive == true
-                        && u.CompanyId.ToString() == ssn.CompanyId)
+                    .Where(u => u.CompanyId.ToString() == ssn.CompanyId)
                     .ToListAsync();
 
                 oRetorno.Objeto = userListDB.Adapt<List<UserResponseDTO>>();
@@ -159,7 +158,7 @@ namespace DocumentinAPI.Repository
 
         }
 
-        public async Task<Retorno<UserResponseDTO>> DeleteUserAsync(int userId, UserSession ssn)
+        public async Task<Retorno<UserResponseDTO>> ToggleStatusUserAsync(int userId, UserSession ssn)
         {
             
             Retorno<UserResponseDTO> oRetorno = new();
@@ -182,7 +181,7 @@ namespace DocumentinAPI.Repository
                     throw new Exception("notFound");
                 }
 
-                userDB.IsActive = false;
+                userDB.IsActive = !userDB.IsActive;
                 userDB.UpdatedAt = DateTime.Now;
 
                 await _context.SaveChangesAsync();
