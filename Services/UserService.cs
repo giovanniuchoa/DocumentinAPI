@@ -103,7 +103,7 @@ namespace DocumentinAPI.Services
 
         }
 
-        public async Task<Retorno<UserResponseDTO>> DeleteUserAsync(int userId, UserSession ssn)
+        public async Task<Retorno<UserResponseDTO>> ToggleStatusUserAsync(int userId, UserSession ssn)
         {
 
             Retorno<UserResponseDTO> oRetorno = new();
@@ -111,7 +111,7 @@ namespace DocumentinAPI.Services
             try
             {
 
-                var ret = await _repository.DeleteUserAsync(userId, ssn);
+                var ret = await _repository.ToggleStatusUserAsync(userId, ssn);
 
                 oRetorno = ret;
 

@@ -88,11 +88,11 @@ namespace DocumentinAPI.Controllers
 
         }
 
-        [HttpPut("DeleteUser/{userId}")]
-        public async Task<IActionResult> DeleteUserAsync(int userId)
+        [HttpPut("ToggleStatusUser/{userId}")]
+        public async Task<IActionResult> ToggleStatusUserAsync(int userId)
         {
 
-            var retorno = await _service.DeleteUserAsync(userId, TokenService.GetClaimsData(HttpContext.User));
+            var retorno = await _service.ToggleStatusUserAsync(userId, TokenService.GetClaimsData(HttpContext.User));
 
             if (retorno.Erro)
             {
