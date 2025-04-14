@@ -104,7 +104,7 @@ namespace DocumentinAPI.Services
 
         }
 
-        public async Task<Retorno<CompanyResponseDTO>> DeleteCompanyAsync(int companyId, UserSession ssn)
+        public async Task<Retorno<CompanyResponseDTO>> ToggleStatusCompanyAsync(int companyId, UserSession ssn)
         {
 
             Retorno<CompanyResponseDTO> oRetorno = new();
@@ -112,7 +112,7 @@ namespace DocumentinAPI.Services
             try
             {
 
-                var ret = await _repository.DeleteCompanyAsync(companyId, ssn);
+                var ret = await _repository.ToggleStatusCompanyAsync(companyId, ssn);
 
                 oRetorno = ret;
 
