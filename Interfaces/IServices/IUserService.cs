@@ -10,7 +10,7 @@ namespace DocumentinAPI.Interfaces.IServices
         public Task<Retorno<IEnumerable<UserResponseDTO>>> GetListUserAsync(UserSession ssn);
         public Task<Retorno<UserResponseDTO>> AddUserAsync(UserRequestDTO dto, UserSession ssn);
         public Task<Retorno<UserResponseDTO>> UpdateUserAsync(UserRequestDTO dto, UserSession ssn);
-        public Task<Retorno<UserResponseDTO>> DeleteUserAsync(int userId, UserSession ssn);
+        public Task<Retorno<UserResponseDTO>> ToggleStatusUserAsync(int userId, UserSession ssn);
 
 
     }
