@@ -58,5 +58,71 @@ namespace DocumentinAPI.Services
             return oRetorno;
 
         }
+
+        public async Task<Retorno<UserResponseDTO>> AddUserAsync(UserRequestDTO dto, UserSession ssn)
+        {
+
+            Retorno<UserResponseDTO> oRetorno = new();
+
+            try
+            {
+
+                var ret = await _repository.AddUserAsync(dto, ssn); 
+
+                oRetorno= ret;
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
+
+        public async Task<Retorno<UserResponseDTO>> UpdateUserAsync(UserRequestDTO dto, UserSession ssn)
+        {
+
+            Retorno<UserResponseDTO> oRetorno = new();
+
+            try
+            {
+
+                var ret = await _repository.UpdateUserAsync(dto, ssn);
+
+                oRetorno = ret;
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
+
+        public async Task<Retorno<UserResponseDTO>> DeleteUserAsync(int userId, UserSession ssn)
+        {
+
+            Retorno<UserResponseDTO> oRetorno = new();
+
+            try
+            {
+
+                var ret = await _repository.DeleteUserAsync(userId, ssn);
+
+                oRetorno = ret;
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
     }
 }
