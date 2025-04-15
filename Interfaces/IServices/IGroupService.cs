@@ -10,7 +10,7 @@ namespace DocumentinAPI.Interfaces.IServices
         public Task<Retorno<IEnumerable<GroupResponseDTO>>> GetListGroupAsync(UserSession ssn);
         public Task<Retorno<GroupResponseDTO>> AddGroupAsync(GroupRequestDTO group, UserSession ssn);
         public Task<Retorno<GroupResponseDTO>> UpdateGroupAsync(GroupRequestDTO group, UserSession ssn);
-        public Task<Retorno<GroupResponseDTO>> DeleteGroupAsync(int groupId, UserSession ssn);
+        public Task<Retorno<GroupResponseDTO>> ToggleStatusGroupAsync(int groupId, UserSession ssn);
 
 
     }

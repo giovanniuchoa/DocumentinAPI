@@ -25,7 +25,6 @@ namespace DocumentinAPI.Repository
 
                 var grupoDB = await _context.Groups
                     .Where(g => g.GroupId == groupId
-                        && g.IsActive == true
                         && g.CompanyId.ToString() == ssn.CompanyId)
                     .FirstOrDefaultAsync();
 
@@ -56,8 +55,7 @@ namespace DocumentinAPI.Repository
             {
 
                 var grupoListDB = await _context.Groups
-                    .Where(g => g.CompanyId.ToString() == ssn.CompanyId
-                        && g.IsActive == true)
+                    .Where(g => g.CompanyId.ToString() == ssn.CompanyId)
                     .ToListAsync();
 
                 oRetorno.Objeto = grupoListDB.Adapt<List<GroupResponseDTO>>();
@@ -127,6 +125,7 @@ namespace DocumentinAPI.Repository
 
                 var grupoDB = await _context.Groups
                     .Where(g => g.GroupId == group.GroupId
+                        && g.IsActive == true
                         && g.CompanyId.ToString() == ssn.CompanyId)
                     .FirstOrDefaultAsync();
 
@@ -153,7 +152,7 @@ namespace DocumentinAPI.Repository
 
         }
 
-        public async Task<Retorno<GroupResponseDTO>> DeleteGroupAsync(int groupId, UserSession ssn)
+        public async Task<Retorno<GroupResponseDTO>> ToggleStatusGroupAsync(int groupId, UserSession ssn)
         {
             
             Retorno<GroupResponseDTO> oRetorno = new();
@@ -175,7 +174,7 @@ namespace DocumentinAPI.Repository
                     throw new Exception("notFound");
                 }
                 
-                grupoDB.IsActive = false;
+                grupoDB.IsActive = !grupoDB.IsActive;
                 grupoDB.UpdatedAt = DateTime.Now;
 
                 await _context.SaveChangesAsync();

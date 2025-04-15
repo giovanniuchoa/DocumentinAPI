@@ -103,7 +103,7 @@ namespace DocumentinAPI.Services
 
         }
 
-        public async Task<Retorno<GroupResponseDTO>> DeleteGroupAsync(int groupId, UserSession ssn)
+        public async Task<Retorno<GroupResponseDTO>> ToggleStatusGroupAsync(int groupId, UserSession ssn)
         {
 
             Retorno<GroupResponseDTO> oRetorno = new();
@@ -111,7 +111,7 @@ namespace DocumentinAPI.Services
             try
             {
 
-                var ret = await _repository.DeleteGroupAsync(groupId, ssn);
+                var ret = await _repository.ToggleStatusGroupAsync(groupId, ssn);
 
                 oRetorno = ret;
 

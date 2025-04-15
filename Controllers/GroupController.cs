@@ -20,7 +20,7 @@ namespace DocumentinAPI.Controllers
         }
 
         [HttpGet("GetGroupById/{groupId}")]
-        public async Task<IActionResult> GetGroupById(int groupId)
+        public async Task<IActionResult> GetGroupByIdAsync(int groupId)
         {
             var ret = await _service.GetGroupByIdAsync(groupId, TokenService.GetClaimsData(HttpContext.User));
 
@@ -35,7 +35,7 @@ namespace DocumentinAPI.Controllers
         }
 
         [HttpGet("GetListGroup")]
-        public async Task<IActionResult> GetListGroup()
+        public async Task<IActionResult> GetListGroupAsync()
         {
             var ret = await _service.GetListGroupAsync(TokenService.GetClaimsData(HttpContext.User));
 
@@ -50,7 +50,7 @@ namespace DocumentinAPI.Controllers
         }
 
         [HttpPost("AddGroup")]
-        public async Task<IActionResult> AddGroup([FromBody] GroupRequestDTO group)
+        public async Task<IActionResult> AddGroupAsync([FromBody] GroupRequestDTO group)
         {
             var ret = await _service.AddGroupAsync(group, TokenService.GetClaimsData(HttpContext.User));
 
@@ -66,7 +66,7 @@ namespace DocumentinAPI.Controllers
         }
 
         [HttpPut("UpdateGroup")]
-        public async Task<IActionResult> UpdateGroup([FromBody] GroupRequestDTO group)
+        public async Task<IActionResult> UpdateGroupAsync([FromBody] GroupRequestDTO group)
         {
             var ret = await _service.UpdateGroupAsync(group, TokenService.GetClaimsData(HttpContext.User));
 
@@ -80,10 +80,10 @@ namespace DocumentinAPI.Controllers
             }
         }
 
-        [HttpPut("DeleteGroup/{groupId}")]
-        public async Task<IActionResult> DeleteGroup(int groupId)
+        [HttpPut("ToggleStatusGroup/{groupId}")]
+        public async Task<IActionResult> ToggleStatusGroupAsync(int groupId)
         {
-            var ret = await _service.DeleteGroupAsync(groupId, TokenService.GetClaimsData(HttpContext.User));
+            var ret = await _service.ToggleStatusGroupAsync(groupId, TokenService.GetClaimsData(HttpContext.User));
 
             if (ret.Erro == true)
             {
