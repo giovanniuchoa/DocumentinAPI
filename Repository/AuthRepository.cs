@@ -1,4 +1,5 @@
 ﻿using DocumentinAPI.Authentication;
+using DocumentinAPI.Cryptography;
 using DocumentinAPI.Data;
 using DocumentinAPI.Domain.DTOs.Auth;
 using DocumentinAPI.Domain.Utils;
@@ -24,14 +25,13 @@ namespace DocumentinAPI.Repository
                 /* TODO por enquanto esta simples só para teste */
 
                 var usuario = await _context.Users
-                    .Where(u => u.Email == model.Login 
-                        && u.Password == model.Password
+                    .Where(u => u.Email == model.Login
                         && u.IsActive == true)
                     .FirstOrDefaultAsync();
 
-                if (usuario == null)
+                if (usuario == null || usuario.Password != model.Password.GenerateHash())
                 {
-                    throw new Exception("Usuário ou senha inválidos");
+                    throw new Exception("invalidCredentials");
                 }
 
                 oRetorno.Objeto = new(await TokenService.GenerateTokenAsync(usuario));

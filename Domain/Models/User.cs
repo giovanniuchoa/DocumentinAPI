@@ -17,7 +17,7 @@ namespace DocumentinAPI.Domain.Models
         public string Email { get; set; }
 
         [Required]
-        [Column(TypeName = "varchar(20)")]
+        [Column(TypeName = "varchar(max)")]
         public string Password { get; set; }
 
         [Required]

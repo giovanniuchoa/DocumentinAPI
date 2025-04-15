@@ -1,4 +1,5 @@
-﻿using DocumentinAPI.Data;
+﻿using DocumentinAPI.Cryptography;
+using DocumentinAPI.Data;
 using DocumentinAPI.Domain.DTOs.User;
 using DocumentinAPI.Domain.Models;
 using DocumentinAPI.Domain.Utils;
@@ -87,6 +88,7 @@ namespace DocumentinAPI.Repository
 
                 var userDB = dto.Adapt<User>();
 
+                userDB.Password = userDB.Password.GenerateHash();
                 userDB.CompanyId = ssn.CompanyId;
                 userDB.CreatedAt = DateTime.Now;
                 userDB.UpdatedAt = DateTime.Now;
@@ -136,7 +138,7 @@ namespace DocumentinAPI.Repository
 
                 userDB.Name = dto.Name;
                 userDB.Email = dto.Email;
-                userDB.Password = dto.Password;
+                userDB.Password = dto.Password.GenerateHash();
                 userDB.Profile = dto.Profile;
                 userDB.PreferredLanguage = dto.PreferredLanguage;
                 userDB.PreferredTheme = dto.PreferredTheme;
