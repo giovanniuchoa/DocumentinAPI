@@ -9,7 +9,7 @@ namespace DocumentinAPI.Controllers
 
     [Route("Group")]
     [Authorize]
-    public class GroupController : ControllerBase
+    public class GroupController : BaseController
     {
 
         private readonly IGroupService _service;
@@ -22,7 +22,7 @@ namespace DocumentinAPI.Controllers
         [HttpGet("GetGroupById/{groupId}")]
         public async Task<IActionResult> GetGroupByIdAsync(int groupId)
         {
-            var ret = await _service.GetGroupByIdAsync(groupId, TokenService.GetClaimsData(HttpContext.User));
+            var ret = await _service.GetGroupByIdAsync(groupId, ssn);
 
             if (ret.Erro == true)
             {
@@ -37,7 +37,7 @@ namespace DocumentinAPI.Controllers
         [HttpGet("GetListGroup")]
         public async Task<IActionResult> GetListGroupAsync()
         {
-            var ret = await _service.GetListGroupAsync(TokenService.GetClaimsData(HttpContext.User));
+            var ret = await _service.GetListGroupAsync(ssn);
 
             if (ret.Erro == true)
             {
@@ -52,7 +52,7 @@ namespace DocumentinAPI.Controllers
         [HttpPost("AddGroup")]
         public async Task<IActionResult> AddGroupAsync([FromBody] GroupRequestDTO group)
         {
-            var ret = await _service.AddGroupAsync(group, TokenService.GetClaimsData(HttpContext.User));
+            var ret = await _service.AddGroupAsync(group, ssn);
 
             if (ret.Erro == true)
             {
@@ -68,7 +68,7 @@ namespace DocumentinAPI.Controllers
         [HttpPut("UpdateGroup")]
         public async Task<IActionResult> UpdateGroupAsync([FromBody] GroupRequestDTO group)
         {
-            var ret = await _service.UpdateGroupAsync(group, TokenService.GetClaimsData(HttpContext.User));
+            var ret = await _service.UpdateGroupAsync(group, ssn);
 
             if (ret.Erro == true)
             {
@@ -83,7 +83,7 @@ namespace DocumentinAPI.Controllers
         [HttpPut("ToggleStatusGroup/{groupId}")]
         public async Task<IActionResult> ToggleStatusGroupAsync(int groupId)
         {
-            var ret = await _service.ToggleStatusGroupAsync(groupId, TokenService.GetClaimsData(HttpContext.User));
+            var ret = await _service.ToggleStatusGroupAsync(groupId, ssn);
 
             if (ret.Erro == true)
             {

@@ -33,7 +33,7 @@ namespace DocumentinAPI.Domain.Models
         [Required]  
         public DateTime UpdatedAt { get; set; }
 
-        public DateTime LastLoginAt { get; set; }
+        public DateTime? LastLoginAt { get; set; }
 
         [Required]
         public int CompanyId { get; set; }
