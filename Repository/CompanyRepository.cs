@@ -24,7 +24,7 @@ namespace DocumentinAPI.Repository
             try
             {
 
-                if (ssn.Profile != "1")
+                if (ssn.Profile != 1)
                 {
                     throw new Exception("noPermission");
                 }
@@ -58,7 +58,7 @@ namespace DocumentinAPI.Repository
 
                 var empresaDB = await _context.Companies
                     .Where(x => x.CompanyId == companyId
-                        && x.CompanyId.ToString() == ssn.CompanyId)
+                        && x.CompanyId == ssn.CompanyId)
                     .FirstOrDefaultAsync();
 
                 if (empresaDB == null)
@@ -87,7 +87,7 @@ namespace DocumentinAPI.Repository
             try
             {
 
-                if (ssn.Profile != "1")
+                if (ssn.Profile != 1)
                 {
                     throw new Exception("noPermission");
                 }
@@ -119,7 +119,7 @@ namespace DocumentinAPI.Repository
             try
             {
 
-                if (!("1,2").Contains(ssn.Profile)) /* Somente dev e adm podem alterar empresas */
+                if (!("1,2").Contains(ssn.Profile.ToString())) /* Somente dev e adm podem alterar empresas */
                 {
                     throw new Exception("noPermission");
                 }
@@ -161,7 +161,7 @@ namespace DocumentinAPI.Repository
             try
             {
 
-                if (ssn.Profile != "1")
+                if (ssn.Profile != 1)
                 {
                     throw new Exception("noPermission");
                 }

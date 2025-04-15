@@ -10,7 +10,7 @@ namespace DocumentinAPI.Controllers
 
     [Route("User")]
     [Authorize]
-    public class UserController : ControllerBase
+    public class UserController : BaseController
     {
 
         private readonly IUserService _service;
@@ -24,7 +24,7 @@ namespace DocumentinAPI.Controllers
         public async Task<IActionResult> GetUserByIdAsync(int userId)
         {
 
-            var retorno = await _service.GetUserByIdAsync(userId, TokenService.GetClaimsData(HttpContext.User));
+            var retorno = await _service.GetUserByIdAsync(userId, ssn);
 
             if (retorno.Erro)
             {
@@ -41,7 +41,7 @@ namespace DocumentinAPI.Controllers
         public async Task<IActionResult> GetListUserAsync()
         {
 
-            var retorno = await _service.GetListUserAsync(TokenService.GetClaimsData(HttpContext.User));
+            var retorno = await _service.GetListUserAsync(ssn);
 
             if (retorno.Erro)
             {
@@ -58,7 +58,7 @@ namespace DocumentinAPI.Controllers
         public async Task<IActionResult> AddUserAsync([FromBody] UserRequestDTO dto)
         {
 
-            var retorno = await _service.AddUserAsync(dto, TokenService.GetClaimsData(HttpContext.User));
+            var retorno = await _service.AddUserAsync(dto, ssn);
 
             if (retorno.Erro)
             {
@@ -75,7 +75,7 @@ namespace DocumentinAPI.Controllers
         public async Task<IActionResult> UpdateUserAsync([FromBody] UserRequestDTO dto)
         {
 
-            var retorno = await _service.UpdateUserAsync(dto, TokenService.GetClaimsData(HttpContext.User));
+            var retorno = await _service.UpdateUserAsync(dto, ssn);
 
             if (retorno.Erro)
             {
@@ -92,7 +92,7 @@ namespace DocumentinAPI.Controllers
         public async Task<IActionResult> ToggleStatusUserAsync(int userId)
         {
 
-            var retorno = await _service.ToggleStatusUserAsync(userId, TokenService.GetClaimsData(HttpContext.User));
+            var retorno = await _service.ToggleStatusUserAsync(userId, ssn);
 
             if (retorno.Erro)
             {

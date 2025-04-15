@@ -25,7 +25,7 @@ namespace DocumentinAPI.Repository
 
                 var grupoDB = await _context.Groups
                     .Where(g => g.GroupId == groupId
-                        && g.CompanyId.ToString() == ssn.CompanyId)
+                        && g.CompanyId == ssn.CompanyId)
                     .FirstOrDefaultAsync();
 
                 if (grupoDB == null)
@@ -55,7 +55,7 @@ namespace DocumentinAPI.Repository
             {
 
                 var grupoListDB = await _context.Groups
-                    .Where(g => g.CompanyId.ToString() == ssn.CompanyId)
+                    .Where(g => g.CompanyId == ssn.CompanyId)
                     .ToListAsync();
 
                 oRetorno.Objeto = grupoListDB.Adapt<List<GroupResponseDTO>>();
@@ -80,18 +80,18 @@ namespace DocumentinAPI.Repository
             try
             {
 
-                if (!("1,2").Contains(ssn.Profile))
+                if (!("1,2").Contains(ssn.Profile.ToString()))
                 {
                     throw new Exception("noPermission");
                 }
 
                 var grupoDB = group.Adapt<Group>();
 
-                grupoDB.UserId = int.Parse(ssn.UserId);
+                grupoDB.UserId = ssn.UserId;
                 grupoDB.IsActive = true;
                 grupoDB.CreatedAt = DateTime.Now;
                 grupoDB.UpdatedAt = DateTime.Now;
-                grupoDB.CompanyId = int.Parse(ssn.CompanyId);
+                grupoDB.CompanyId = ssn.CompanyId;
 
                 await _context.Groups.AddAsync(grupoDB);
 
@@ -118,7 +118,7 @@ namespace DocumentinAPI.Repository
             try
             {
 
-                if (!("1,2").Contains(ssn.Profile))
+                if (!("1,2").Contains(ssn.Profile.ToString()))
                 {
                     throw new Exception("noPermission");
                 }
@@ -126,7 +126,7 @@ namespace DocumentinAPI.Repository
                 var grupoDB = await _context.Groups
                     .Where(g => g.GroupId == group.GroupId
                         && g.IsActive == true
-                        && g.CompanyId.ToString() == ssn.CompanyId)
+                        && g.CompanyId == ssn.CompanyId)
                     .FirstOrDefaultAsync();
 
                 if (grupoDB == null)
@@ -159,14 +159,14 @@ namespace DocumentinAPI.Repository
 
             try
             {
-                if (!("1,2").Contains(ssn.Profile))
+                if (!("1,2").Contains(ssn.Profile.ToString()))
                 {
                     throw new Exception("noPermission");
                 }
 
                 var grupoDB = await _context.Groups
                     .Where(g => g.GroupId == groupId
-                        && g.CompanyId.ToString() == ssn.CompanyId)
+                        && g.CompanyId == ssn.CompanyId)
                     .FirstOrDefaultAsync();
 
                 if (grupoDB == null)
