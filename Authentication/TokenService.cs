@@ -57,10 +57,10 @@ namespace DocumentinAPI.Authentication
         {
             return new UserSession
             {
-                UserId = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value,
+                UserId = int.Parse(user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value),
                 Name = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value,
-                Profile = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value,
-                CompanyId = user.Claims.FirstOrDefault(c => c.Type == "CompanyId")?.Value
+                Profile = int.Parse(user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value),
+                CompanyId = int.Parse(user.Claims.FirstOrDefault(c => c.Type == "CompanyId")?.Value)
 
             };
         }

@@ -3,13 +3,13 @@
     public class UserSession
     {
 
-        public string UserId { get; set; }
+        public int UserId { get; set; }
 
         public string Name { get; set; }
 
-        public string Profile { get; set; }
+        public int Profile { get; set; }
 
-        public string CompanyId { get; set; }
+        public int CompanyId { get; set; }
 
     }
 }

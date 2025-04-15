@@ -8,7 +8,7 @@ namespace DocumentinAPI.Controllers
 {
     [Route("Company")]
     [Authorize]
-    public class CompanyController : ControllerBase
+    public class CompanyController : BaseController
     {
 
         private readonly ICompanyService _service;
@@ -21,7 +21,7 @@ namespace DocumentinAPI.Controllers
         [HttpGet("GetCompaniesById/{companyId}")]
         public async Task<IActionResult> GetCompaniesByIdAsync(int companyId)
         {
-            var ret = await _service.GetCompanyByIdAsync(companyId, TokenService.GetClaimsData(HttpContext.User));
+            var ret = await _service.GetCompanyByIdAsync(companyId, ssn);
 
             if (ret.Erro == true)
             {
@@ -37,7 +37,7 @@ namespace DocumentinAPI.Controllers
         [HttpGet("GetListCompanies")]
         public async Task<IActionResult> GetCompaniesAsync()
         {
-            var ret = await _service.GetListCompanyAsync(TokenService.GetClaimsData(HttpContext.User));
+            var ret = await _service.GetListCompanyAsync(ssn);
 
             if (ret.Erro == true)
             {
@@ -54,7 +54,7 @@ namespace DocumentinAPI.Controllers
         public async Task<IActionResult> AddCompanyAsync([FromBody] CompanyRequestDTO company)
         {
 
-            var ret = await _service.AddCompanyAsync(company, TokenService.GetClaimsData(HttpContext.User));
+            var ret = await _service.AddCompanyAsync(company, ssn);
 
             if (ret.Erro == true)
             {
@@ -71,7 +71,7 @@ namespace DocumentinAPI.Controllers
         public async Task<IActionResult> UpdateCompanyAsync([FromBody] CompanyRequestDTO company)
         {
 
-            var ret = await _service.UpdateCompanyAsync(company, TokenService.GetClaimsData(HttpContext.User));
+            var ret = await _service.UpdateCompanyAsync(company, ssn);
 
             if (ret.Erro == true)
             {
@@ -87,7 +87,7 @@ namespace DocumentinAPI.Controllers
         [HttpPut("ToggleStatusCompany/{companyId}")]
         public async Task<IActionResult> ToggleStatusCompanyAsync(int companyId)
         {
-            var ret = await _service.ToggleStatusCompanyAsync(companyId, TokenService.GetClaimsData(HttpContext.User));
+            var ret = await _service.ToggleStatusCompanyAsync(companyId, ssn);
 
             if (ret.Erro == true)
             {
