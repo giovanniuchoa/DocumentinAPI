@@ -24,8 +24,9 @@ namespace DocumentinAPI.Repository
             {
 
                 var grupoDB = await _context.Groups
+                    .Include(g => g.User)
                     .Where(g => g.GroupId == groupId
-                        && g.CompanyId == ssn.CompanyId)
+                        && g.User.CompanyId == ssn.CompanyId)
                     .FirstOrDefaultAsync();
 
                 if (grupoDB == null)
@@ -55,7 +56,8 @@ namespace DocumentinAPI.Repository
             {
 
                 var grupoListDB = await _context.Groups
-                    .Where(g => g.CompanyId == ssn.CompanyId)
+                    .Include(g => g.User)
+                    .Where(g => g.User.CompanyId == ssn.CompanyId)
                     .ToListAsync();
 
                 oRetorno.Objeto = grupoListDB.Adapt<List<GroupResponseDTO>>();
@@ -91,7 +93,6 @@ namespace DocumentinAPI.Repository
                 grupoDB.IsActive = true;
                 grupoDB.CreatedAt = DateTime.Now;
                 grupoDB.UpdatedAt = DateTime.Now;
-                grupoDB.CompanyId = ssn.CompanyId;
 
                 await _context.Groups.AddAsync(grupoDB);
 
@@ -124,9 +125,10 @@ namespace DocumentinAPI.Repository
                 }
 
                 var grupoDB = await _context.Groups
+                    .Include(g => g.User)
                     .Where(g => g.GroupId == group.GroupId
                         && g.IsActive == true
-                        && g.CompanyId == ssn.CompanyId)
+                        && g.User.CompanyId == ssn.CompanyId)
                     .FirstOrDefaultAsync();
 
                 if (grupoDB == null)
@@ -165,8 +167,9 @@ namespace DocumentinAPI.Repository
                 }
 
                 var grupoDB = await _context.Groups
+                    .Include(g => g.User)
                     .Where(g => g.GroupId == groupId
-                        && g.CompanyId == ssn.CompanyId)
+                        && g.User.CompanyId == ssn.CompanyId)
                     .FirstOrDefaultAsync();
 
                 if (grupoDB == null)

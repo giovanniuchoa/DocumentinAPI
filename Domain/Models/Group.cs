@@ -21,9 +21,6 @@ namespace DocumentinAPI.Domain.Models
         public int UserId { get; set; }
 
         [Required]
-        public int CompanyId { get; set; }
-
-        [Required]
         public bool IsActive { get; set; }
 
         [Required]
@@ -31,9 +28,6 @@ namespace DocumentinAPI.Domain.Models
 
         [Required]
         public DateTime UpdatedAt { get; set; }
-
-        [ForeignKey(nameof(CompanyId))]
-        public virtual Company Company { get; set; }
 
         [ForeignKey(nameof(UserId))]
         public virtual User User { get; set; }
