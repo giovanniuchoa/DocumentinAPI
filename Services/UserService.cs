@@ -1,4 +1,6 @@
-﻿using DocumentinAPI.Domain.DTOs.User;
+﻿using DocumentinAPI.Domain.DTOs.Group;
+using DocumentinAPI.Domain.DTOs.User;
+using DocumentinAPI.Domain.DTOs.UserXGroup;
 using DocumentinAPI.Domain.Models;
 using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IRepository;
@@ -112,6 +114,72 @@ namespace DocumentinAPI.Services
             {
 
                 var ret = await _repository.ToggleStatusUserAsync(userId, ssn);
+
+                oRetorno = ret;
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
+
+        public async Task<Retorno<IEnumerable<GroupResponseDTO>>> GetListUserXGroupByUserAsync(int userId, UserSession ssn)
+        {
+            
+            Retorno<IEnumerable<GroupResponseDTO>> oRetorno = new();
+
+            try
+            {
+
+                var ret = await _repository.GetListUserXGroupByUserAsync(userId, ssn);
+
+                oRetorno = ret;
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
+
+        public async Task<Retorno<IEnumerable<GroupResponseDTO>>> PostUserXGroupAsync(UserXGroupRequestDTO model, UserSession ssn)
+        {
+
+            Retorno<IEnumerable<GroupResponseDTO>> oRetorno = new();
+
+            try
+            {
+
+                var ret = await _repository.PostUserXGroupAsync(model, ssn);
+
+                oRetorno = ret;
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
+
+        public async Task<Retorno<IEnumerable<GroupResponseDTO>>> DeleteUserXGroupAsync(UserXGroupRequestDTO model, UserSession ssn)
+        {
+
+            Retorno<IEnumerable<GroupResponseDTO>> oRetorno = new();
+
+            try
+            {
+
+                var ret = await _repository.DeleteUserXGroupAsync(model, ssn);
 
                 oRetorno = ret;
 

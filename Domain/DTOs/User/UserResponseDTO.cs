@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using DocumentinAPI.Domain.DTOs.Group;
 
 namespace DocumentinAPI.Domain.DTOs.User
 {

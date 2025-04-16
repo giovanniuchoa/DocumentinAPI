@@ -1,6 +1,8 @@
 ﻿using DocumentinAPI.Cryptography;
 using DocumentinAPI.Data;
+using DocumentinAPI.Domain.DTOs.Group;
 using DocumentinAPI.Domain.DTOs.User;
+using DocumentinAPI.Domain.DTOs.UserXGroup;
 using DocumentinAPI.Domain.Models;
 using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IRepository;
@@ -35,7 +37,9 @@ namespace DocumentinAPI.Repository
                     throw new Exception("notFound");
                 }
 
-                oRetorno.Objeto = userDB.Adapt<UserResponseDTO>();
+                var userDTO = userDB.Adapt<UserResponseDTO>();
+
+                oRetorno.Objeto = userDTO;
                 oRetorno.SetSucesso();
 
             }
@@ -189,6 +193,173 @@ namespace DocumentinAPI.Repository
                 await _context.SaveChangesAsync();
 
                 oRetorno.Objeto = userDB.Adapt<UserResponseDTO>();
+
+                oRetorno.SetSucesso();
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
+
+        public async Task<Retorno<IEnumerable<GroupResponseDTO>>> GetListUserXGroupByUserAsync(int userId, UserSession ssn)
+        {
+            
+            Retorno<IEnumerable<GroupResponseDTO>> oRetorno = new();
+
+            try
+            {
+
+                var listaGruposDB = await _context.UserXGroups
+                    .Include(ug => ug.User)
+                    .Where(ug => ug.UserId == userId 
+                        && ug.User.CompanyId == ssn.CompanyId 
+                        && ug.Group.IsActive == true 
+                        && ug.Group.User.CompanyId == ssn.CompanyId) 
+                    .Select(ug => ug.Group)
+                    .ToListAsync();
+
+                oRetorno.Objeto = listaGruposDB.Adapt<List<GroupResponseDTO>>();
+
+                oRetorno.SetSucesso();
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
+
+        public async Task<Retorno<IEnumerable<GroupResponseDTO>>> PostUserXGroupAsync(UserXGroupRequestDTO model, UserSession ssn)
+        {
+
+            Retorno<IEnumerable<GroupResponseDTO>> oRetorno = new();
+
+            try
+            {
+
+                if (!("1,2").Contains(ssn.Profile.ToString()))
+                {
+                    throw new Exception("noPermission");
+                }
+
+                var userDB = await _context.Users
+                    .Where(u => u.UserId == model.UserId
+                        && u.CompanyId == ssn.CompanyId)
+                    .FirstOrDefaultAsync();
+
+                var grupoDB = await _context.Groups
+                    .Include(g => g.User)
+                    .Where(g => g.GroupId == model.GroupId
+                        && g.IsActive == true
+                        && g.User.CompanyId == ssn.CompanyId)
+                    .FirstOrDefaultAsync();
+
+                if (userDB == null || grupoDB == null )
+                {
+                    throw new Exception("notFound");
+                }
+
+                var userXGrupoDB = await _context.UserXGroups
+                    .Where(ug => ug.UserId == model.UserId
+                        && ug.GroupId == model.GroupId)
+                    .FirstOrDefaultAsync();
+
+                if (userXGrupoDB != null)
+                {
+                    throw new Exception("alreadyExists");
+                }
+
+                userXGrupoDB = model.Adapt<UserXGroup>();
+
+                await _context.UserXGroups.AddAsync(userXGrupoDB);
+
+                await _context.SaveChangesAsync();
+
+                var listaGruposDB = await _context.UserXGroups
+                    .Include(ug => ug.User)
+                    .Where(ug => ug.UserId == model.UserId
+                        && ug.User.CompanyId == ssn.CompanyId
+                        && ug.Group.IsActive == true
+                        && ug.Group.User.CompanyId == ssn.CompanyId)
+                    .Select(ug => ug.Group)
+                    .ToListAsync();
+
+                oRetorno.Objeto = listaGruposDB.Adapt<List<GroupResponseDTO>>();
+
+                oRetorno.SetSucesso();
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
+
+        public async Task<Retorno<IEnumerable<GroupResponseDTO>>> DeleteUserXGroupAsync(UserXGroupRequestDTO model, UserSession ssn)
+        {
+
+            Retorno<IEnumerable<GroupResponseDTO>> oRetorno = new();
+
+            try
+            {
+
+                if (!("1,2").Contains(ssn.Profile.ToString()))
+                {
+                    throw new Exception("noPermission");
+                }
+
+                var userDB = await _context.Users
+                    .Where(u => u.UserId == model.UserId
+                        && u.CompanyId == ssn.CompanyId)
+                    .FirstOrDefaultAsync();
+
+                var grupoDB = await _context.Groups
+                    .Include(g => g.User)
+                    .Where(g => g.GroupId == model.GroupId
+                        && g.IsActive == true
+                        && g.User.CompanyId == ssn.CompanyId)
+                    .FirstOrDefaultAsync();
+
+                if (userDB == null || grupoDB == null)
+                {
+                    throw new Exception("notFound");
+                }
+
+                var userXGrupoDB = await _context.UserXGroups
+                    .Where(ug => ug.UserId == model.UserId
+                        && ug.GroupId == model.GroupId)
+                    .FirstOrDefaultAsync();
+
+                if (userXGrupoDB == null)
+                {
+                    throw new Exception("notFound");
+                }
+
+                _context.UserXGroups.Remove(userXGrupoDB);
+
+                await _context.SaveChangesAsync();
+
+                var listaGruposDB = await _context.UserXGroups
+                    .Include(ug => ug.User)
+                    .Where(ug => ug.UserId == model.UserId
+                        && ug.User.CompanyId == ssn.CompanyId
+                        && ug.Group.IsActive == true
+                        && ug.Group.User.CompanyId == ssn.CompanyId)
+                    .Select(ug => ug.Group)
+                    .ToListAsync();
+
+                oRetorno.Objeto = listaGruposDB.Adapt<List<GroupResponseDTO>>();
 
                 oRetorno.SetSucesso();
 

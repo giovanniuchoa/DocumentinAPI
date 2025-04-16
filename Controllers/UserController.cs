@@ -1,5 +1,6 @@
 ﻿using DocumentinAPI.Authentication;
 using DocumentinAPI.Domain.DTOs.User;
+using DocumentinAPI.Domain.DTOs.UserXGroup;
 using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IServices;
 using Microsoft.AspNetCore.Authorization;
@@ -93,6 +94,57 @@ namespace DocumentinAPI.Controllers
         {
 
             var retorno = await _service.ToggleStatusUserAsync(userId, ssn);
+
+            if (retorno.Erro)
+            {
+                return BadRequest(retorno);
+            }
+            else
+            {
+                return Ok(retorno);
+            }
+
+        }
+
+        [HttpGet("GetListGroupByUser/{userId}")]
+        public async Task<IActionResult> GetListUserXGroupByUserAsync(int userId)
+        {
+
+            var retorno = await _service.GetListUserXGroupByUserAsync(userId, ssn);
+
+            if (retorno.Erro)
+            {
+                return BadRequest(retorno);
+            }
+            else
+            {
+                return Ok(retorno);
+            }
+
+        }
+
+        [HttpPost("PostUserXGroup")]
+        public async Task<IActionResult> PostUserXGroupAsync([FromBody] UserXGroupRequestDTO model)
+        {
+
+            var retorno = await _service.PostUserXGroupAsync(model, ssn);
+
+            if (retorno.Erro)
+            {
+                return BadRequest(retorno);
+            }
+            else
+            {
+                return Ok(retorno);
+            }
+
+        }
+
+        [HttpDelete("DeleteUserXGroup")]
+        public async Task<IActionResult> DeleteUserXGroupAsync([FromBody] UserXGroupRequestDTO model)
+        {
+
+            var retorno = await _service.DeleteUserXGroupAsync(model, ssn);
 
             if (retorno.Erro)
             {
