@@ -1,4 +1,5 @@
 ﻿using DocumentinAPI.Domain.DTOs.Group;
+using DocumentinAPI.Domain.DTOs.PasswordRecovery;
 using DocumentinAPI.Domain.DTOs.User;
 using DocumentinAPI.Domain.DTOs.UserXGroup;
 using DocumentinAPI.Domain.Models;
@@ -149,7 +150,7 @@ namespace DocumentinAPI.Services
 
         }
 
-        public async Task<Retorno<IEnumerable<GroupResponseDTO>>> PostUserXGroupAsync(UserXGroupRequestDTO model, UserSession ssn)
+        public async Task<Retorno<IEnumerable<GroupResponseDTO>>> AddUserXGroupAsync(UserXGroupRequestDTO model, UserSession ssn)
         {
 
             Retorno<IEnumerable<GroupResponseDTO>> oRetorno = new();
@@ -157,7 +158,7 @@ namespace DocumentinAPI.Services
             try
             {
 
-                var ret = await _repository.PostUserXGroupAsync(model, ssn);
+                var ret = await _repository.AddUserXGroupAsync(model, ssn);
 
                 oRetorno = ret;
 
@@ -180,6 +181,72 @@ namespace DocumentinAPI.Services
             {
 
                 var ret = await _repository.DeleteUserXGroupAsync(model, ssn);
+
+                oRetorno = ret;
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
+
+        public async Task<Retorno<PasswordRecoveryResponseDTO>> RequestPasswordRecoveryAsync(PasswordRecoveryRequestDTO model)
+        {
+            
+            Retorno<PasswordRecoveryResponseDTO> oRetorno = new();
+
+            try
+            {
+
+                var ret = await _repository.RequestPasswordRecoveryAsync(model);
+
+                oRetorno = ret;
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
+
+        public async Task<Retorno<ValidatePasswordRecoveryResponseDTO>> ValidateTokenPasswordRecoveryAsync(ValidatePasswordRecoveryRequestDTO model)
+        {
+            
+            Retorno<ValidatePasswordRecoveryResponseDTO> oRetorno = new();
+
+            try
+            {
+
+                var ret = await _repository.ValidateTokenPasswordRecoveryAsync(model);
+
+                oRetorno = ret;
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
+
+        public async Task<Retorno<UserResponseDTO>> UpdatePasswordRecoveryAsync(UpdatePasswordRecoveryRequestDTO model)
+        {
+            
+            Retorno<UserResponseDTO> oRetorno = new();
+
+            try
+            {
+
+                var ret = await _repository.UpdatePasswordRecoveryAsync(model);
 
                 oRetorno = ret;
 
