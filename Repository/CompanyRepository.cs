@@ -92,7 +92,16 @@ namespace DocumentinAPI.Repository
                     throw new Exception("noPermission");
                 }
 
-                var empresaDB = company.Adapt<Company>();
+                var empresaDB = await _context.Companies
+                    .Where(x => x.TaxId == company.TaxId)
+                    .FirstOrDefaultAsync();
+
+                if (empresaDB != null)
+                {
+                    throw new Exception("alreadyExistsTaxId");
+                }
+
+                    empresaDB = company.Adapt<Company>();
 
                 await _context.Companies.AddAsync(empresaDB);
 
