@@ -176,5 +176,23 @@ namespace DocumentinAPI.Controllers
 
         }
 
+        [HttpPost("ValidateTokenPasswordRecovery")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ValidateTokenPasswordRecoveryAsync([FromBody] ValidatePasswordRecoveryRequestDTO model)
+        {
+
+            var retorno = await _service.ValidateTokenPasswordRecoveryAsync(model);
+
+            if (retorno.Erro)
+            {
+                return BadRequest(retorno);
+            }
+            else
+            {
+                return Ok(retorno);
+            }
+
+        }
+
     }
 }

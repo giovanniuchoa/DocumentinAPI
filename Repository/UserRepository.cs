@@ -403,19 +403,93 @@ namespace DocumentinAPI.Repository
                     throw new Exception("notFound");
                 }
 
+                var recoveryListDB = await _context.PasswordRecoveries
+                    .Where(p => p.UserId == userDB.UserId
+                        && p.IsActive == true)
+                    .ToListAsync();
+
+                if (recoveryListDB != null && recoveryListDB.Count > 0)
+                {
+
+                    foreach (var recoveryDB in recoveryListDB)
+                    {
+                        recoveryDB.IsActive = false;
+                    }                    
+
+                    await _context.SaveChangesAsync();
+                }
+
                 PasswordRecovery passwordRecoveryDB = new PasswordRecovery
                 {
                     UserId = userDB.UserId,
                     Token = GerarTokenNumerico(6),
                     CreatedAt = DateTime.Now,
-                    IsActive = true
+                    IsActive = true,
+                    IsValidated = false
                 };
 
                 await _context.PasswordRecoveries.AddAsync(passwordRecoveryDB);
 
                 await _context.SaveChangesAsync();
 
+                /* TODO: Envia um email para o usuário com o token */
+
                 oRetorno.Objeto = passwordRecoveryDB.Adapt<PasswordRecoveryResponseDTO>();
+
+                oRetorno.SetSucesso();
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
+
+        public async Task<Retorno<ValidatePasswordRecoveryResponseDTO>> ValidateTokenPasswordRecoveryAsync(ValidatePasswordRecoveryRequestDTO model)
+        {
+            
+            Retorno<ValidatePasswordRecoveryResponseDTO> oRetorno = new();
+
+            try
+            {
+
+                var userDB = await _context.Users
+                    .Where(u => u.Email == model.Email
+                        && u.IsActive == true)
+                    .FirstOrDefaultAsync();
+
+                if (userDB == null)
+                {
+                    throw new Exception("notFound");
+                }
+
+                var recoveryDB = await _context.PasswordRecoveries
+                    .Where(p => p.UserId == userDB.UserId
+                        && p.IsActive == true)
+                    .FirstOrDefaultAsync();
+
+                if (recoveryDB == null) 
+                {
+                    throw new Exception("notFoundRecovery");
+                }
+                
+                if (recoveryDB.Token == model?.Token)
+                {
+
+                    recoveryDB.IsValidated = true;
+
+                    await _context.SaveChangesAsync();
+
+                }
+                else
+                {
+                    throw new Exception("invalidToken");
+                }
+
+                oRetorno.Objeto = recoveryDB.Adapt<ValidatePasswordRecoveryResponseDTO>();
 
                 oRetorno.SetSucesso();
 
