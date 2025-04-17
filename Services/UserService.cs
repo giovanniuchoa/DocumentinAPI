@@ -237,5 +237,27 @@ namespace DocumentinAPI.Services
             return oRetorno;
 
         }
+
+        public async Task<Retorno<UserResponseDTO>> UpdatePasswordRecoveryAsync(UpdatePasswordRecoveryRequestDTO model)
+        {
+            
+            Retorno<UserResponseDTO> oRetorno = new();
+
+            try
+            {
+
+                var ret = await _repository.UpdatePasswordRecoveryAsync(model);
+
+                oRetorno = ret;
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
     }
 }

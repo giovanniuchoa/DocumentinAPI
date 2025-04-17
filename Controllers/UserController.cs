@@ -194,5 +194,23 @@ namespace DocumentinAPI.Controllers
 
         }
 
+        [HttpPut("UpdatePasswordRecovery")]
+        [AllowAnonymous]
+        public async Task<IActionResult> UpdatePasswordRecoveryAsync([FromBody] UpdatePasswordRecoveryRequestDTO model)
+        {
+
+            var retorno = await _service.UpdatePasswordRecoveryAsync(model);
+
+            if (retorno.Erro)
+            {
+                return BadRequest(retorno);
+            }
+            else
+            {
+                return Ok(retorno);
+            }
+
+        }
+
     }
 }

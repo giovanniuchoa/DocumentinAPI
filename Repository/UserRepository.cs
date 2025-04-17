@@ -502,5 +502,63 @@ namespace DocumentinAPI.Repository
             return oRetorno;
 
         }
+
+        public async Task<Retorno<UserResponseDTO>> UpdatePasswordRecoveryAsync(UpdatePasswordRecoveryRequestDTO model)
+        {
+            
+            Retorno<UserResponseDTO> oRetorno = new();
+
+            try
+            {
+
+                var userDB = await _context.Users
+                    .Where(u => u.Email == model.Email
+                        && u.IsActive == true)
+                    .FirstOrDefaultAsync();
+
+                if (userDB == null)
+                {
+                    throw new Exception("notFound");
+                }
+
+                var recoveryDB = await _context.PasswordRecoveries
+                    .Where(p => p.UserId == userDB.UserId
+                        && p.IsActive == true)
+                    .FirstOrDefaultAsync();
+
+                if (recoveryDB == null)
+                {
+                    throw new Exception("notFoundRecovery");
+                }
+
+                if (recoveryDB.Token != model?.Token || recoveryDB.IsValidated == false)
+                {
+                    throw new Exception("notValidatedRecovery");
+                }
+
+                if (model.NewPassword == null)
+                {
+                    throw new Exception("invalidCredentials");
+                }
+
+                userDB.Password = model.NewPassword.GenerateHash();
+
+                recoveryDB.IsActive = false;
+
+                await _context.SaveChangesAsync();
+
+                oRetorno.Objeto = userDB.Adapt<UserResponseDTO>();
+
+                oRetorno.SetSucesso();
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
     }
 }
