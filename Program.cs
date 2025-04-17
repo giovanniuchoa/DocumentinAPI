@@ -41,6 +41,7 @@ builder.Services.AddTransient<IAuthService, AuthService>();
 builder.Services.AddTransient<ICompanyService, CompanyService>();
 builder.Services.AddTransient<IGroupService, GroupService>();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IEmailService, EmailService>();
 
 #endregion
 
