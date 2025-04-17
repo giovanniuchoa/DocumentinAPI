@@ -1,6 +1,7 @@
 ﻿using DocumentinAPI.Cryptography;
 using DocumentinAPI.Data;
 using DocumentinAPI.Domain.DTOs.Group;
+using DocumentinAPI.Domain.DTOs.PasswordRecovery;
 using DocumentinAPI.Domain.DTOs.User;
 using DocumentinAPI.Domain.DTOs.UserXGroup;
 using DocumentinAPI.Domain.Models;
@@ -8,6 +9,7 @@ using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IRepository;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
+using static DocumentinAPI.Domain.Utils.Helpers;
 
 namespace DocumentinAPI.Repository
 {
@@ -90,7 +92,17 @@ namespace DocumentinAPI.Repository
                     throw new Exception("noPermission");
                 }
 
-                var userDB = dto.Adapt<User>();
+                var userDB = await _context.Users
+                    .Where(u => u.Email == dto.Email
+                        && u.IsActive == true)
+                    .FirstOrDefaultAsync();
+
+                if (userDB != null)
+                {
+                    throw new Exception("alreadyExistsEmail");
+                }
+
+                userDB = dto.Adapt<User>();
 
                 userDB.Password = userDB.Password.GenerateHash();
                 userDB.CompanyId = ssn.CompanyId;
@@ -237,7 +249,7 @@ namespace DocumentinAPI.Repository
 
         }
 
-        public async Task<Retorno<IEnumerable<GroupResponseDTO>>> PostUserXGroupAsync(UserXGroupRequestDTO model, UserSession ssn)
+        public async Task<Retorno<IEnumerable<GroupResponseDTO>>> AddUserXGroupAsync(UserXGroupRequestDTO model, UserSession ssn)
         {
 
             Retorno<IEnumerable<GroupResponseDTO>> oRetorno = new();
@@ -360,6 +372,50 @@ namespace DocumentinAPI.Repository
                     .ToListAsync();
 
                 oRetorno.Objeto = listaGruposDB.Adapt<List<GroupResponseDTO>>();
+
+                oRetorno.SetSucesso();
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
+
+        public async Task<Retorno<PasswordRecoveryResponseDTO>> RequestPasswordRecoveryAsync(PasswordRecoveryRequestDTO model)
+        {
+            
+            Retorno<PasswordRecoveryResponseDTO> oRetorno = new();
+
+            try
+            {
+
+                var userDB = await _context.Users
+                    .Where(u => u.Email == model.Email
+                        && u.IsActive == true)
+                    .FirstOrDefaultAsync();
+
+                if (userDB == null)
+                {
+                    throw new Exception("notFound");
+                }
+
+                PasswordRecovery passwordRecoveryDB = new PasswordRecovery
+                {
+                    UserId = userDB.UserId,
+                    Token = GerarTokenNumerico(6),
+                    CreatedAt = DateTime.Now,
+                    IsActive = true
+                };
+
+                await _context.PasswordRecoveries.AddAsync(passwordRecoveryDB);
+
+                await _context.SaveChangesAsync();
+
+                oRetorno.Objeto = passwordRecoveryDB.Adapt<PasswordRecoveryResponseDTO>();
 
                 oRetorno.SetSucesso();
 

@@ -4,6 +4,7 @@ using DocumentinAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DocumentinAPI.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20250417145350_migration_20250417_002")]
+    partial class migration_20250417_002
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -97,6 +100,9 @@ namespace DocumentinAPI.Migrations
                         .HasColumnType("varchar(10)");
 
                     b.HasKey("CompanyId");
+
+                    b.HasIndex("TaxId")
+                        .IsUnique();
 
                     b.ToTable("Companies");
                 });
@@ -443,6 +449,9 @@ namespace DocumentinAPI.Migrations
                     b.HasKey("UserId");
 
                     b.HasIndex("CompanyId");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });

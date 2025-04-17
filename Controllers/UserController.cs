@@ -1,4 +1,5 @@
 ﻿using DocumentinAPI.Authentication;
+using DocumentinAPI.Domain.DTOs.PasswordRecovery;
 using DocumentinAPI.Domain.DTOs.User;
 using DocumentinAPI.Domain.DTOs.UserXGroup;
 using DocumentinAPI.Domain.Utils;
@@ -123,11 +124,11 @@ namespace DocumentinAPI.Controllers
 
         }
 
-        [HttpPost("PostUserXGroup")]
-        public async Task<IActionResult> PostUserXGroupAsync([FromBody] UserXGroupRequestDTO model)
+        [HttpPost("AddUserXGroup")]
+        public async Task<IActionResult> AddUserXGroupAsync([FromBody] UserXGroupRequestDTO model)
         {
 
-            var retorno = await _service.PostUserXGroupAsync(model, ssn);
+            var retorno = await _service.AddUserXGroupAsync(model, ssn);
 
             if (retorno.Erro)
             {
@@ -145,6 +146,24 @@ namespace DocumentinAPI.Controllers
         {
 
             var retorno = await _service.DeleteUserXGroupAsync(model, ssn);
+
+            if (retorno.Erro)
+            {
+                return BadRequest(retorno);
+            }
+            else
+            {
+                return Ok(retorno);
+            }
+
+        }
+
+        [HttpPost("RequestPasswordRecovery")]
+        [AllowAnonymous]
+        public async Task<IActionResult> RequestPasswordRecoveryAsyncAsync([FromBody] PasswordRecoveryRequestDTO model)
+        {
+
+            var retorno = await _service.RequestPasswordRecoveryAsync(model);
 
             if (retorno.Erro)
             {
