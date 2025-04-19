@@ -17,5 +17,14 @@ namespace DocumentinAPI.Domain.Models
         [Column(TypeName = "varchar(max)")]
         public string Content { get; set; }
 
+        [Required]
+        public bool IsActive { get; set; }
+
+        [Required]
+        public DateTime CreatedAt { get; set; }
+
+        [Required]
+        public DateTime UpdatedAt { get; set; }
+
     }
 }

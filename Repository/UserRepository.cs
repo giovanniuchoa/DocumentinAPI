@@ -12,6 +12,7 @@ using Mapster;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using static DocumentinAPI.Domain.Utils.Helpers;
+using static DocumentinAPI.Domain.Utils.TemplateHelpers;
 
 namespace DocumentinAPI.Repository
 {
@@ -296,6 +297,8 @@ namespace DocumentinAPI.Repository
 
                 userXGrupoDB = model.Adapt<UserXGroup>();
 
+                userXGrupoDB.CreatedAt = DateTime.Now;  
+
                 await _context.UserXGroups.AddAsync(userXGrupoDB);
 
                 await _context.SaveChangesAsync();
@@ -572,19 +575,6 @@ namespace DocumentinAPI.Repository
 
             return oRetorno;
 
-        }
-
-        public async Task<string> GetEmailBodyFromTemplateAsync(string templateFileName, Dictionary<string, string> replacements)
-        {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Templates", templateFileName);
-            var html = await File.ReadAllTextAsync(filePath);
-
-            foreach (var item in replacements)
-            {
-                html = html.Replace($"{{{{{item.Key}}}}}", item.Value); // substitui {{CHAVE}} pelas informações
-            }
-
-            return html;
         }
 
     }

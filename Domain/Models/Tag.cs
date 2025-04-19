@@ -13,5 +13,14 @@ namespace DocumentinAPI.Domain.Models
         [Column(TypeName = "varchar(20)")]
         public string Name { get; set; }
 
+        [Required]
+        public bool IsActive { get; set; }
+
+        [Required]
+        public DateTime CreatedAt { get; set; }
+
+        [Required]
+        public DateTime UpdatedAt { get; set; }
+
     }
 }

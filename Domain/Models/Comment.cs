@@ -25,6 +25,9 @@ namespace DocumentinAPI.Domain.Models
         [Required]
         public DateTime UpdatedAt { get; set; }
 
+        [Required]  
+        public bool IsActive { get; set; }
+
         [ForeignKey(nameof(DocumentId))]
         public virtual Document Document { get; set; }
 
