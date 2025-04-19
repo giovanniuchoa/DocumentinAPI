@@ -32,6 +32,9 @@ namespace DocumentinAPI.Domain.Models
         [Required]
         public int FolderId { get; set; }
 
+        [Required]
+        public bool IsActive { get; set; }
+
         [ForeignKey(nameof(UserId))]
         public virtual User User { get; set; }
 

@@ -16,7 +16,7 @@ namespace DocumentinAPI.Data
         public DbSet<DocumentVersion> DocumentVersions { get; set; }
         public DbSet<DocumentXTag> DocumentXTags { get; set; }
         public DbSet<Folder> Folders { get; set; }
-        public DbSet<FolderPermission> FolderPermissions { get; set; }
+        public DbSet<FolderXGroup> FolderXGroups { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Domain.Models.Task> Tasks { get; set; }
@@ -40,6 +40,9 @@ namespace DocumentinAPI.Data
             
             modelBuilder.Entity<UserXGroup>()
                 .HasKey(ug => new { ug.UserId, ug.GroupId });
+
+            modelBuilder.Entity<FolderXGroup>()
+                .HasKey(fg => new { fg.FolderId, fg.GroupId });
 
             base.OnModelCreating(modelBuilder);
         }

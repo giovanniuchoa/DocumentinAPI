@@ -12,6 +12,9 @@ namespace DocumentinAPI.Domain.Models
         [Required]
         public int GroupId { get; set; }
 
+        [Required]
+        public DateTime CreatedAt { get; set; }
+
         [ForeignKey(nameof(UserId))]
         public virtual User User { get; set; }
 

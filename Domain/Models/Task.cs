@@ -38,6 +38,9 @@ namespace DocumentinAPI.Domain.Models
 
         public int ParentTaskId { get; set; }
 
+        [Required]
+        public bool IsActive { get; set; }
+
         [ForeignKey(nameof(AssigneeId))]
         public virtual User Assignee { get; set; }
 
