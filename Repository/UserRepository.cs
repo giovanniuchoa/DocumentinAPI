@@ -7,17 +7,23 @@ using DocumentinAPI.Domain.DTOs.UserXGroup;
 using DocumentinAPI.Domain.Models;
 using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IRepository;
+using DocumentinAPI.Interfaces.IServices;
 using Mapster;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using static DocumentinAPI.Domain.Utils.Helpers;
+using static DocumentinAPI.Domain.Utils.TemplateHelpers;
 
 namespace DocumentinAPI.Repository
 {
     public class UserRepository : BaseRepository, IUserRepository
     {
 
-        public UserRepository(DBContext context) : base(context)
+        private readonly IEmailService _emailService;
+
+        public UserRepository(DBContext context, IEmailService emailService) : base(context)
         {
+            _emailService = emailService;
         }
 
         public async Task<Retorno<UserResponseDTO>> GetUserByIdAsync(int userId, UserSession ssn)
@@ -291,6 +297,8 @@ namespace DocumentinAPI.Repository
 
                 userXGrupoDB = model.Adapt<UserXGroup>();
 
+                userXGrupoDB.CreatedAt = DateTime.Now;  
+
                 await _context.UserXGroups.AddAsync(userXGrupoDB);
 
                 await _context.SaveChangesAsync();
@@ -432,7 +440,15 @@ namespace DocumentinAPI.Repository
 
                 await _context.SaveChangesAsync();
 
-                /* TODO: Envia um email para o usuário com o token */
+                var dados = new Dictionary<string, string>
+                {
+                    { "NOME", userDB.Name },
+                    { "TOKEN", passwordRecoveryDB.Token }
+                };
+
+                var body = await GetEmailBodyFromTemplateAsync("PasswordRecovery.html", dados);
+
+                await _emailService.SendEmailAsync(userDB.Email, "Recuperação de Senha - Token", body);
 
                 oRetorno.Objeto = passwordRecoveryDB.Adapt<PasswordRecoveryResponseDTO>();
 
@@ -560,5 +576,6 @@ namespace DocumentinAPI.Repository
             return oRetorno;
 
         }
+
     }
 }

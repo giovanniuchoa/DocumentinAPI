@@ -20,9 +20,9 @@ builder.Services.AddSwaggerGen();
 
 #region DataBase
 
-//var connectionString = builder.Configuration.GetConnectionString("Local_NotebookGio");
+var connectionString = builder.Configuration.GetConnectionString("Local_NotebookGio");
 //var connectionString = builder.Configuration.GetConnectionString("Local_NotebookJao");
-var connectionString = builder.Configuration.GetConnectionString("Local_PcEmpresaGio");
+//var connectionString = builder.Configuration.GetConnectionString("Local_PcEmpresaGio");
 
 builder.Services.AddDbContext<DBContext>(opt => opt.UseSqlServer(connectionString));
 
@@ -41,6 +41,7 @@ builder.Services.AddTransient<IAuthService, AuthService>();
 builder.Services.AddTransient<ICompanyService, CompanyService>();
 builder.Services.AddTransient<IGroupService, GroupService>();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IEmailService, EmailService>();
 
 #endregion
 

@@ -3,17 +3,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DocumentinAPI.Domain.Models
 {
-    public class FolderPermission
+    public class FolderXGroup
     {
-
-        [Key]
-        public int FolderPermissionId { get; set; }
 
         [Required]  
         public int FolderId { get; set; }
 
         [Required]
         public int GroupId { get; set; }
+
+        [Required]
+        public DateTime CreatedAt { get; set; }
 
         [ForeignKey(nameof(FolderId))]
         public virtual Folder Folder { get; set; }

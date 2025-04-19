@@ -19,10 +19,13 @@ namespace DocumentinAPI.Domain.Models
         public int UserId { get; set; }
 
         [Required]
-        public int CompanyId { get; set; }
+        public bool IsActive { get; set; }
 
-        [ForeignKey(nameof(CompanyId))]
-        public virtual Company Company { get; set; }
+        [Required]
+        public DateTime CreatedAt { get; set; }
+
+        [Required]
+        public DateTime UpdatedAt { get; set; }
 
         [ForeignKey(nameof(ParentFolderId))]
         public virtual Folder ParentFoler { get; set; }

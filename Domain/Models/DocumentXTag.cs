@@ -12,6 +12,9 @@ namespace DocumentinAPI.Domain.Models
         [Required]
         public int DocumentId { get; set; }
 
+        [Required]
+        public DateTime CreatedAt { get; set; }
+
         [ForeignKey(nameof(TagId))]
         public virtual Tag Tag { get; set; }
 
