@@ -13,8 +13,6 @@ namespace DocumentinAPI.Domain.DTOs.User
 
         public string Email { get; set; }
 
-        public string Password { get; set; }
-
         public short Profile { get; set; }
 
         public short PreferredLanguage { get; set; }

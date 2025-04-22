@@ -1,5 +1,6 @@
 ﻿using DocumentinAPI.Data;
 using DocumentinAPI.Domain.DTOs.Group;
+using DocumentinAPI.Domain.DTOs.User;
 using DocumentinAPI.Domain.Models;
 using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IRepository;
@@ -34,7 +35,11 @@ namespace DocumentinAPI.Repository
                     throw new Exception("notFound");
                 }
 
-                oRetorno.Objeto = grupoDB.Adapt<GroupResponseDTO>();
+                var grupo = grupoDB.Adapt<GroupResponseDTO>();
+
+                grupo.CompanyId = grupoDB.User.CompanyId;
+
+                oRetorno.Objeto = grupo;
                 oRetorno.SetSucesso();
 
             }
@@ -60,7 +65,14 @@ namespace DocumentinAPI.Repository
                     .Where(g => g.User.CompanyId == ssn.CompanyId)
                     .ToListAsync();
 
-                oRetorno.Objeto = grupoListDB.Adapt<List<GroupResponseDTO>>();
+                var grupoList = grupoListDB.Adapt<List<GroupResponseDTO>>();
+
+                foreach (var grupo in grupoList)
+                {
+                    grupo.CompanyId = grupoListDB.FirstOrDefault(g => g.GroupId == grupo.GroupId).User.CompanyId;
+                }
+
+                oRetorno.Objeto = grupoList;
 
                 oRetorno.SetSucesso();
 
@@ -141,7 +153,11 @@ namespace DocumentinAPI.Repository
 
                 await _context.SaveChangesAsync();
 
-                oRetorno.Objeto = grupoDB.Adapt<GroupResponseDTO>();
+                var grupo = grupoDB.Adapt<GroupResponseDTO>();
+
+                grupo.CompanyId = grupoDB.User.CompanyId;
+
+                oRetorno.Objeto = grupo;
                 oRetorno.SetSucesso();
 
             }
@@ -182,8 +198,42 @@ namespace DocumentinAPI.Repository
 
                 await _context.SaveChangesAsync();
 
-                oRetorno.Objeto = grupoDB.Adapt<GroupResponseDTO>();
+                var grupo = grupoDB.Adapt<GroupResponseDTO>();
+
+                grupo.CompanyId = grupoDB.User.CompanyId;
+
+                oRetorno.Objeto = grupo;
                 oRetorno.SetSucesso();
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
+
+        public async Task<Retorno<IEnumerable<UserResponseDTO>>> GetListUserXGroupByGroupAsync(int groupId, UserSession ssn)
+        {
+            
+            Retorno<IEnumerable<UserResponseDTO>> oRetorno = new();
+
+            try
+            {
+
+                var userListDB = await _context.UserXGroups
+                    .Include(ug => ug.User)
+                    .Where(ug => ug.GroupId == groupId
+                        && ug.User.CompanyId == ssn.CompanyId
+                        && (ssn.Profile == 1 || (ssn.Profile == 2 && ug.User.Profile != 1) || (ug.User.UserId == ssn.UserId)) )
+                    .Select(ug => ug.User)
+                    .ToListAsync();
+
+                oRetorno.Objeto = userListDB.Adapt<List<UserResponseDTO>>();
+
+                oRetorno.SetSucesso();
+
             }
             catch (Exception ex)
             {

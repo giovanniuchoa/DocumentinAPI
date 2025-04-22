@@ -1,4 +1,5 @@
 ﻿using DocumentinAPI.Domain.DTOs.Group;
+using DocumentinAPI.Domain.DTOs.User;
 using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IRepository;
 using DocumentinAPI.Interfaces.IServices;
@@ -112,6 +113,27 @@ namespace DocumentinAPI.Services
             {
 
                 var ret = await _repository.ToggleStatusGroupAsync(groupId, ssn);
+
+                oRetorno = ret;
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
+
+        public async Task<Retorno<IEnumerable<UserResponseDTO>>> GetListUserXGroupByGroupAsync(int groupId, UserSession ssn)
+        {
+
+            Retorno<IEnumerable<UserResponseDTO>> oRetorno = new();
+
+            try
+            {
+                var ret = await _repository.GetListUserXGroupByGroupAsync(groupId, ssn);
 
                 oRetorno = ret;
 
