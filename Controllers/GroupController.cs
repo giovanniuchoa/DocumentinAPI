@@ -95,5 +95,21 @@ namespace DocumentinAPI.Controllers
             }
         }
 
+        [HttpGet("GetListUserByGroup/{groupId}")]
+        public async Task<IActionResult> GetListUserXGroupByGroupAsync(int groupId)
+        {
+
+            var ret = await _service.GetListUserXGroupByGroupAsync(groupId, ssn);
+
+            if (ret.Erro == true)
+            {
+                return BadRequest(ret);
+            }
+            else
+            {
+                return Ok(ret);
+            }
+        }
+
     }
 }
