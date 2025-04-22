@@ -37,7 +37,8 @@ namespace DocumentinAPI.Repository
                 var userDB = await _context.Users
                     .Where(u => u.UserId == userId
                         && u.IsActive == true
-                        && u.CompanyId == ssn.CompanyId)
+                        && u.CompanyId == ssn.CompanyId
+                        && (ssn.Profile == 1 || (ssn.Profile == 2 && u.Profile != 1) || (u.UserId == ssn.UserId)) )
                     .FirstOrDefaultAsync();
 
                 if (userDB == null)
@@ -68,7 +69,8 @@ namespace DocumentinAPI.Repository
             {
 
                 var userListDB = await _context.Users
-                    .Where(u => u.CompanyId == ssn.CompanyId)
+                    .Where(u => u.CompanyId == ssn.CompanyId
+                        && (ssn.Profile == 1 || (ssn.Profile == 2 && u.Profile != 1) || (u.UserId == ssn.UserId) ) )
                     .ToListAsync();
 
                 oRetorno.Objeto = userListDB.Adapt<List<UserResponseDTO>>();
@@ -93,7 +95,7 @@ namespace DocumentinAPI.Repository
             try
             {
 
-                if (!("1,2").Contains(ssn.Profile.ToString()))
+                if (!("1,2").Contains(ssn.Profile.ToString()) || (ssn.Profile == 2 && dto.Profile == 1))
                 {
                     throw new Exception("noPermission");
                 }
@@ -153,7 +155,7 @@ namespace DocumentinAPI.Repository
                     throw new Exception("notFound");
                 }
 
-                if (!("1,2").Contains(ssn.Profile.ToString()) && userDB.UserId != ssn.UserId)
+                if ((!("1,2").Contains(ssn.Profile.ToString()) || (ssn.Profile == 2 && userDB.Profile == 1)) && userDB.UserId != ssn.UserId)
                 {
                     throw new Exception("noPermission");
                 }
@@ -199,6 +201,11 @@ namespace DocumentinAPI.Repository
                     .Where(u => u.UserId == userId
                         && u.CompanyId == ssn.CompanyId)
                     .FirstOrDefaultAsync();
+
+                if (ssn.Profile == 2 && userDB.Profile == 1)
+                {
+                    throw new Exception("noPermission");
+                }
 
                 if (userDB == null)
                 {
@@ -270,7 +277,8 @@ namespace DocumentinAPI.Repository
 
                 var userDB = await _context.Users
                     .Where(u => u.UserId == model.UserId
-                        && u.CompanyId == ssn.CompanyId)
+                        && u.CompanyId == ssn.CompanyId
+                        && (ssn.Profile == 1 || (ssn.Profile == 2 && u.Profile != 1) || (u.UserId == ssn.UserId)) )
                     .FirstOrDefaultAsync();
 
                 var grupoDB = await _context.Groups
@@ -341,7 +349,8 @@ namespace DocumentinAPI.Repository
 
                 var userDB = await _context.Users
                     .Where(u => u.UserId == model.UserId
-                        && u.CompanyId == ssn.CompanyId)
+                        && u.CompanyId == ssn.CompanyId
+                        && (ssn.Profile == 1 || (ssn.Profile == 2 && u.Profile != 1) || (u.UserId == ssn.UserId)) )
                     .FirstOrDefaultAsync();
 
                 var grupoDB = await _context.Groups

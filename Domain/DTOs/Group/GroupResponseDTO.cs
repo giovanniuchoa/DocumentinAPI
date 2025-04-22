@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using DocumentinAPI.Domain.DTOs.User;
 
 namespace DocumentinAPI.Domain.DTOs.Group
 {
@@ -14,9 +15,9 @@ namespace DocumentinAPI.Domain.DTOs.Group
 
         public int UserId { get; set; }
 
-        public int CompanyId { get; set; }
-
         public bool IsActive { get; set; }
+
+        public int CompanyId { get; set; }
 
     }
 }

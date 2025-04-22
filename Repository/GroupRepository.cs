@@ -34,7 +34,11 @@ namespace DocumentinAPI.Repository
                     throw new Exception("notFound");
                 }
 
-                oRetorno.Objeto = grupoDB.Adapt<GroupResponseDTO>();
+                var grupo = grupoDB.Adapt<GroupResponseDTO>();
+
+                grupo.CompanyId = grupoDB.User.CompanyId;
+
+                oRetorno.Objeto = grupo;
                 oRetorno.SetSucesso();
 
             }
@@ -60,7 +64,14 @@ namespace DocumentinAPI.Repository
                     .Where(g => g.User.CompanyId == ssn.CompanyId)
                     .ToListAsync();
 
-                oRetorno.Objeto = grupoListDB.Adapt<List<GroupResponseDTO>>();
+                var grupoList = grupoListDB.Adapt<List<GroupResponseDTO>>();
+
+                foreach (var grupo in grupoList)
+                {
+                    grupo.CompanyId = grupoListDB.FirstOrDefault(g => g.GroupId == grupo.GroupId).User.CompanyId;
+                }
+
+                oRetorno.Objeto = grupoList;
 
                 oRetorno.SetSucesso();
 
@@ -141,7 +152,11 @@ namespace DocumentinAPI.Repository
 
                 await _context.SaveChangesAsync();
 
-                oRetorno.Objeto = grupoDB.Adapt<GroupResponseDTO>();
+                var grupo = grupoDB.Adapt<GroupResponseDTO>();
+
+                grupo.CompanyId = grupoDB.User.CompanyId;
+
+                oRetorno.Objeto = grupo;
                 oRetorno.SetSucesso();
 
             }
@@ -182,7 +197,11 @@ namespace DocumentinAPI.Repository
 
                 await _context.SaveChangesAsync();
 
-                oRetorno.Objeto = grupoDB.Adapt<GroupResponseDTO>();
+                var grupo = grupoDB.Adapt<GroupResponseDTO>();
+
+                grupo.CompanyId = grupoDB.User.CompanyId;
+
+                oRetorno.Objeto = grupo;
                 oRetorno.SetSucesso();
             }
             catch (Exception ex)
