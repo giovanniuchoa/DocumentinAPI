@@ -145,6 +145,10 @@ namespace DocumentinAPI.Repository
                 empresaDB.Name = company.Name;
                 empresaDB.Phone = company.Phone;
                 empresaDB.Adress = company.Adress;
+                empresaDB.TaxId = company.TaxId;
+                empresaDB.Phone = company.Phone;
+                empresaDB.Email = company.Email;
+                empresaDB.ZipCode = company.ZipCode;
                 empresaDB.UpdatedAt = DateTime.Now;
 
                 await _context.SaveChangesAsync();
