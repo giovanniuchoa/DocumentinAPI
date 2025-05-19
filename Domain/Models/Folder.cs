@@ -13,7 +13,7 @@ namespace DocumentinAPI.Domain.Models
         [Column(TypeName = "varchar(20)")]
         public string Name { get; set; }
 
-        public int ParentFolderId { get; set; }
+        public int? ParentFolderId { get; set; }
 
         [Required]
         public int UserId { get; set; }

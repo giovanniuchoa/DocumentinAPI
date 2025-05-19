@@ -35,6 +35,7 @@ builder.Services.AddTransient<IAuthRepository, AuthRepository>();
 builder.Services.AddTransient<ICompanyRepository, CompanyRepository>();
 builder.Services.AddTransient<IGroupRepository, GroupRepository>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IDocumentRepository, DocumentRepository>();
 
 /* Service */
 builder.Services.AddTransient<IAuthService, AuthService>();
@@ -42,6 +43,7 @@ builder.Services.AddTransient<ICompanyService, CompanyService>();
 builder.Services.AddTransient<IGroupService, GroupService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IEmailService, EmailService>();
+builder.Services.AddTransient<IDocumentService, DocumentService>();
 
 #endregion
 
