@@ -17,9 +17,6 @@ namespace DocumentinAPI.Domain.Models
         [Column(TypeName = "varchar(max)")]
         public string Content { get; set; }
 
-        [Column(TypeName = "char(5)")]
-        public string Format { get; set; }
-
         [Required]
         public DateTime CreatedAt { get; set; }
 
