@@ -81,7 +81,28 @@ namespace DocumentinAPI.Repository
             try
             {
 
+                var taskDB = await _context.Tasks
+                    .Where(t => t.TaskId == dto.TaskId)
+                    .FirstOrDefaultAsync();
 
+                if (taskDB != null)
+                {
+                    throw new Exception("taskAlreadyExists");
+                }
+
+                taskDB = dto.Adapt<Domain.Models.Task>();
+
+                taskDB.UserId = ssn.UserId;
+                taskDB.CreatedAt = DateTime.Now;
+                taskDB.UpdatedAt = DateTime.Now;
+                taskDB.IsActive = true;
+
+                await _context.Tasks.AddAsync(taskDB);
+
+                await _context.SaveChangesAsync();
+
+                oRetorno.Objeto = taskDB.Adapt<TaskResponseDTO>();
+                oRetorno.SetSucesso();
 
             }
             catch (Exception ex)
@@ -102,7 +123,31 @@ namespace DocumentinAPI.Repository
             try
             {
 
+                var taskDB = await _context.Tasks
+                    .Include(t => t.User)
+                    .Where(t => t.TaskId == dto.TaskId
+                        && t.User.CompanyId == ssn.CompanyId
+                        && t.IsActive == true)
+                    .FirstOrDefaultAsync();
 
+                if (taskDB == null)
+                {
+                    throw new Exception("taskNotFound");
+                }
+
+                taskDB.Title = dto.Title;
+                taskDB.Description = dto.Description;
+                taskDB.DueDate = dto.DueDate;
+                taskDB.Priority = dto.Priority;
+                taskDB.Status = dto.Status;
+                taskDB.AssigneeId = dto.AssigneeId;
+                taskDB.ParentTaskId = dto.ParentTaskId;
+                taskDB.UpdatedAt = DateTime.Now;
+
+                await _context.SaveChangesAsync();
+
+                oRetorno.Objeto = taskDB.Adapt<TaskResponseDTO>();
+                oRetorno.SetSucesso();
 
             }
             catch (Exception ex)
@@ -123,7 +168,21 @@ namespace DocumentinAPI.Repository
             try
             {
 
+                var taskDB = await _context.Tasks
+                    .Include(t => t.User)
+                    .Where(t => t.TaskId == taskId
+                        && t.User.CompanyId == ssn.CompanyId)
+                    .FirstOrDefaultAsync();
 
+                if (taskDB == null)
+                {
+                    throw new Exception("taskNotFound");
+                }
+                
+                taskDB.IsActive = !taskDB.IsActive;
+                taskDB.UpdatedAt = DateTime.Now;
+
+                await _context.SaveChangesAsync();
 
             }
             catch (Exception ex)
