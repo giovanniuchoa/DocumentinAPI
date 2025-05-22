@@ -51,30 +51,67 @@ namespace DocumentinAPI.Controllers
         [HttpPost("AddDocument")]
         public async Task<IActionResult> AddDocumentAsync([FromBody] DocumentRequestDTO document)
         {
-            var ret = await _service.AddDocumentAsync(document, ssn);
-            if (ret.Erro == true)
+
+            if (("1,2").Contains(ssn.Profile.ToString()))
             {
-                return BadRequest(ret);
+
+                var ret = await _service.AddDocumentAsync(document, ssn);
+
+                if (ret.Erro)
+                {
+
+                    if (ret.Mensagem == "noPermission")
+                    {
+                        return Forbid(ret.Mensagem);
+                    }
+                    else
+                    {
+                        return BadRequest(ret);
+                    }
+
+                }
+                else
+                {
+                    return Ok(ret);
+                }
             }
             else
             {
-                return Ok(ret);
+                return Forbid("noPermission");
             }
+
         }
 
         [HttpPut("UpdateDocument")]
         public async Task<IActionResult> UpdateDocumentAsync([FromBody] DocumentRequestDTO document)
         {
 
-            var ret = await _service.UpdateDocumentAsync(document, ssn);
-
-            if (ret.Erro == true)
+            if (("1,2").Contains(ssn.Profile.ToString()))
             {
-                return BadRequest(ret);
+
+                var ret = await _service.UpdateDocumentAsync(document, ssn);
+
+                if (ret.Erro)
+                {
+
+                    if (ret.Mensagem == "noPermission")
+                    {
+                        return Forbid(ret.Mensagem);
+                    }
+                    else
+                    {
+                        return BadRequest(ret);
+                    }
+
+                }
+                else
+                {
+                    return Ok(ret);
+                }
             }
             else
             {
-                return Ok(ret);
+                return Forbid("noPermission");
             }
 
         }
@@ -83,15 +120,32 @@ namespace DocumentinAPI.Controllers
         public async Task<IActionResult> ToogleStatusDocumentAsync(int documentId)
         {
 
-            var ret = await _service.ToogleStatusDocumentAsync(documentId, ssn);
-
-            if (ret.Erro == true)
+            if (("1,2").Contains(ssn.Profile.ToString()))
             {
-                return BadRequest(ret);
+
+                var ret = await _service.ToogleStatusDocumentAsync(documentId, ssn);
+
+                if (ret.Erro)
+                {
+
+                    if (ret.Mensagem == "noPermission")
+                    {
+                        return Forbid(ret.Mensagem);
+                    }
+                    else
+                    {
+                        return BadRequest(ret);
+                    }
+
+                }
+                else
+                {
+                    return Ok(ret);
+                }
             }
             else
             {
-                return Ok(ret);
+                return Forbid("noPermission");
             }
 
         }
