@@ -84,11 +84,6 @@ namespace DocumentinAPI.Repository
             try
             {
 
-                if (!("1,2").Contains(ssn.Profile.ToString()))
-                {
-                    throw new Exception("noPermission");
-                }
-
                 var documentoDB = await _context.Documents
                     .Where(d => d.DocumentId == document.DocumentId)
                     .FirstOrDefaultAsync();
@@ -141,11 +136,6 @@ namespace DocumentinAPI.Repository
             try
             {
 
-                if (!("1,2").Contains(ssn.Profile.ToString()))
-                {
-                    throw new Exception("noPermission");
-                }
-
                 var documentoDB = await _context.Documents
                     .Include(d => d.User)
                     .Where(d => d.DocumentId == document.DocumentId
@@ -197,11 +187,6 @@ namespace DocumentinAPI.Repository
 
             try
             {
-
-                if (!("1,2").Contains(ssn.Profile.ToString()))
-                {
-                    throw new Exception("noPermission");
-                }
 
                 var documentoDB = await _context.Documents
                     .Include(d => d.User)

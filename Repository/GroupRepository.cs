@@ -94,11 +94,6 @@ namespace DocumentinAPI.Repository
             try
             {
 
-                if (!("1,2").Contains(ssn.Profile.ToString()))
-                {
-                    throw new Exception("noPermission");
-                }
-
                 var grupoDB = group.Adapt<Group>();
 
                 grupoDB.UserId = ssn.UserId;
@@ -130,11 +125,6 @@ namespace DocumentinAPI.Repository
 
             try
             {
-
-                if (!("1,2").Contains(ssn.Profile.ToString()))
-                {
-                    throw new Exception("noPermission");
-                }
 
                 var grupoDB = await _context.Groups
                     .Include(g => g.User)
@@ -177,10 +167,6 @@ namespace DocumentinAPI.Repository
 
             try
             {
-                if (!("1,2").Contains(ssn.Profile.ToString()))
-                {
-                    throw new Exception("noPermission");
-                }
 
                 var grupoDB = await _context.Groups
                     .Include(g => g.User)

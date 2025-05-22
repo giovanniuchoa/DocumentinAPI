@@ -95,11 +95,6 @@ namespace DocumentinAPI.Repository
             try
             {
 
-                if (!("1,2").Contains(ssn.Profile.ToString()) || (ssn.Profile == 2 && dto.Profile == 1))
-                {
-                    throw new Exception("noPermission");
-                }
-
                 var userDB = await _context.Users
                     .Where(u => u.Email == dto.Email
                         && u.IsActive == true)
@@ -155,7 +150,7 @@ namespace DocumentinAPI.Repository
                     throw new Exception("notFound");
                 }
 
-                if ((!("1,2").Contains(ssn.Profile.ToString()) || (ssn.Profile == 2 && userDB.Profile == 1)) && userDB.UserId != ssn.UserId)
+                if (ssn.Profile == 2 && userDB.Profile == 1)
                 {
                     throw new Exception("noPermission");
                 }
@@ -191,11 +186,6 @@ namespace DocumentinAPI.Repository
 
             try
             {
-
-                if (!("1,2").Contains(ssn.Profile.ToString()))
-                {
-                    throw new Exception("noPermission");
-                }
 
                 var userDB = await _context.Users
                     .Where(u => u.UserId == userId
@@ -270,11 +260,6 @@ namespace DocumentinAPI.Repository
             try
             {
 
-                if (!("1,2").Contains(ssn.Profile.ToString()))
-                {
-                    throw new Exception("noPermission");
-                }
-
                 var userDB = await _context.Users
                     .Where(u => u.UserId == model.UserId
                         && u.CompanyId == ssn.CompanyId
@@ -341,11 +326,6 @@ namespace DocumentinAPI.Repository
 
             try
             {
-
-                if (!("1,2").Contains(ssn.Profile.ToString()))
-                {
-                    throw new Exception("noPermission");
-                }
 
                 var userDB = await _context.Users
                     .Where(u => u.UserId == model.UserId

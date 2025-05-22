@@ -52,15 +52,33 @@ namespace DocumentinAPI.Controllers
         [HttpPost("AddGroup")]
         public async Task<IActionResult> AddGroupAsync([FromBody] GroupRequestDTO group)
         {
-            var ret = await _service.AddGroupAsync(group, ssn);
-
-            if (ret.Erro == true)
+            
+            if (("1,2").Contains(ssn.Profile.ToString()))
             {
-                return BadRequest(ret);
+
+                var ret = await _service.AddGroupAsync(group, ssn);
+
+                if (ret.Erro)
+                {
+
+                    if (ret.Mensagem == "noPermission")
+                    {
+                        return Forbid(ret.Mensagem);
+                    }
+                    else
+                    {
+                        return BadRequest(ret);
+                    }
+
+                }
+                else
+                {
+                    return Ok(ret);
+                }
             }
             else
             {
-                return Ok(ret);
+                return Forbid("noPermission");
             }
 
         }
@@ -68,31 +86,69 @@ namespace DocumentinAPI.Controllers
         [HttpPut("UpdateGroup")]
         public async Task<IActionResult> UpdateGroupAsync([FromBody] GroupRequestDTO group)
         {
-            var ret = await _service.UpdateGroupAsync(group, ssn);
-
-            if (ret.Erro == true)
+            
+            if (("1,2").Contains(ssn.Profile.ToString()))
             {
-                return BadRequest(ret);
+
+                var ret = await _service.UpdateGroupAsync(group, ssn);
+
+                if (ret.Erro)
+                {
+
+                    if (ret.Mensagem == "noPermission")
+                    {
+                        return Forbid(ret.Mensagem);
+                    }
+                    else
+                    {
+                        return BadRequest(ret);
+                    }
+
+                }
+                else
+                {
+                    return Ok(ret);
+                }
             }
             else
             {
-                return Ok(ret);
+                return Forbid("noPermission");
             }
+
         }
 
         [HttpPut("ToggleStatusGroup/{groupId}")]
         public async Task<IActionResult> ToggleStatusGroupAsync(int groupId)
         {
-            var ret = await _service.ToggleStatusGroupAsync(groupId, ssn);
-
-            if (ret.Erro == true)
+            
+            if (("1,2").Contains(ssn.Profile.ToString()))
             {
-                return BadRequest(ret);
+
+                var ret = await _service.ToggleStatusGroupAsync(groupId, ssn);
+
+                if (ret.Erro)
+                {
+
+                    if (ret.Mensagem == "noPermission")
+                    {
+                        return Forbid(ret.Mensagem);
+                    }
+                    else
+                    {
+                        return BadRequest(ret);
+                    }
+
+                }
+                else
+                {
+                    return Ok(ret);
+                }
             }
             else
             {
-                return Ok(ret);
+                return Forbid("noPermission");
             }
+
         }
 
         [HttpGet("GetListUserByGroup/{groupId}")]
