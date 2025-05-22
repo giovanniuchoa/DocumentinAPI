@@ -21,6 +21,7 @@ namespace DocumentinAPI.Controllers
         [HttpGet("GetCompaniesById/{companyId}")]
         public async Task<IActionResult> GetCompaniesByIdAsync(int companyId)
         {
+
             var ret = await _service.GetCompanyByIdAsync(companyId, ssn);
 
             if (ret.Erro == true)
@@ -35,17 +36,36 @@ namespace DocumentinAPI.Controllers
         }
 
         [HttpGet("GetListCompanies")]
-        public async Task<IActionResult> GetCompaniesAsync()
+        public async Task<IActionResult> GetListCompaniesAsync()
         {
-            var ret = await _service.GetListCompanyAsync(ssn);
-
-            if (ret.Erro == true)
+            
+            if (ssn.Profile == 1)
             {
-                return BadRequest(ret);
+
+                var ret = await _service.GetListCompanyAsync(ssn);
+
+                if (ret.Erro)
+                {
+
+                    if (ret.Mensagem == "noPermission")
+                    {
+                        return Forbid(ret.Mensagem);
+                    }
+                    else
+                    {
+                        return BadRequest(ret);
+                    }
+
+                }
+                else
+                {
+                    return Ok(ret);
+                }
+
             }
             else
             {
-                return Ok(ret);
+                return Forbid("noPermission");
             }
 
         }
@@ -54,15 +74,33 @@ namespace DocumentinAPI.Controllers
         public async Task<IActionResult> AddCompanyAsync([FromBody] CompanyRequestDTO company)
         {
 
-            var ret = await _service.AddCompanyAsync(company, ssn);
-
-            if (ret.Erro == true)
+            if (ssn.Profile == 1)
             {
-                return BadRequest(ret);
+
+                var ret = await _service.AddCompanyAsync(company, ssn);
+
+                if (ret.Erro)
+                {
+
+                    if (ret.Mensagem == "noPermission")
+                    {
+                        return Forbid(ret.Mensagem);
+                    }
+                    else
+                    {
+                        return BadRequest(ret);
+                    }
+
+                }
+                else
+                {
+                    return Ok(ret);
+                }
+
             }
             else
             {
-                return Ok(ret);
+                return Forbid("noPermission");
             }
 
         }        
@@ -71,15 +109,33 @@ namespace DocumentinAPI.Controllers
         public async Task<IActionResult> UpdateCompanyAsync([FromBody] CompanyRequestDTO company)
         {
 
-            var ret = await _service.UpdateCompanyAsync(company, ssn);
-
-            if (ret.Erro == true)
+            if (("1,2").Contains(ssn.Profile.ToString()))
             {
-                return BadRequest(ret);
+
+                var ret = await _service.UpdateCompanyAsync(company, ssn);
+
+                if (ret.Erro)
+                {
+
+                    if (ret.Mensagem == "noPermission")
+                    {
+                        return Forbid(ret.Mensagem);
+                    }
+                    else
+                    {
+                        return BadRequest(ret);
+                    }
+
+                }
+                else
+                {
+                    return Ok(ret);
+                }
+
             }
             else
             {
-                return Ok(ret);
+                return Forbid("noPermission");
             }
 
         }
@@ -87,16 +143,36 @@ namespace DocumentinAPI.Controllers
         [HttpPut("ToggleStatusCompany/{companyId}")]
         public async Task<IActionResult> ToggleStatusCompanyAsync(int companyId)
         {
-            var ret = await _service.ToggleStatusCompanyAsync(companyId, ssn);
-
-            if (ret.Erro == true)
+            
+            if (ssn.Profile == 1)
             {
-                return BadRequest(ret);
+
+                var ret = await _service.ToggleStatusCompanyAsync(companyId, ssn);
+
+                if (ret.Erro)
+                {
+
+                    if (ret.Mensagem == "noPermission")
+                    {
+                        return Forbid(ret.Mensagem);
+                    }
+                    else
+                    {
+                        return BadRequest(ret);
+                    }
+
+                }
+                else
+                {
+                    return Ok(ret);
+                }
+
             }
             else
             {
-                return Ok(ret);
+                return Forbid("noPermission");
             }
+
         }
 
     }

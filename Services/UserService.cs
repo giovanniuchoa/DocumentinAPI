@@ -70,6 +70,11 @@ namespace DocumentinAPI.Services
             try
             {
 
+                if (ssn.Profile == 2 && dto.Profile == 1)
+                {
+                    throw new Exception("noPermission"); 
+                }
+
                 var ret = await _repository.AddUserAsync(dto, ssn); 
 
                 oRetorno= ret;
@@ -91,6 +96,11 @@ namespace DocumentinAPI.Services
 
             try
             {
+
+                if (ssn.Profile == 2 && dto.Profile == 1)
+                {
+                    throw new Exception("noPermission");
+                }
 
                 var ret = await _repository.UpdateUserAsync(dto, ssn);
 

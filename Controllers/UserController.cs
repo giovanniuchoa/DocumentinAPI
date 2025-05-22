@@ -60,15 +60,33 @@ namespace DocumentinAPI.Controllers
         public async Task<IActionResult> AddUserAsync([FromBody] UserRequestDTO dto)
         {
 
-            var retorno = await _service.AddUserAsync(dto, ssn);
-
-            if (retorno.Erro)
+            if (("1,2").Contains(ssn.Profile.ToString()))
             {
-                return BadRequest(retorno);
+
+                var retorno = await _service.AddUserAsync(dto, ssn);
+
+                if (retorno.Erro)
+                {
+
+                    if (retorno.Mensagem == "noPermission")
+                    {
+                        return Forbid(retorno.Mensagem);
+                    }
+                    else
+                    {
+                        return BadRequest(retorno);
+                    }
+                       
+                }
+                else
+                {
+                    return Ok(retorno);
+                }   
+            
             }
             else
             {
-                return Ok(retorno);
+                return Forbid("noPermission");
             }
 
         }
@@ -77,15 +95,32 @@ namespace DocumentinAPI.Controllers
         public async Task<IActionResult> UpdateUserAsync([FromBody] UserRequestDTO dto)
         {
 
-            var retorno = await _service.UpdateUserAsync(dto, ssn);
-
-            if (retorno.Erro)
+            if (("1,2").Contains(ssn.Profile.ToString()))
             {
-                return BadRequest(retorno);
+
+                var retorno = await _service.UpdateUserAsync(dto, ssn);
+
+                if (retorno.Erro)
+                {
+
+                    if (retorno.Mensagem == "noPermission")
+                    {
+                        return Forbid(retorno.Mensagem);
+                    }
+                    else
+                    {
+                        return BadRequest(retorno);
+                    }
+
+                }
+                else
+                {
+                    return Ok(retorno);
+                }
             }
             else
             {
-                return Ok(retorno);
+                return Forbid("noPermission");
             }
 
         }
@@ -94,15 +129,32 @@ namespace DocumentinAPI.Controllers
         public async Task<IActionResult> ToggleStatusUserAsync(int userId)
         {
 
-            var retorno = await _service.ToggleStatusUserAsync(userId, ssn);
-
-            if (retorno.Erro)
+            if (("1,2").Contains(ssn.Profile.ToString()))
             {
-                return BadRequest(retorno);
+
+                var retorno = await _service.ToggleStatusUserAsync(userId, ssn);
+
+                if (retorno.Erro)
+                {
+
+                    if (retorno.Mensagem == "noPermission")
+                    {
+                        return Forbid(retorno.Mensagem);
+                    }
+                    else
+                    {
+                        return BadRequest(retorno);
+                    }
+
+                }
+                else
+                {
+                    return Ok(retorno);
+                }
             }
             else
             {
-                return Ok(retorno);
+                return Forbid("noPermission");
             }
 
         }
@@ -128,15 +180,32 @@ namespace DocumentinAPI.Controllers
         public async Task<IActionResult> AddUserXGroupAsync([FromBody] UserXGroupRequestDTO model)
         {
 
-            var retorno = await _service.AddUserXGroupAsync(model, ssn);
-
-            if (retorno.Erro)
+            if (("1,2").Contains(ssn.Profile.ToString()))
             {
-                return BadRequest(retorno);
+
+                var retorno = await _service.AddUserXGroupAsync(model, ssn);
+
+                if (retorno.Erro)
+                {
+
+                    if (retorno.Mensagem == "noPermission")
+                    {
+                        return Forbid(retorno.Mensagem);
+                    }
+                    else
+                    {
+                        return BadRequest(retorno);
+                    }
+
+                }
+                else
+                {
+                    return Ok(retorno);
+                }
             }
             else
             {
-                return Ok(retorno);
+                return Forbid("noPermission");
             }
 
         }
@@ -145,15 +214,32 @@ namespace DocumentinAPI.Controllers
         public async Task<IActionResult> DeleteUserXGroupAsync([FromBody] UserXGroupRequestDTO model)
         {
 
-            var retorno = await _service.DeleteUserXGroupAsync(model, ssn);
-
-            if (retorno.Erro)
+            if (("1,2").Contains(ssn.Profile.ToString()))
             {
-                return BadRequest(retorno);
+
+                var retorno = await _service.DeleteUserXGroupAsync(model, ssn);
+
+                if (retorno.Erro)
+                {
+
+                    if (retorno.Mensagem == "noPermission")
+                    {
+                        return Forbid(retorno.Mensagem);
+                    }
+                    else
+                    {
+                        return BadRequest(retorno);
+                    }
+
+                }
+                else
+                {
+                    return Ok(retorno);
+                }
             }
             else
             {
-                return Ok(retorno);
+                return Forbid("noPermission");
             }
 
         }
