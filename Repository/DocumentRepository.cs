@@ -115,6 +115,29 @@ namespace DocumentinAPI.Repository
                 await _context.Documents.AddAsync(documentoDB);
                 await _context.SaveChangesAsync();
 
+                try
+                {
+
+                    /* Grava na DocumentVersion */
+
+                    var documentVersionDB = new DocumentVersion
+                    {
+                        DocumentId = documentoDB.DocumentId,
+                        Content = documentoDB.Content,
+                        CreatedAt = DateTime.Now,
+                        UserId = ssn.UserId
+                    };
+
+                    await _context.DocumentVersions.AddAsync(documentVersionDB);
+
+                    await _context.SaveChangesAsync();
+
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+
                 oRetorno.Objeto = documentoDB.Adapt<DocumentResponseDTO>();
                 oRetorno.SetSucesso();
 
@@ -166,6 +189,32 @@ namespace DocumentinAPI.Repository
                 documentoDB.FolderId = document.FolderId;
 
                 await _context.SaveChangesAsync();
+
+                try
+                {
+
+                    /* Grava na DocumentVersion */
+
+                    var documentVersionDB = new DocumentVersion
+                    {
+                        DocumentId = documentoDB.DocumentId,
+                        Content = documentoDB.Content,
+                        CreatedAt = DateTime.Now,
+                        UserId = ssn.UserId
+                    };
+
+                    documentVersionDB.CreatedAt = DateTime.Now;
+                    documentVersionDB.UserId = ssn.UserId;
+
+                    await _context.DocumentVersions.AddAsync(documentVersionDB);
+
+                    await _context.SaveChangesAsync();
+
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
 
                 oRetorno.Objeto = documentoDB.Adapt<DocumentResponseDTO>();
                 oRetorno.SetSucesso();
