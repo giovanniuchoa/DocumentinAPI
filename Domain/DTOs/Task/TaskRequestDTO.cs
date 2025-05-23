@@ -20,7 +20,7 @@ namespace DocumentinAPI.Domain.DTOs.Task
 
         public int AssigneeId { get; set; } /* Assinalado para */
 
-        public int ParentTaskId { get; set; }
+        public int? ParentTaskId { get; set; }
 
     }
 }
