@@ -184,6 +184,9 @@ namespace DocumentinAPI.Repository
 
                 await _context.SaveChangesAsync();
 
+                oRetorno.Objeto = taskDB.Adapt<TaskResponseDTO>();
+                oRetorno.SetSucesso();
+
             }
             catch (Exception ex)
             {

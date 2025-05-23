@@ -36,7 +36,7 @@ namespace DocumentinAPI.Domain.Models
         [Required]
         public int UserId { get; set; } /* Criado por */
 
-        public int ParentTaskId { get; set; }
+        public int? ParentTaskId { get; set; }
 
         [Required]
         public bool IsActive { get; set; }
