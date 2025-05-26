@@ -80,5 +80,25 @@ namespace DocumentinAPI.Services
 
         }
 
+        public async Task<Retorno<DocumentVersionResponseDTO>> AddCommentDocumentVersionAsync(DocumentVersionAddCommentRequestDTO dto, UserSession ssn)
+        {
+
+            Retorno<DocumentVersionResponseDTO> oRetorno = new();
+
+            try
+            {
+
+                var ret = await _repository.AddCommentDocumentVersionAsync(dto, ssn);
+                oRetorno = ret;
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
     }
 }

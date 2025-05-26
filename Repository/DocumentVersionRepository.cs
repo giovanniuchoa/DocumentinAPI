@@ -85,6 +85,7 @@ namespace DocumentinAPI.Repository
                 var documentVersionDB = dto.Adapt<DocumentVersion>();
 
                 documentVersionDB.CreatedAt = DateTime.Now;
+                documentVersionDB.UpdatedAt = DateTime.Now;
                 documentVersionDB.UserId = ssn.UserId;
 
                 await _context.DocumentVersions.AddAsync(documentVersionDB);
@@ -104,5 +105,40 @@ namespace DocumentinAPI.Repository
 
         }
 
+        public async Task<Retorno<DocumentVersionResponseDTO>> AddCommentDocumentVersionAsync(DocumentVersionAddCommentRequestDTO dto, UserSession ssn)
+        {
+
+            Retorno<DocumentVersionResponseDTO> oRetorno = new();
+
+            try
+            {
+
+                var documentVersionDB = await _context.DocumentVersions
+                    .Where(d => d.User.CompanyId == ssn.CompanyId
+                        && d.DocumentVersionId == dto.DocumentVersionId)
+                    .FirstOrDefaultAsync();
+
+                if (documentVersionDB == null)
+                {
+                    throw new Exception("documentVersionNotFound");
+                }
+
+                documentVersionDB.Comment = dto.Comment;
+                documentVersionDB.UpdatedAt = DateTime.Now;
+
+                await _context.SaveChangesAsync();
+
+                oRetorno.Objeto = documentVersionDB.Adapt<DocumentVersionResponseDTO>();
+                oRetorno.SetSucesso();
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
     }
 }
