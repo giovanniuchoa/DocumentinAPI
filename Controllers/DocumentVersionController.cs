@@ -52,39 +52,67 @@ namespace DocumentinAPI.Controllers
 
         }
 
-        [HttpPost("AddDocumentVersion")]
-        public async Task<IActionResult> AddDocumentVersion([FromBody] DocumentVersionRequestDTO dto)
+        [HttpPost("AddCommentDocumentVersion")]
+        public async Task<IActionResult> AddCommentDocumentVersionAsync([FromBody] DocumentVersionAddCommentRequestDTO dto)
         {
 
-            if (("1,2").Contains(ssn.Profile.ToString()))
+            var ret = await _service.AddCommentDocumentVersionAsync(dto, ssn);
+
+            if (ret.Erro)
             {
 
-                var ret = await _service.AddDocumentVersionAsync(dto, ssn);
-
-                if (ret.Erro)
+                if (ret.Mensagem == "noPermission")
                 {
 
-                    if (ret.Mensagem == "noPermission")
-                    {
-                        return Forbid(ret.Mensagem);
-                    }
-                    else
-                    {
-                        return BadRequest(ret);
-                    }
+                    return Forbid(ret.Mensagem);
 
                 }
                 else
                 {
-                    return Ok(ret);
+                    return BadRequest(ret);
                 }
+
             }
             else
             {
-                return Forbid("noPermission");
+                return Ok(ret);
             }
 
         }
 
+            //[HttpPost("AddDocumentVersion")]
+            //public async Task<IActionResult> AddDocumentVersion([FromBody] DocumentVersionRequestDTO dto)
+            //{
+
+            //    if (("1,2").Contains(ssn.Profile.ToString()))
+            //    {
+
+            //        var ret = await _service.AddDocumentVersionAsync(dto, ssn);
+
+            //        if (ret.Erro)
+            //        {
+
+            //            if (ret.Mensagem == "noPermission")
+            //            {
+            //                return Forbid(ret.Mensagem);
+            //            }
+            //            else
+            //            {
+            //                return BadRequest(ret);
+            //            }
+
+            //        }
+            //        else
+            //        {
+            //            return Ok(ret);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        return Forbid("noPermission");
+            //    }
+
+            //}
+
+        }
     }
-}
