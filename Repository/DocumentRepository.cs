@@ -125,6 +125,7 @@ namespace DocumentinAPI.Repository
                         DocumentId = documentoDB.DocumentId,
                         Content = documentoDB.Content,
                         CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now,
                         UserId = ssn.UserId
                     };
 
@@ -200,11 +201,9 @@ namespace DocumentinAPI.Repository
                         DocumentId = documentoDB.DocumentId,
                         Content = documentoDB.Content,
                         CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now,
                         UserId = ssn.UserId
                     };
-
-                    documentVersionDB.CreatedAt = DateTime.Now;
-                    documentVersionDB.UserId = ssn.UserId;
 
                     await _context.DocumentVersions.AddAsync(documentVersionDB);
 

@@ -20,6 +20,9 @@ namespace DocumentinAPI.Domain.Models
         public DateTime CreatedAt { get; set; }
 
         [Required]
+        public DateTime UpdatedAt { get; set; }
+
+        [Required]
         public int UserId { get; set; }
 
         [Column(TypeName = "varchar(255)")]
