@@ -22,6 +22,13 @@ namespace DocumentinAPI.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// Obtém um Usuário pelo identificador.
+        /// </summary>
+        /// <response code="200">Retorna o usuário correspondente ao identificador.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetUserById/{userId}")]
         public async Task<IActionResult> GetUserByIdAsync(int userId)
         {
@@ -39,6 +46,13 @@ namespace DocumentinAPI.Controllers
 
         }
 
+        /// <summary>
+        /// Obtém uma lista de Usuários.
+        /// </summary>
+        /// <response code="200">Retorna uma lista de usuário.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetListUser")]
         public async Task<IActionResult> GetListUserAsync()
         {
@@ -56,6 +70,13 @@ namespace DocumentinAPI.Controllers
 
         }
 
+        /// <summary>
+        /// Cadastra um Usuário.
+        /// </summary>
+        /// <response code="200">Retorna o DTO de resposta do usuário cadastrado.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
         [HttpPost("AddUser")]
         public async Task<IActionResult> AddUserAsync([FromBody] UserRequestDTO dto)
         {
@@ -91,6 +112,13 @@ namespace DocumentinAPI.Controllers
 
         }
 
+        /// <summary>
+        /// Atualiza um Usuário.
+        /// </summary>
+        /// <response code="200">Retorna o DTO de resposta do usuário atualizado.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
         [HttpPut("UpdateUser")]
         public async Task<IActionResult> UpdateUserAsync([FromBody] UserRequestDTO dto)
         {
@@ -125,6 +153,13 @@ namespace DocumentinAPI.Controllers
 
         }
 
+        /// <summary>
+        /// Alterna o status (ativo/inativo) de um Usuário.
+        /// </summary>
+        /// <response code="200">Retorna o DTO de resposta do usuário atualizado.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
         [HttpPut("ToggleStatusUser/{userId}")]
         public async Task<IActionResult> ToggleStatusUserAsync(int userId)
         {
@@ -159,6 +194,13 @@ namespace DocumentinAPI.Controllers
 
         }
 
+        /// <summary>
+        /// Obtém uma lista de grupos vinculados ao usuário correspondente ao identificador.
+        /// </summary>
+        /// <response code="200">Retorna uma lista de grupos vinculados ao usuário correspondente ao identificador.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetListGroupByUser/{userId}")]
         public async Task<IActionResult> GetListUserXGroupByUserAsync(int userId)
         {
@@ -176,6 +218,13 @@ namespace DocumentinAPI.Controllers
 
         }
 
+        /// <summary>
+        /// Vincula um Usuário à um Grupo.
+        /// </summary>
+        /// <response code="200">Retorna uma lista de grupos vinculados ao usuário.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
         [HttpPost("AddUserXGroup")]
         public async Task<IActionResult> AddUserXGroupAsync([FromBody] UserXGroupRequestDTO model)
         {
@@ -210,6 +259,13 @@ namespace DocumentinAPI.Controllers
 
         }
 
+        /// <summary>
+        /// Desvincula um Usuário de um Grupo.
+        /// </summary>
+        /// <response code="200">Retorna uma lista de grupos vinculados ao usuário.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
         [HttpDelete("DeleteUserXGroup")]
         public async Task<IActionResult> DeleteUserXGroupAsync([FromBody] UserXGroupRequestDTO model)
         {
@@ -244,6 +300,12 @@ namespace DocumentinAPI.Controllers
 
         }
 
+        /// <summary>
+        /// Envia token de recuperação de senha ao e-mail correspondente.
+        /// </summary>
+        /// <response code="200">Retorna DTO de recuperação de senha cadastrada.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
         [HttpPost("RequestPasswordRecovery")]
         [AllowAnonymous]
         public async Task<IActionResult> RequestPasswordRecoveryAsyncAsync([FromBody] PasswordRecoveryRequestDTO model)
@@ -262,6 +324,12 @@ namespace DocumentinAPI.Controllers
 
         }
 
+        /// <summary>
+        /// Valida token enviado por e-mail.
+        /// </summary>
+        /// <response code="200">Retorna DTO com o token.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
         [HttpPost("ValidateTokenPasswordRecovery")]
         [AllowAnonymous]
         public async Task<IActionResult> ValidateTokenPasswordRecoveryAsync([FromBody] ValidatePasswordRecoveryRequestDTO model)
@@ -280,6 +348,12 @@ namespace DocumentinAPI.Controllers
 
         }
 
+        /// <summary>
+        /// Atualiza a senha do usuário (caso validação do token tenha sucesso).
+        /// </summary>
+        /// <response code="200">Retorna DTO com o usuário atualizado.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
         [HttpPut("UpdatePasswordRecovery")]
         [AllowAnonymous]
         public async Task<IActionResult> UpdatePasswordRecoveryAsync([FromBody] UpdatePasswordRecoveryRequestDTO model)

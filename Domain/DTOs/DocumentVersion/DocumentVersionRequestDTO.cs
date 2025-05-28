@@ -1,4 +1,6 @@
-﻿namespace DocumentinAPI.Domain.DTOs.DocumentVersion
+﻿using Swashbuckle.AspNetCore.Annotations;
+
+namespace DocumentinAPI.Domain.DTOs.DocumentVersion
 {
     public class DocumentVersionRequestDTO
     {
