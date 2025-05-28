@@ -26,6 +26,11 @@ builder.Services.AddSwaggerGen(c =>
         Title = "Documentin - API",
         Version = "v1",
         Description = "API para gerenciamento empresarial de documentos e tarefas.",
+        Contact = new OpenApiContact
+        {
+            Name = "Giovanni Uchoa",
+            Email = "noreply.documentin@gmail.com"
+        }
     });
 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
