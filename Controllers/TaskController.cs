@@ -18,6 +18,13 @@ namespace DocumentinAPI.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// Obtém uma tarefa pelo identificador.
+        /// </summary>
+        /// <response code="200">Retorna a tarefa correspondente ao identificador.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetTaskById/{taskId}")]
         public async Task<IActionResult> GetTaskByIdAsync(int taskId)
         {
@@ -35,6 +42,13 @@ namespace DocumentinAPI.Controllers
 
         }
 
+        /// <summary>
+        /// Obtém uma lista de tarefas.
+        /// </summary>
+        /// <response code="200">Retorna uma lista de tarefas.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetListTask")]
         public async Task<IActionResult> GetListTaskAsync()
         {
@@ -52,6 +66,13 @@ namespace DocumentinAPI.Controllers
 
         }
 
+        /// <summary>
+        /// Cadastra uma tarefa.
+        /// </summary>
+        /// <response code="200">Retorna o DTO de resposta da tarefa cadastrada.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
         [HttpPost("AddTask")]
         public async Task<IActionResult> AddTaskAsync([FromBody] TaskRequestDTO dto)
         {
@@ -78,6 +99,13 @@ namespace DocumentinAPI.Controllers
 
         }
 
+        /// <summary>
+        /// Atualiza uma tarefa.
+        /// </summary>
+        /// <response code="200">Retorna o DTO de resposta da tarefa atualizada.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
         [HttpPut("UpdateTask")]
         public async Task<IActionResult> UpdateTaskAsync([FromBody] TaskRequestDTO dto)
         {
@@ -104,6 +132,13 @@ namespace DocumentinAPI.Controllers
 
         }
 
+        /// <summary>
+        /// Alterna o status (ativo/inativo) da tarefa.
+        /// </summary>
+        /// <response code="200">Retorna o DTO de resposta da tarefa atualizada.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
         [HttpPut("ToogleStatusTask/{taskId}")]
         public async Task<IActionResult> ToogleStatusTaskAsync(int taskId)
         {

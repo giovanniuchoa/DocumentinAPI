@@ -18,6 +18,13 @@ namespace DocumentinAPI.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// Obtém uma versão de documento pelo identificador.
+        /// </summary>
+        /// <response code="200">Retorna a versão do documento correspondente ao identificador do documento.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetDocumentVersionById/{documentVersionId}")]
         public async Task<IActionResult> GetDocumentVersionByIdAsync(int documentVersionId)
         {
@@ -35,6 +42,13 @@ namespace DocumentinAPI.Controllers
 
         }
 
+        /// <summary>
+        /// Obtém uma lista de versões do documento correspondente ao identificador.
+        /// </summary>
+        /// <response code="200">Retorna uma lista de versões do documento.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetListDocumentVersionByDocumentId/{documentId}")]
         public async Task<IActionResult> GetDocumentVersionsByDocumentIdAsync(int documentId)
         {
@@ -52,6 +66,13 @@ namespace DocumentinAPI.Controllers
 
         }
 
+        /// <summary>
+        /// Adiciona um comentario na versão do documento.
+        /// </summary>
+        /// <response code="200">Retorna o DTO de resposta da versão do documento atualizada.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
         [HttpPost("AddCommentDocumentVersion")]
         public async Task<IActionResult> AddCommentDocumentVersionAsync([FromBody] DocumentVersionAddCommentRequestDTO dto)
         {
@@ -79,40 +100,6 @@ namespace DocumentinAPI.Controllers
             }
 
         }
-
-            //[HttpPost("AddDocumentVersion")]
-            //public async Task<IActionResult> AddDocumentVersion([FromBody] DocumentVersionRequestDTO dto)
-            //{
-
-            //    if (("1,2").Contains(ssn.Profile.ToString()))
-            //    {
-
-            //        var ret = await _service.AddDocumentVersionAsync(dto, ssn);
-
-            //        if (ret.Erro)
-            //        {
-
-            //            if (ret.Mensagem == "noPermission")
-            //            {
-            //                return Forbid(ret.Mensagem);
-            //            }
-            //            else
-            //            {
-            //                return BadRequest(ret);
-            //            }
-
-            //        }
-            //        else
-            //        {
-            //            return Ok(ret);
-            //        }
-            //    }
-            //    else
-            //    {
-            //        return Forbid("noPermission");
-            //    }
-
-            //}
 
         }
     }
