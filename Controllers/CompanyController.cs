@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DocumentinAPI.Controllers
 {
+
     [Route("Company")]
     [Authorize]
     public class CompanyController : BaseController
@@ -18,6 +19,13 @@ namespace DocumentinAPI.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// Obtém uma empresa pelo identificador.
+        /// </summary>
+        /// <response code="200">Retorna a empresa correspondente ao identificador.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetCompaniesById/{companyId}")]
         public async Task<IActionResult> GetCompaniesByIdAsync(int companyId)
         {
@@ -35,6 +43,13 @@ namespace DocumentinAPI.Controllers
 
         }
 
+        /// <summary>
+        /// Obtém uma lista de empresas.
+        /// </summary>
+        /// <response code="200">Retorna uma lista de empresas.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetListCompanies")]
         public async Task<IActionResult> GetListCompaniesAsync()
         {
@@ -70,6 +85,13 @@ namespace DocumentinAPI.Controllers
 
         }
 
+        /// <summary>
+        /// Cadastra uma empresa.
+        /// </summary>
+        /// <response code="200">Retorna o DTO de resposta da empresa cadastrada.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
         [HttpPost("AddCompany")]
         public async Task<IActionResult> AddCompanyAsync([FromBody] CompanyRequestDTO company)
         {
@@ -103,8 +125,15 @@ namespace DocumentinAPI.Controllers
                 return Forbid("noPermission");
             }
 
-        }        
-        
+        }
+
+        /// <summary>
+        /// Atualiza uma empresa.
+        /// </summary>
+        /// <response code="200">Retorna o DTO de resposta da empresa atualizada.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
         [HttpPut("UpdateCompany")]
         public async Task<IActionResult> UpdateCompanyAsync([FromBody] CompanyRequestDTO company)
         {
@@ -140,6 +169,13 @@ namespace DocumentinAPI.Controllers
 
         }
 
+        /// <summary>
+        /// Alterna o status (ativo/inativo) da empresa.
+        /// </summary>
+        /// <response code="200">Retorna o DTO de resposta da empresa atualizada.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
         [HttpPut("ToggleStatusCompany/{companyId}")]
         public async Task<IActionResult> ToggleStatusCompanyAsync(int companyId)
         {
