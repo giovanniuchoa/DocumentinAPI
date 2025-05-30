@@ -1,9 +1,12 @@
 using DocumentinAPI.Authentication;
 using DocumentinAPI.Data;
+using DocumentinAPI.Domain.Validators;
 using DocumentinAPI.Interfaces.IRepository;
 using DocumentinAPI.Interfaces.IServices;
 using DocumentinAPI.Repository;
 using DocumentinAPI.Services;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -130,6 +133,14 @@ builder.Services.AddCors(options =>
                         .AllowAnyMethod()
                         .AllowAnyHeader());
 });
+
+#endregion
+
+#region Fluent Validation
+
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddFluentValidationClientsideAdapters();
+builder.Services.AddValidatorsFromAssembly(typeof(AuthRequestDTOValidator).Assembly);
 
 #endregion
 
