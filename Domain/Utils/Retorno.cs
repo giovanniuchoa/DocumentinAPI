@@ -20,7 +20,7 @@
         public void SetSucesso(string mensagem)
         {
             this.Erro = false;
-            this.Mensagem = string.IsNullOrEmpty(mensagem) ? "Ação realizada com sucesso!" : mensagem;
+            this.Mensagem = string.IsNullOrEmpty(mensagem) ? "success" : mensagem;
         }
 
         #endregion
@@ -35,7 +35,7 @@
         public void SetErro(string mensagem)
         {
             this.Erro = true;
-            this.Mensagem = string.IsNullOrEmpty(mensagem) ? "Ocorreu um erro inesperado!" : mensagem;
+            this.Mensagem = string.IsNullOrEmpty(mensagem) ? "error" : mensagem;
         }
 
         #endregion

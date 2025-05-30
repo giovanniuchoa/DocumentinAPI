@@ -1,5 +1,6 @@
 using DocumentinAPI.Authentication;
 using DocumentinAPI.Data;
+using DocumentinAPI.Domain.Filters;
 using DocumentinAPI.Domain.Validators;
 using DocumentinAPI.Interfaces.IRepository;
 using DocumentinAPI.Interfaces.IServices;
@@ -16,7 +17,10 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<ValidationFilter>();
+});
 
 builder.Services.AddEndpointsApiExplorer();
 
@@ -140,7 +144,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddFluentValidationClientsideAdapters();
-builder.Services.AddValidatorsFromAssembly(typeof(AuthRequestDTOValidator).Assembly);
+builder.Services.AddValidatorsFromAssembly(typeof(CompanyRequestDTOValidator).Assembly);
 
 #endregion
 
