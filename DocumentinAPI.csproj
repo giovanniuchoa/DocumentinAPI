@@ -25,7 +25,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Domain\Validators\Document\" />
     <Folder Include="Domain\Validators\DocumentVersion\" />
     <Folder Include="Domain\Validators\Group\" />
     <Folder Include="Domain\Validators\UserXGroup\" />
