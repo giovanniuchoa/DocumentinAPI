@@ -7,6 +7,7 @@ using DocumentinAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Supabase;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Text;
@@ -85,6 +86,7 @@ builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IDocumentRepository, DocumentRepository>();
 builder.Services.AddTransient<ITaskRepository, TaskRepository>();
 builder.Services.AddTransient<IDocumentVersionRepository, DocumentVersionRepository>();
+builder.Services.AddTransient<ISupabaseRepository, SupabaseRepository>();
 
 /* Service */
 builder.Services.AddTransient<IAuthService, AuthService>();
@@ -95,6 +97,7 @@ builder.Services.AddTransient<IEmailService, EmailService>();
 builder.Services.AddTransient<IDocumentService, DocumentService>();
 builder.Services.AddTransient<ITaskService, TaskService>();
 builder.Services.AddTransient<IDocumentVersionService, DocumentVersionService>();
+builder.Services.AddTransient<ISupabaseService, SupabaseService>();
 
 #endregion
 
@@ -130,6 +133,20 @@ builder.Services.AddCors(options =>
                         .AllowAnyMethod()
                         .AllowAnyHeader());
 });
+
+#endregion
+
+#region Supabase
+
+builder.Services.AddScoped<Supabase.Client>(_ =>
+new Supabase.Client(
+    builder.Configuration["Supabase:Url"],
+    builder.Configuration["Supabase:ApiKey"],
+    new SupabaseOptions
+    {
+        AutoRefreshToken = true,
+        AutoConnectRealtime = true,
+    }));
 
 #endregion
 
