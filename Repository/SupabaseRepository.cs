@@ -14,10 +14,10 @@ namespace DocumentinAPI.Repository
             _client = client;
         }
 
-        public async Task<Retorno<string>> UploadImageAsync(UploadImageRequestDTO dto)
+        public async Task<Retorno<UploadImageResponseDTO>> UploadImageAsync(UploadImageRequestDTO dto)
         {
 
-            Retorno<string> oRetorno = new();
+            Retorno<UploadImageResponseDTO> oRetorno = new();
 
             try
             {
@@ -26,15 +26,18 @@ namespace DocumentinAPI.Repository
                 await dto.Image.CopyToAsync(memoryStream);
                 var imageBytes = memoryStream.ToArray();
 
-                var bucket = _client.Storage.From("photos");
+                var bucket = _client.Storage.From("pictures");
 
                 var fileName = $"{Guid.NewGuid()}_{dto.Image.FileName}";
 
                 await bucket.Upload(imageBytes, fileName);
 
-                var publicUrl = bucket.GetPublicUrl(fileName);
+                UploadImageResponseDTO resposta = new()
+                {
+                    Url = bucket.GetPublicUrl(fileName)
+                };
 
-                oRetorno.Objeto = publicUrl;
+                oRetorno.Objeto = resposta;
 
                 oRetorno.SetSucesso();
 

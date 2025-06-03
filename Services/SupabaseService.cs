@@ -15,10 +15,10 @@ namespace DocumentinAPI.Services
             _repository = repository;
         }
 
-        public async Task<Retorno<string>> UploadImageAsync(UploadImageRequestDTO dto)
+        public async Task<Retorno<UploadImageResponseDTO>> UploadImageAsync(UploadImageRequestDTO dto)
         {
 
-            Retorno<string> oRetorno = new();
+            Retorno<UploadImageResponseDTO> oRetorno = new();
 
             try
             {

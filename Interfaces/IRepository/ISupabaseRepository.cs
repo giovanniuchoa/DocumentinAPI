@@ -6,7 +6,7 @@ namespace DocumentinAPI.Interfaces.IRepository
     public interface ISupabaseRepository
     {
 
-        public Task<Retorno<string>> UploadImageAsync(UploadImageRequestDTO dto);
+        public Task<Retorno<UploadImageResponseDTO>> UploadImageAsync(UploadImageRequestDTO dto);
 
     }
 }

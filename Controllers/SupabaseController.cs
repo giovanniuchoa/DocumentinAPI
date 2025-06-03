@@ -18,7 +18,7 @@ namespace DocumentinAPI.Controllers
         }
 
         [HttpPost("UploadImage")]
-        public async Task<IActionResult> UploadImageAsync([FromBody] UploadImageRequestDTO dto)
+        public async Task<IActionResult> UploadImageAsync([FromForm] UploadImageRequestDTO dto)
         {
 
             var ret = await _service.UploadImageAsync(dto);

@@ -7,7 +7,7 @@ namespace DocumentinAPI.Interfaces.IServices
     public interface ISupabaseService
     {
 
-        public Task<Retorno<string>> UploadImageAsync(UploadImageRequestDTO dto);
+        public Task<Retorno<UploadImageResponseDTO>> UploadImageAsync(UploadImageRequestDTO dto);
 
     }
 }
