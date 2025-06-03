@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DocumentinAPI.Controllers
 {
+
+    [Route("Auth")]
     public class AuthController : ControllerBase
     {
 

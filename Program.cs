@@ -7,6 +7,7 @@ using DocumentinAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Supabase;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -83,6 +84,20 @@ builder.Services.AddCors(options =>
                         .AllowAnyMethod()
                         .AllowAnyHeader());
 });
+
+#endregion
+
+#region Supabase
+
+builder.Services.AddScoped<Supabase.Client>(_ =>
+new Supabase.Client(
+    builder.Configuration["Supabase:Url"],
+    builder.Configuration["Supabase:ApiKey"],
+    new SupabaseOptions
+    {
+        AutoRefreshToken = true,
+        AutoConnectRealtime = true,
+    }));
 
 #endregion
 
