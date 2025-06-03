@@ -25,13 +25,4 @@
     <PackageReference Include="System.Security.Cryptography.Cng" Version="5.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Domain\Validators\DocumentVersion\" />
-    <Folder Include="Domain\Validators\Group\" />
-    <Folder Include="Domain\Validators\UserXGroup\" />
-    <Folder Include="Domain\Validators\User\" />
-    <Folder Include="Domain\Validators\Task\" />
-    <Folder Include="Domain\Validators\PasswordRecovery\" />
-  </ItemGroup>
-
 </Project>
