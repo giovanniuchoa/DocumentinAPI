@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
     <PackageReference Include="MailKit" Version="4.11.0" />
     <PackageReference Include="Mapster" Version="7.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.3.0" />
@@ -22,6 +23,15 @@
     <PackageReference Include="Supabase" Version="1.1.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
     <PackageReference Include="System.Security.Cryptography.Cng" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Domain\Validators\DocumentVersion\" />
+    <Folder Include="Domain\Validators\Group\" />
+    <Folder Include="Domain\Validators\UserXGroup\" />
+    <Folder Include="Domain\Validators\User\" />
+    <Folder Include="Domain\Validators\Task\" />
+    <Folder Include="Domain\Validators\PasswordRecovery\" />
   </ItemGroup>
 
 </Project>
