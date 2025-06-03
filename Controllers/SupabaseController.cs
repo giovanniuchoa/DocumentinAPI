@@ -1,5 +1,6 @@
 ﻿using DocumentinAPI.Domain.DTOs.Supabase;
 using DocumentinAPI.Interfaces.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Runtime.Intrinsics.X86;
 
@@ -7,6 +8,7 @@ namespace DocumentinAPI.Controllers
 {
 
     [Route("Supabase")]
+    [Authorize]
     public class SupabaseController : BaseController
     {
 
