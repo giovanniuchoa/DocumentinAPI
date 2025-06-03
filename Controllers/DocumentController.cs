@@ -18,6 +18,13 @@ namespace DocumentinAPI.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// Obtém um Documento pelo identificador.
+        /// </summary>
+        /// <response code="200">Retorna o documento correspondente ao identificador.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetDocumentById/{documentId}")]
         public async Task<IActionResult> GetDocumentByIdAsync(int documentId)
         {
@@ -34,6 +41,13 @@ namespace DocumentinAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Obtém uma lista de Documentos.
+        /// </summary>
+        /// <response code="200">Retorna uma lista de documentos.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetListDocument")]
         public async Task<IActionResult> GetListDocumentAsync()
         {
@@ -48,6 +62,13 @@ namespace DocumentinAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Cadastra um Documento.
+        /// </summary>
+        /// <response code="200">Retorna o DTO de resposta do documento cadastrado.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
         [HttpPost("AddDocument")]
         public async Task<IActionResult> AddDocumentAsync([FromBody] DocumentRequestDTO document)
         {
@@ -82,6 +103,13 @@ namespace DocumentinAPI.Controllers
 
         }
 
+        /// <summary>
+        /// Atualiza um Documento.
+        /// </summary>
+        /// <response code="200">Retorna o DTO de resposta do documento atualizado.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
         [HttpPut("UpdateDocument")]
         public async Task<IActionResult> UpdateDocumentAsync([FromBody] DocumentRequestDTO document)
         {
@@ -116,6 +144,13 @@ namespace DocumentinAPI.Controllers
 
         }
 
+        /// <summary>
+        /// Alterna o status (ativo/inativo) de um documento.
+        /// </summary>
+        /// <response code="200">Retorna o DTO de resposta do documento atualizado.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
         [HttpPut("ToogleStatusDocument/{documentId}")]
         public async Task<IActionResult> ToogleStatusDocumentAsync(int documentId)
         {

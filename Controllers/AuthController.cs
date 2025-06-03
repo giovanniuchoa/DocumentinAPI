@@ -16,6 +16,12 @@ namespace DocumentinAPI.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// Autentica um usuário e retorna um token de acesso.
+        /// </summary>
+        /// <response code="200">Retorna um token de acesso.</response>
+        /// <response code="400">Se a autenticação falhou.</response>
+        /// <response code="500">Erro interno do servidor.</response>
         [HttpPost("Authenticate")]
         public async Task<IActionResult> AuthenticateAsync([FromBody] AuthRequestDTO model)
         {
