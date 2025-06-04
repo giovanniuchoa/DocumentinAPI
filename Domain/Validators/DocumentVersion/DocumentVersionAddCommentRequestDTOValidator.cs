@@ -12,7 +12,7 @@ namespace DocumentinAPI.Domain.Validators
             
             RuleFor(x => x.Comment)
                 .NotEmpty().WithMessage("commentRequired")
-                .MaximumLength(500).WithMessage("commentMaxLength");
+                .MaximumLength(255).WithMessage("commentMaxLength");
         }
     }
 }

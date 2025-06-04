@@ -9,7 +9,7 @@ namespace DocumentinAPI.Domain.Validators
         {
             RuleFor(x => x.Name)
                 .NotEmpty().WithMessage("userNameRequired")
-                .MaximumLength(100).WithMessage("userNameMaxLength");
+                .MaximumLength(20).WithMessage("userNameMaxLength");
             
             RuleFor(x => x.Email)
                 .NotEmpty().WithMessage("userEmailRequired")

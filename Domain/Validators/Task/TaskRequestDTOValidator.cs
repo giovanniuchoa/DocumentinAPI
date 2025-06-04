@@ -9,10 +9,10 @@ namespace DocumentinAPI.Domain.Validators
         {
             RuleFor(x => x.Title)
                 .NotEmpty().WithMessage("taskTitleRequired")
-                .MaximumLength(100).WithMessage("taskTitleMaxLength");
+                .MaximumLength(30).WithMessage("taskTitleMaxLength");
             
             RuleFor(x => x.Description)
-                .MaximumLength(500).WithMessage("taskDescriptionMaxLength");
+                .MaximumLength(255).WithMessage("taskDescriptionMaxLength");
             
             RuleFor(x => x.DueDate)
                 .GreaterThan(DateTime.Now).WithMessage("dueDateMustBeFuture");

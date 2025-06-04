@@ -9,10 +9,11 @@ namespace DocumentinAPI.Domain.Validators
         {
             RuleFor(x => x.Name)
                 .NotEmpty().WithMessage("groupNameRequired")
-                .MaximumLength(50).WithMessage("groupNameMaxLength");
+                .MaximumLength(20).WithMessage("groupNameMaxLength");
             
             RuleFor(x => x.Description)
-                .MaximumLength(200).WithMessage("groupDescriptionMaxLength");
+                .NotEmpty().WithMessage("groupDescriptionRequired")
+                .MaximumLength(255).WithMessage("groupDescriptionMaxLength");
         }
     }
 }

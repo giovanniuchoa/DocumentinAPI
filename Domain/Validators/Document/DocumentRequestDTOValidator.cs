@@ -11,13 +11,13 @@ namespace DocumentinAPI.Domain.Validators.Document
 
             RuleFor(x => x.Title)
                 .NotEmpty().WithMessage("documentTitleRequired")
-                .MaximumLength(100).WithMessage("documentTitleMaxLength");
+                .MaximumLength(50).WithMessage("documentTitleMaxLength");
 
             RuleFor(x => x.Content)
                 .NotEmpty().WithMessage("documentContentRequired");
 
             RuleFor(x => x.FolderId)
-                .NotEmpty().WithMessage("folderIdRequired");
+                .GreaterThan(0).WithMessage("validFolderIdRequired");
 
         }
 

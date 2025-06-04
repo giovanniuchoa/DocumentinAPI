@@ -14,7 +14,7 @@ namespace DocumentinAPI.Domain.Validators
                 .NotEmpty().WithMessage("documentContentRequired");
             
             RuleFor(x => x.Comment)
-                .MaximumLength(500).WithMessage("commentMaxLength");
+                .MaximumLength(255).WithMessage("commentMaxLength");
         }
     }
 }
