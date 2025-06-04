@@ -1,9 +1,13 @@
 using DocumentinAPI.Authentication;
 using DocumentinAPI.Data;
+using DocumentinAPI.Domain.Filters;
+using DocumentinAPI.Domain.Validators;
 using DocumentinAPI.Interfaces.IRepository;
 using DocumentinAPI.Interfaces.IServices;
 using DocumentinAPI.Repository;
 using DocumentinAPI.Services;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -14,7 +18,10 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<ValidationFilter>();
+});
 
 builder.Services.AddEndpointsApiExplorer();
 
@@ -147,6 +154,14 @@ new Supabase.Client(
         AutoRefreshToken = true,
         AutoConnectRealtime = true,
     }));
+
+#endregion
+
+#region Fluent Validation
+
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddFluentValidationClientsideAdapters();
+builder.Services.AddValidatorsFromAssembly(typeof(CompanyRequestDTOValidator).Assembly);
 
 #endregion
 
