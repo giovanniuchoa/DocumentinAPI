@@ -138,5 +138,29 @@ namespace DocumentinAPI.Controllers
 
         }
 
+        /// <summary>
+        /// Altera a "pasta pai" da pasta.
+        /// </summary>
+        /// <response code="200">Retorna o DTO de resposta da pasta atualizada.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
+        [HttpPut("MoveFolder")]
+        public async Task<IActionResult> MoveFolderAsync([FromBody] MoveFolderRequestDTO dto)
+        {
+
+            var ret = await _service.MoveFolderAsync(dto, ssn);
+
+            if (ret.Erro == true)
+            {
+                return BadRequest(ret);
+            }
+            else
+            {
+                return Ok(ret);
+            }
+
+        }
+
     }
 }

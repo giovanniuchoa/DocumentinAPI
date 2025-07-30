@@ -1,5 +1,6 @@
 ﻿using DocumentinAPI.Data;
 using DocumentinAPI.Domain.DTOs.Folder;
+using DocumentinAPI.Domain.Models;
 using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IRepository;
 using Mapster;
@@ -198,5 +199,57 @@ namespace DocumentinAPI.Repository
 
         }
 
+        public async Task<Retorno<FolderResponseDTO>> MoveFolderAsync(MoveFolderRequestDTO dto, UserSession ssn)
+        {
+
+            Retorno<FolderResponseDTO> oRetorno = new Retorno<FolderResponseDTO>();
+
+            try
+            {
+
+                var folderDB = await _context.Folders
+                    .Include(f => f.User)
+                    .Where(f => f.FolderId == dto.FolderId
+                        && f.User.CompanyId == ssn.CompanyId)
+                    .FirstOrDefaultAsync();
+
+                if (folderDB == null)
+                {
+                    throw new Exception("folderNotFound");
+                }
+
+                if (dto.ParentFolderId != null)
+                {
+
+                    var parentFolderDB = await _context.Folders
+                        .Include(f => f.User)
+                        .Where(f => f.FolderId == dto.ParentFolderId
+                            && f.User.CompanyId == ssn.CompanyId)
+                        .FirstOrDefaultAsync();
+
+                    if (parentFolderDB == null)
+                    {
+                        throw new Exception("parentFolderNotFound");
+                    }
+
+                }
+
+                folderDB.ParentFolderId = dto.ParentFolderId;
+                folderDB.UpdatedAt = DateTime.Now;
+
+                await _context.SaveChangesAsync();
+
+                oRetorno.Objeto = folderDB.Adapt<FolderResponseDTO>();
+                oRetorno.SetSucesso();
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
     }
 }

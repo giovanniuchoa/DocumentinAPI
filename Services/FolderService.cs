@@ -121,6 +121,27 @@ namespace DocumentinAPI.Services
 
         }
 
+        public async Task<Retorno<FolderResponseDTO>> MoveFolderAsync(MoveFolderRequestDTO dto, UserSession ssn)
+        {
+
+            Retorno<FolderResponseDTO> oRetorno = new();
+
+            try
+            {
+
+                var ret = await _repository.MoveFolderAsync(dto, ssn);
+                oRetorno = ret;
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
+
     }
 
 }
