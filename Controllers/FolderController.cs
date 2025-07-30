@@ -19,7 +19,7 @@ namespace DocumentinAPI.Controllers
         }
 
         /// <summary>
-        /// Obtém uma pasta pelo identificador.
+        /// Obtém uma pasta pelo identificador com a lista de seus documentos.
         /// </summary>
         /// <response code="200">Retorna a pasta correspondente ao identificador.</response>
         /// <response code="401">Usuário não autorizado.</response>
@@ -43,7 +43,7 @@ namespace DocumentinAPI.Controllers
         }
 
         /// <summary>
-        /// Obtém uma lista de pastas.
+        /// Obtém uma lista de pastas cada uma com a lista de seus documentos.
         /// </summary>
         /// <response code="200">Retorna uma lista de pastas.</response>
         /// <response code="401">Usuário não autorizado.</response>

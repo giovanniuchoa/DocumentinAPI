@@ -24,6 +24,7 @@ namespace DocumentinAPI.Repository
 
                 var folderDB = await _context.Folders
                     .Include(f => f.User)
+                    .Include(f => f.Documents)
                     .Where(f => f.FolderId == folderId
                         && f.User.CompanyId == ssn.CompanyId)
                     .FirstOrDefaultAsync();
@@ -56,6 +57,7 @@ namespace DocumentinAPI.Repository
 
                 var folderListDB = await _context.Folders
                     .Include(t => t.User)
+                    .Include(t => t.Documents)
                     .Where(t => t.User.CompanyId == ssn.CompanyId)
                     .ToListAsync();
 
