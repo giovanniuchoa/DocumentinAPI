@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using static DocumentinAPI.Domain.Utils.Helpers;
 using static DocumentinAPI.Domain.Utils.TemplateHelpers;
+using DocumentinAPI.Domain.DTOs.Auth;
 
 namespace DocumentinAPI.Repository
 {
@@ -26,7 +27,7 @@ namespace DocumentinAPI.Repository
             _emailService = emailService;
         }
 
-        public async Task<Retorno<UserResponseDTO>> GetUserByIdAsync(int userId, UserSession ssn)
+        public async Task<Retorno<UserResponseDTO>> GetUserByIdAsync(int userId, UserClaimDTO ssn)
         {
            
             Retorno<UserResponseDTO> oRetorno = new Retorno<UserResponseDTO>();
@@ -61,7 +62,7 @@ namespace DocumentinAPI.Repository
 
         }
 
-        public async Task<Retorno<IEnumerable<UserResponseDTO>>> GetListUserAsync(UserSession ssn)
+        public async Task<Retorno<IEnumerable<UserResponseDTO>>> GetListUserAsync(UserClaimDTO ssn)
         {
             Retorno<IEnumerable<UserResponseDTO>> oRetorno = new();
 
@@ -87,7 +88,7 @@ namespace DocumentinAPI.Repository
 
         }
 
-        public async Task<Retorno<UserResponseDTO>> AddUserAsync(UserRequestDTO dto, UserSession ssn)
+        public async Task<Retorno<UserResponseDTO>> AddUserAsync(UserRequestDTO dto, UserClaimDTO ssn)
         {
             
             Retorno<UserResponseDTO> oRetorno = new();
@@ -131,7 +132,7 @@ namespace DocumentinAPI.Repository
 
         }
 
-        public async Task<Retorno<UserResponseDTO>> UpdateUserAsync(UserRequestDTO dto, UserSession ssn)
+        public async Task<Retorno<UserResponseDTO>> UpdateUserAsync(UserRequestDTO dto, UserClaimDTO ssn)
         {
             
             Retorno<UserResponseDTO> oRetorno = new();
@@ -179,7 +180,7 @@ namespace DocumentinAPI.Repository
 
         }
 
-        public async Task<Retorno<UserResponseDTO>> ToggleStatusUserAsync(int userId, UserSession ssn)
+        public async Task<Retorno<UserResponseDTO>> ToggleStatusUserAsync(int userId, UserClaimDTO ssn)
         {
             
             Retorno<UserResponseDTO> oRetorno = new();
@@ -221,7 +222,7 @@ namespace DocumentinAPI.Repository
 
         }
 
-        public async Task<Retorno<IEnumerable<GroupResponseDTO>>> GetListUserXGroupByUserAsync(int userId, UserSession ssn)
+        public async Task<Retorno<IEnumerable<GroupResponseDTO>>> GetListUserXGroupByUserAsync(int userId, UserClaimDTO ssn)
         {
             
             Retorno<IEnumerable<GroupResponseDTO>> oRetorno = new();
@@ -252,7 +253,7 @@ namespace DocumentinAPI.Repository
 
         }
 
-        public async Task<Retorno<IEnumerable<GroupResponseDTO>>> AddUserXGroupAsync(UserXGroupRequestDTO model, UserSession ssn)
+        public async Task<Retorno<IEnumerable<GroupResponseDTO>>> AddUserXGroupAsync(UserXGroupRequestDTO model, UserClaimDTO ssn)
         {
 
             Retorno<IEnumerable<GroupResponseDTO>> oRetorno = new();
@@ -319,7 +320,7 @@ namespace DocumentinAPI.Repository
 
         }
 
-        public async Task<Retorno<IEnumerable<GroupResponseDTO>>> DeleteUserXGroupAsync(UserXGroupRequestDTO model, UserSession ssn)
+        public async Task<Retorno<IEnumerable<GroupResponseDTO>>> DeleteUserXGroupAsync(UserXGroupRequestDTO model, UserClaimDTO ssn)
         {
 
             Retorno<IEnumerable<GroupResponseDTO>> oRetorno = new();

@@ -1,4 +1,5 @@
 ﻿using DocumentinAPI.Domain.DTOs.Folder;
+using DocumentinAPI.Domain.DTOs.FolderXGroup;
 using DocumentinAPI.Interfaces.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -158,6 +159,40 @@ namespace DocumentinAPI.Controllers
             else
             {
                 return Ok(ret);
+            }
+
+        }
+
+        /// <summary>
+        /// Adiciona um vínculo de acesso de grupo com a pasta.
+        /// </summary>
+        /// <response code="200">Retorna uma lista com os grupos da pasta alterada.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
+        [HttpPost("AddFolderXGroup")]
+        public async Task<IActionResult> AddFolderXGroupAsync([FromBody] FolderXGroupRequestDTO dto)
+        {
+
+
+
+            if (("1,2").Contains(ssn.Profile.ToString()))
+            {
+
+                var ret = await _service.AddFolderXGroupAsync(dto, ssn);
+
+                if (ret.Erro == true)
+                {
+                    return BadRequest(ret);
+                }
+                else
+                {
+                    return Ok(ret);
+                }
+            }
+            else
+            {
+                return Forbid("noPermission");
             }
 
         }

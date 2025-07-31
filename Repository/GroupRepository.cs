@@ -6,6 +6,7 @@ using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IRepository;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
+using DocumentinAPI.Domain.DTOs.Auth;
 
 namespace DocumentinAPI.Repository
 {
@@ -16,7 +17,7 @@ namespace DocumentinAPI.Repository
         {
         }
 
-        public async Task<Retorno<GroupResponseDTO>> GetGroupByIdAsync(int groupId, UserSession ssn)
+        public async Task<Retorno<GroupResponseDTO>> GetGroupByIdAsync(int groupId, UserClaimDTO ssn)
         {
 
             Retorno<GroupResponseDTO> oRetorno = new();
@@ -52,7 +53,7 @@ namespace DocumentinAPI.Repository
 
         }
 
-        public async Task<Retorno<IEnumerable<GroupResponseDTO>>> GetListGroupAsync(UserSession ssn)
+        public async Task<Retorno<IEnumerable<GroupResponseDTO>>> GetListGroupAsync(UserClaimDTO ssn)
         {
 
             Retorno<IEnumerable<GroupResponseDTO>> oRetorno = new();
@@ -86,7 +87,7 @@ namespace DocumentinAPI.Repository
 
         }
 
-        public async Task<Retorno<GroupResponseDTO>> AddGroupAsync(GroupRequestDTO group, UserSession ssn)
+        public async Task<Retorno<GroupResponseDTO>> AddGroupAsync(GroupRequestDTO group, UserClaimDTO ssn)
         {
             
             Retorno<GroupResponseDTO> oRetorno = new();
@@ -118,7 +119,7 @@ namespace DocumentinAPI.Repository
 
         }
 
-        public async Task<Retorno<GroupResponseDTO>> UpdateGroupAsync(GroupRequestDTO group, UserSession ssn)
+        public async Task<Retorno<GroupResponseDTO>> UpdateGroupAsync(GroupRequestDTO group, UserClaimDTO ssn)
         {
             
             Retorno<GroupResponseDTO> oRetorno = new();
@@ -160,7 +161,7 @@ namespace DocumentinAPI.Repository
 
         }
 
-        public async Task<Retorno<GroupResponseDTO>> ToggleStatusGroupAsync(int groupId, UserSession ssn)
+        public async Task<Retorno<GroupResponseDTO>> ToggleStatusGroupAsync(int groupId, UserClaimDTO ssn)
         {
             
             Retorno<GroupResponseDTO> oRetorno = new();
@@ -200,7 +201,7 @@ namespace DocumentinAPI.Repository
 
         }
 
-        public async Task<Retorno<IEnumerable<UserResponseDTO>>> GetListUserXGroupByGroupAsync(int groupId, UserSession ssn)
+        public async Task<Retorno<IEnumerable<UserResponseDTO>>> GetListUserXGroupByGroupAsync(int groupId, UserClaimDTO ssn)
         {
             
             Retorno<IEnumerable<UserResponseDTO>> oRetorno = new();
