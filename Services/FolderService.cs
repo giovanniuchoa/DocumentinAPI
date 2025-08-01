@@ -186,6 +186,27 @@ namespace DocumentinAPI.Services
             return oRetorno;
 
         }
+
+        public async Task<Retorno<IEnumerable<GroupResponseDTO>>> GetListFolderXGroupByFolderAsync(int folderId, UserClaimDTO ssn)
+        {
+
+            Retorno<IEnumerable<GroupResponseDTO>> oRetorno = new();
+
+            try
+            {
+
+                var ret = await _repository.GetListFolderXGroupByFolderAsync(folderId, ssn);
+                oRetorno = ret;
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
     }
 
 }

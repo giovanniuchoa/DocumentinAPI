@@ -1,4 +1,5 @@
 ﻿using DocumentinAPI.Data;
+using DocumentinAPI.Domain.DTOs.Auth;
 using DocumentinAPI.Domain.DTOs.Folder;
 using DocumentinAPI.Domain.DTOs.FolderXGroup;
 using DocumentinAPI.Domain.DTOs.Group;
@@ -7,7 +8,7 @@ using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IRepository;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
-using DocumentinAPI.Domain.DTOs.Auth;
+using Supabase.Gotrue;
 
 namespace DocumentinAPI.Repository
 {
@@ -367,6 +368,37 @@ namespace DocumentinAPI.Repository
                 var listaGruposDB = await _context.FolderXGroups
                     .Include(ug => ug.Folder.User)
                     .Where(ug => ug.FolderId == dto.FolderId
+                        && ug.Folder.User.CompanyId == ssn.CompanyId
+                        && ug.Group.IsActive == true
+                        && ug.Group.User.CompanyId == ssn.CompanyId)
+                    .Select(ug => ug.Group)
+                    .ToListAsync();
+
+                oRetorno.Objeto = listaGruposDB.Adapt<List<GroupResponseDTO>>();
+
+                oRetorno.SetSucesso();
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
+
+        public async Task<Retorno<IEnumerable<GroupResponseDTO>>> GetListFolderXGroupByFolderAsync(int folderId, UserClaimDTO ssn)
+        {
+
+            Retorno<IEnumerable<GroupResponseDTO>> oRetorno = new();
+
+            try
+            {
+
+                var listaGruposDB = await _context.FolderXGroups
+                    .Include(ug => ug.Folder.User)
+                    .Where(ug => ug.FolderId == folderId
                         && ug.Folder.User.CompanyId == ssn.CompanyId
                         && ug.Group.IsActive == true
                         && ug.Group.User.CompanyId == ssn.CompanyId)
