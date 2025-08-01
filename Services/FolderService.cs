@@ -1,7 +1,10 @@
 ﻿using DocumentinAPI.Domain.DTOs.Folder;
+using DocumentinAPI.Domain.DTOs.FolderXGroup;
+using DocumentinAPI.Domain.DTOs.Group;
 using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IRepository;
 using DocumentinAPI.Interfaces.IServices;
+using DocumentinAPI.Domain.DTOs.Auth;
 
 namespace DocumentinAPI.Services
 {
@@ -16,7 +19,7 @@ namespace DocumentinAPI.Services
             _repository = folderRepository;
         }
 
-        public async Task<Retorno<FolderResponseDTO>> GetFolderByIdAsync(int folderId, UserSession ssn)
+        public async Task<Retorno<FolderResponseDTO>> GetFolderByIdAsync(int folderId, UserClaimDTO ssn)
         {
 
             Retorno<FolderResponseDTO> oRetorno = new();
@@ -37,7 +40,7 @@ namespace DocumentinAPI.Services
 
         }
 
-        public async Task<Retorno<ICollection<FolderResponseDTO>>> GetListFolderAsync(UserSession ssn)
+        public async Task<Retorno<ICollection<FolderResponseDTO>>> GetListFolderAsync(UserClaimDTO ssn)
         {
 
             Retorno<ICollection<FolderResponseDTO>> oRetorno = new();
@@ -58,7 +61,7 @@ namespace DocumentinAPI.Services
 
         }
 
-        public async Task<Retorno<FolderResponseDTO>> AddFolderAsync(FolderRequestDTO dto, UserSession ssn)
+        public async Task<Retorno<FolderResponseDTO>> AddFolderAsync(FolderRequestDTO dto, UserClaimDTO ssn)
         {
 
             Retorno<FolderResponseDTO> oRetorno = new();
@@ -79,7 +82,7 @@ namespace DocumentinAPI.Services
 
         }
 
-        public async Task<Retorno<FolderResponseDTO>> UpdateFolderAsync(FolderRequestDTO dto, UserSession ssn)
+        public async Task<Retorno<FolderResponseDTO>> UpdateFolderAsync(FolderRequestDTO dto, UserClaimDTO ssn)
         {
 
             Retorno<FolderResponseDTO> oRetorno = new();
@@ -100,7 +103,7 @@ namespace DocumentinAPI.Services
 
         }
 
-        public async Task<Retorno<FolderResponseDTO>> ToogleStatusFolderAsync(int folderId, UserSession ssn)
+        public async Task<Retorno<FolderResponseDTO>> ToogleStatusFolderAsync(int folderId, UserClaimDTO ssn)
         {
 
             Retorno<FolderResponseDTO> oRetorno = new();
@@ -121,6 +124,89 @@ namespace DocumentinAPI.Services
 
         }
 
+        public async Task<Retorno<FolderResponseDTO>> MoveFolderAsync(MoveFolderRequestDTO dto, UserClaimDTO ssn)
+        {
+
+            Retorno<FolderResponseDTO> oRetorno = new();
+
+            try
+            {
+
+                var ret = await _repository.MoveFolderAsync(dto, ssn);
+                oRetorno = ret;
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
+
+        public async Task<Retorno<IEnumerable<GroupResponseDTO>>> AddFolderXGroupAsync(FolderXGroupRequestDTO dto, UserClaimDTO ssn)
+        {
+
+            Retorno<IEnumerable<GroupResponseDTO>> oRetorno = new();
+
+            try
+            {
+
+                var ret = await _repository.AddFolderXGroupAsync(dto, ssn);
+                oRetorno = ret;
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
+
+        public async Task<Retorno<IEnumerable<GroupResponseDTO>>> DeleteFolderXGroupAsync(FolderXGroupRequestDTO dto, UserClaimDTO ssn)
+        {
+
+            Retorno<IEnumerable<GroupResponseDTO>> oRetorno = new();
+
+            try
+            {
+
+                var ret = await _repository.DeleteFolderXGroupAsync(dto, ssn);
+                oRetorno = ret;
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
+
+        public async Task<Retorno<IEnumerable<GroupResponseDTO>>> GetListFolderXGroupByFolderAsync(int folderId, UserClaimDTO ssn)
+        {
+
+            Retorno<IEnumerable<GroupResponseDTO>> oRetorno = new();
+
+            try
+            {
+
+                var ret = await _repository.GetListFolderXGroupByFolderAsync(folderId, ssn);
+                oRetorno = ret;
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
     }
 
 }

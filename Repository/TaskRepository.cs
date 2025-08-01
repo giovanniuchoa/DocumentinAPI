@@ -4,6 +4,7 @@ using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IRepository;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
+using DocumentinAPI.Domain.DTOs.Auth;
 
 namespace DocumentinAPI.Repository
 {
@@ -14,7 +15,7 @@ namespace DocumentinAPI.Repository
         {
         }
 
-        public async Task<Retorno<TaskResponseDTO>> GetTaskByIdAsync(int taskId, UserSession ssn)
+        public async Task<Retorno<TaskResponseDTO>> GetTaskByIdAsync(int taskId, UserClaimDTO ssn)
         {
             
             Retorno<TaskResponseDTO> oRetorno = new Retorno<TaskResponseDTO>();
@@ -46,7 +47,7 @@ namespace DocumentinAPI.Repository
 
         }
 
-        public async Task<Retorno<ICollection<TaskResponseDTO>>> GetListTaskAsync(UserSession ssn)
+        public async Task<Retorno<ICollection<TaskResponseDTO>>> GetListTaskAsync(UserClaimDTO ssn)
         {
 
             Retorno<ICollection<TaskResponseDTO>> oRetorno = new Retorno<ICollection<TaskResponseDTO>>();
@@ -73,7 +74,7 @@ namespace DocumentinAPI.Repository
 
         }
 
-        public async Task<Retorno<TaskResponseDTO>> AddTaskAsync(TaskRequestDTO dto, UserSession ssn)
+        public async Task<Retorno<TaskResponseDTO>> AddTaskAsync(TaskRequestDTO dto, UserClaimDTO ssn)
         {
 
             Retorno<TaskResponseDTO> oRetorno = new Retorno<TaskResponseDTO>();
@@ -115,7 +116,7 @@ namespace DocumentinAPI.Repository
 
         }
 
-        public async Task<Retorno<TaskResponseDTO>> UpdateTaskAsync(TaskRequestDTO dto, UserSession ssn)
+        public async Task<Retorno<TaskResponseDTO>> UpdateTaskAsync(TaskRequestDTO dto, UserClaimDTO ssn)
         {
 
             Retorno<TaskResponseDTO> oRetorno = new Retorno<TaskResponseDTO>();
@@ -160,7 +161,7 @@ namespace DocumentinAPI.Repository
 
         }
 
-        public async Task<Retorno<TaskResponseDTO>> ToogleStatusTaskAsync(int taskId, UserSession ssn)
+        public async Task<Retorno<TaskResponseDTO>> ToogleStatusTaskAsync(int taskId, UserClaimDTO ssn)
         {
 
             Retorno<TaskResponseDTO> oRetorno = new Retorno<TaskResponseDTO>();

@@ -5,6 +5,7 @@ using DocumentinAPI.Domain.DTOs.UserXGroup;
 using DocumentinAPI.Domain.Models;
 using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IRepository;
+using DocumentinAPI.Domain.DTOs.Auth;
 using DocumentinAPI.Interfaces.IServices;
 
 namespace DocumentinAPI.Services
@@ -19,7 +20,7 @@ namespace DocumentinAPI.Services
             _repository = repository;
         }
 
-        public async Task<Retorno<UserResponseDTO>> GetUserByIdAsync(int userId, UserSession ssn)
+        public async Task<Retorno<UserResponseDTO>> GetUserByIdAsync(int userId, UserClaimDTO ssn)
         {
             
             Retorno<UserResponseDTO> oRetorno = new();
@@ -41,7 +42,7 @@ namespace DocumentinAPI.Services
 
         }
 
-        public async Task<Retorno<IEnumerable<UserResponseDTO>>> GetListUserAsync(UserSession ssn)
+        public async Task<Retorno<IEnumerable<UserResponseDTO>>> GetListUserAsync(UserClaimDTO ssn)
         {
 
             Retorno<IEnumerable<UserResponseDTO>> oRetorno = new();
@@ -62,7 +63,7 @@ namespace DocumentinAPI.Services
 
         }
 
-        public async Task<Retorno<UserResponseDTO>> AddUserAsync(UserRequestDTO dto, UserSession ssn)
+        public async Task<Retorno<UserResponseDTO>> AddUserAsync(UserRequestDTO dto, UserClaimDTO ssn)
         {
 
             Retorno<UserResponseDTO> oRetorno = new();
@@ -89,7 +90,7 @@ namespace DocumentinAPI.Services
 
         }
 
-        public async Task<Retorno<UserResponseDTO>> UpdateUserAsync(UserRequestDTO dto, UserSession ssn)
+        public async Task<Retorno<UserResponseDTO>> UpdateUserAsync(UserRequestDTO dto, UserClaimDTO ssn)
         {
 
             Retorno<UserResponseDTO> oRetorno = new();
@@ -116,7 +117,7 @@ namespace DocumentinAPI.Services
 
         }
 
-        public async Task<Retorno<UserResponseDTO>> ToggleStatusUserAsync(int userId, UserSession ssn)
+        public async Task<Retorno<UserResponseDTO>> ToggleStatusUserAsync(int userId, UserClaimDTO ssn)
         {
 
             Retorno<UserResponseDTO> oRetorno = new();
@@ -138,7 +139,7 @@ namespace DocumentinAPI.Services
 
         }
 
-        public async Task<Retorno<IEnumerable<GroupResponseDTO>>> GetListUserXGroupByUserAsync(int userId, UserSession ssn)
+        public async Task<Retorno<IEnumerable<GroupResponseDTO>>> GetListUserXGroupByUserAsync(int userId, UserClaimDTO ssn)
         {
             
             Retorno<IEnumerable<GroupResponseDTO>> oRetorno = new();
@@ -160,7 +161,7 @@ namespace DocumentinAPI.Services
 
         }
 
-        public async Task<Retorno<IEnumerable<GroupResponseDTO>>> AddUserXGroupAsync(UserXGroupRequestDTO model, UserSession ssn)
+        public async Task<Retorno<IEnumerable<GroupResponseDTO>>> AddUserXGroupAsync(UserXGroupRequestDTO model, UserClaimDTO ssn)
         {
 
             Retorno<IEnumerable<GroupResponseDTO>> oRetorno = new();
@@ -182,7 +183,7 @@ namespace DocumentinAPI.Services
 
         }
 
-        public async Task<Retorno<IEnumerable<GroupResponseDTO>>> DeleteUserXGroupAsync(UserXGroupRequestDTO model, UserSession ssn)
+        public async Task<Retorno<IEnumerable<GroupResponseDTO>>> DeleteUserXGroupAsync(UserXGroupRequestDTO model, UserClaimDTO ssn)
         {
 
             Retorno<IEnumerable<GroupResponseDTO>> oRetorno = new();
