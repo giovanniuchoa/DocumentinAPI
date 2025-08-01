@@ -4,6 +4,7 @@ using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IRepository;
 using DocumentinAPI.Interfaces.IServices;
 using DocumentinAPI.Domain.DTOs.Auth;
+using DocumentinAPI.Domain.DTOs.Folder;
 
 namespace DocumentinAPI.Services
 {
@@ -135,6 +136,27 @@ namespace DocumentinAPI.Services
             try
             {
                 var ret = await _repository.GetListUserXGroupByGroupAsync(groupId, ssn);
+
+                oRetorno = ret;
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
+
+        public async Task<Retorno<IEnumerable<FolderResponseDTO>>> GetListFolderXGroupByGroupAsync(int groupId, UserClaimDTO ssn)
+        {
+
+            Retorno<IEnumerable<FolderResponseDTO>> oRetorno = new();
+
+            try
+            {
+                var ret = await _repository.GetListFolderXGroupByGroupAsync(groupId, ssn);
 
                 oRetorno = ret;
 

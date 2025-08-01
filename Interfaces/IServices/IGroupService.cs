@@ -1,7 +1,8 @@
-﻿using DocumentinAPI.Domain.DTOs.Group;
+﻿using DocumentinAPI.Domain.DTOs.Auth;
+using DocumentinAPI.Domain.DTOs.Folder;
+using DocumentinAPI.Domain.DTOs.Group;
 using DocumentinAPI.Domain.DTOs.User;
 using DocumentinAPI.Domain.Utils;
-using DocumentinAPI.Domain.DTOs.Auth;
 
 namespace DocumentinAPI.Interfaces.IServices
 {
@@ -14,6 +15,7 @@ namespace DocumentinAPI.Interfaces.IServices
         public Task<Retorno<GroupResponseDTO>> UpdateGroupAsync(GroupRequestDTO group, UserClaimDTO ssn);
         public Task<Retorno<GroupResponseDTO>> ToggleStatusGroupAsync(int groupId, UserClaimDTO ssn);
         public Task<Retorno<IEnumerable<UserResponseDTO>>> GetListUserXGroupByGroupAsync(int groupId, UserClaimDTO ssn);
+        public Task<Retorno<IEnumerable<FolderResponseDTO>>> GetListFolderXGroupByGroupAsync(int groupId, UserClaimDTO ssn);
 
 
     }

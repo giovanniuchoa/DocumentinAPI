@@ -209,5 +209,28 @@ namespace DocumentinAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Obtém uma lista de pastas vinculadas ao grupo correspondente ao identificador.
+        /// </summary>
+        /// <response code="200">Retorna uma lista de pastas vinculadas ao grupo correspondente ao identificador.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
+        [HttpGet("GetListFolderByGroup/{groupId}")]
+        public async Task<IActionResult> GetListFolderXGroupByGroupAsync(int groupId)
+        {
+
+            var ret = await _service.GetListFolderXGroupByGroupAsync(groupId, ssn);
+
+            if (ret.Erro == true)
+            {
+                return BadRequest(ret);
+            }
+            else
+            {
+                return Ok(ret);
+            }
+        }
+
     }
 }

@@ -7,6 +7,7 @@ using DocumentinAPI.Interfaces.IRepository;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
 using DocumentinAPI.Domain.DTOs.Auth;
+using DocumentinAPI.Domain.DTOs.Folder;
 
 namespace DocumentinAPI.Repository
 {
@@ -218,6 +219,37 @@ namespace DocumentinAPI.Repository
                     .ToListAsync();
 
                 oRetorno.Objeto = userListDB.Adapt<List<UserResponseDTO>>();
+
+                oRetorno.SetSucesso();
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
+
+        public async Task<Retorno<IEnumerable<FolderResponseDTO>>> GetListFolderXGroupByGroupAsync(int groupId, UserClaimDTO ssn)
+        {
+
+            Retorno<IEnumerable<FolderResponseDTO>> oRetorno = new();
+
+            try
+            {
+
+                var listaGruposDB = await _context.FolderXGroups
+                    .Include(fg => fg.Folder.User)
+                    .Where(fg => fg.GroupId == groupId
+                        && fg.Folder.User.CompanyId == ssn.CompanyId
+                        && fg.Group.IsActive == true
+                        && fg.Group.User.CompanyId == ssn.CompanyId)
+                    .Select(fg => fg.Folder)
+                    .ToListAsync();
+
+                oRetorno.Objeto = listaGruposDB.Adapt<List<FolderResponseDTO>>();
 
                 oRetorno.SetSucesso();
 
