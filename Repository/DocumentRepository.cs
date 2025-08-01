@@ -1,4 +1,5 @@
 ﻿using DocumentinAPI.Data;
+using DocumentinAPI.Domain.DTOs.Auth;
 using DocumentinAPI.Domain.DTOs.Document;
 using DocumentinAPI.Domain.DTOs.Group;
 using DocumentinAPI.Domain.Models;
@@ -15,7 +16,7 @@ namespace DocumentinAPI.Repository
         {
         }
 
-        public async Task<Retorno<DocumentResponseDTO>> GetDocumentByIdAsync(int documentId, UserSession ssn)
+        public async Task<Retorno<DocumentResponseDTO>> GetDocumentByIdAsync(int documentId, UserClaimDTO ssn)
         {
 
             Retorno<DocumentResponseDTO> oRetorno = new();
@@ -50,7 +51,7 @@ namespace DocumentinAPI.Repository
 
         }
 
-        public async Task<Retorno<IEnumerable<DocumentResponseDTO>>> GetListDocumentAsync(UserSession ssn)
+        public async Task<Retorno<IEnumerable<DocumentResponseDTO>>> GetListDocumentAsync(UserClaimDTO ssn)
         {
 
             Retorno<IEnumerable<DocumentResponseDTO>> oRetorno = new();
@@ -76,7 +77,7 @@ namespace DocumentinAPI.Repository
 
         }
 
-        public async Task<Retorno<DocumentResponseDTO>> AddDocumentAsync(DocumentRequestDTO document, UserSession ssn)
+        public async Task<Retorno<DocumentResponseDTO>> AddDocumentAsync(DocumentRequestDTO document, UserClaimDTO ssn)
         {
             
             Retorno<DocumentResponseDTO> oRetorno = new();
@@ -152,7 +153,7 @@ namespace DocumentinAPI.Repository
 
         }
 
-        public async Task<Retorno<DocumentResponseDTO>> UpdateDocumentAsync(DocumentRequestDTO document, UserSession ssn)
+        public async Task<Retorno<DocumentResponseDTO>> UpdateDocumentAsync(DocumentRequestDTO document, UserClaimDTO ssn)
         {
             
             Retorno<DocumentResponseDTO> oRetorno = new();
@@ -228,7 +229,7 @@ namespace DocumentinAPI.Repository
 
         }
 
-        public async Task<Retorno<DocumentResponseDTO>> ToogleStatusDocumentAsync(int documentId, UserSession ssn)
+        public async Task<Retorno<DocumentResponseDTO>> ToogleStatusDocumentAsync(int documentId, UserClaimDTO ssn)
         {
             
             Retorno<DocumentResponseDTO> oRetorno = new();

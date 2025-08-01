@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DocumentinAPI.Domain.DTOs.Document;
+using System.ComponentModel.DataAnnotations;
 
 namespace DocumentinAPI.Domain.DTOs.Folder
 {
@@ -18,6 +19,8 @@ namespace DocumentinAPI.Domain.DTOs.Folder
         public DateTime CreatedAt { get; set; }
 
         public DateTime UpdatedAt { get; set; }
+
+        public ICollection<DocumentResponseDTO> Documents { get; set; } = [];
 
     }
 }

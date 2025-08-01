@@ -27,8 +27,10 @@ namespace DocumentinAPI.Domain.Models
         [Required]
         public DateTime UpdatedAt { get; set; }
 
+        public ICollection<Document> Documents { get; set; } = [];
+
         [ForeignKey(nameof(ParentFolderId))]
-        public virtual Folder ParentFoler { get; set; }
+        public virtual Folder ParentFolder { get; set; }
 
         [ForeignKey(nameof(UserId))]
         public virtual User User { get; set; }
