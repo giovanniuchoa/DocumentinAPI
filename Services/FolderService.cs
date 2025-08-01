@@ -165,6 +165,27 @@ namespace DocumentinAPI.Services
             return oRetorno;
 
         }
+
+        public async Task<Retorno<IEnumerable<GroupResponseDTO>>> DeleteFolderXGroupAsync(FolderXGroupRequestDTO dto, UserClaimDTO ssn)
+        {
+
+            Retorno<IEnumerable<GroupResponseDTO>> oRetorno = new();
+
+            try
+            {
+
+                var ret = await _repository.DeleteFolderXGroupAsync(dto, ssn);
+                oRetorno = ret;
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
     }
 
 }

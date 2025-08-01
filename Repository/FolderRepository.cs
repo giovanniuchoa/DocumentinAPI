@@ -323,5 +323,68 @@ namespace DocumentinAPI.Repository
             return oRetorno;
 
         }
+
+        public async Task<Retorno<IEnumerable<GroupResponseDTO>>> DeleteFolderXGroupAsync(FolderXGroupRequestDTO dto, UserClaimDTO ssn)
+        {
+
+            Retorno<IEnumerable<GroupResponseDTO>> oRetorno = new();
+
+            try
+            {
+
+                var folderDB = await _context.Folders
+                    .Include(f => f.User)
+                    .Where(f => f.FolderId == dto.FolderId
+                        && f.User.CompanyId == ssn.CompanyId)
+                    .FirstOrDefaultAsync();
+
+                var grupoDB = await _context.Groups
+                    .Include(g => g.User)
+                    .Where(g => g.GroupId == dto.GroupId
+                        && g.IsActive == true
+                        && g.User.CompanyId == ssn.CompanyId)
+                    .FirstOrDefaultAsync();
+
+                if (folderDB == null || grupoDB == null)
+                {
+                    throw new Exception("notFound");
+                }
+
+                var folderXGrupoDB = await _context.FolderXGroups
+                    .Where(ug => ug.FolderId == dto.FolderId
+                        && ug.GroupId == dto.GroupId)
+                    .FirstOrDefaultAsync();
+
+                if (folderXGrupoDB == null)
+                {
+                    throw new Exception("notFound");
+                }
+
+                _context.FolderXGroups.Remove(folderXGrupoDB);
+
+                await _context.SaveChangesAsync();
+
+                var listaGruposDB = await _context.FolderXGroups
+                    .Include(ug => ug.Folder.User)
+                    .Where(ug => ug.FolderId == dto.FolderId
+                        && ug.Folder.User.CompanyId == ssn.CompanyId
+                        && ug.Group.IsActive == true
+                        && ug.Group.User.CompanyId == ssn.CompanyId)
+                    .Select(ug => ug.Group)
+                    .ToListAsync();
+
+                oRetorno.Objeto = listaGruposDB.Adapt<List<GroupResponseDTO>>();
+
+                oRetorno.SetSucesso();
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
     }
 }
