@@ -27,11 +27,17 @@ namespace DocumentinAPI.Domain.Models
         [Required]
         public DateTime UpdatedAt { get; set; }
 
+        [Required]
+        public int ValidatorId { get; set; }
+
         [ForeignKey(nameof(ParentFolderId))]
         public virtual Folder ParentFoler { get; set; }
 
         [ForeignKey(nameof(UserId))]
         public virtual User User { get; set; }
+
+        [ForeignKey(nameof(ValidatorId))]
+        public virtual User Validator { get; set; }
 
     }
 }

@@ -25,6 +25,7 @@ namespace DocumentinAPI.Data
         public DbSet<UserXGroup> UserXGroups { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<PasswordRecovery> PasswordRecoveries { get; set; }
+        public DbSet<DocumentValidation> DocumentValidations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
