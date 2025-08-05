@@ -5,6 +5,7 @@ using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IRepository;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
+using DocumentinAPI.Domain.DTOs.Auth;
 using System.Collections.Generic;
 
 namespace DocumentinAPI.Repository
@@ -16,7 +17,7 @@ namespace DocumentinAPI.Repository
         {
         }
 
-        public async Task<Retorno<IEnumerable<CompanyResponseDTO>>> GetListCompanyAsync(UserSession ssn)
+        public async Task<Retorno<IEnumerable<CompanyResponseDTO>>> GetListCompanyAsync(UserClaimDTO ssn)
         {
 
             Retorno<IEnumerable<CompanyResponseDTO>> oRetorno = new();
@@ -43,7 +44,7 @@ namespace DocumentinAPI.Repository
 
         }
 
-        public async Task<Retorno<CompanyResponseDTO>> GetCompanyByIdAsync(int companyId, UserSession ssn)
+        public async Task<Retorno<CompanyResponseDTO>> GetCompanyByIdAsync(int companyId, UserClaimDTO ssn)
         {
 
             Retorno<CompanyResponseDTO> oRetorno = new();
@@ -74,7 +75,7 @@ namespace DocumentinAPI.Repository
 
         }
 
-        public async Task<Retorno<CompanyResponseDTO>> AddCompanyAsync(CompanyRequestDTO company, UserSession ssn)
+        public async Task<Retorno<CompanyResponseDTO>> AddCompanyAsync(CompanyRequestDTO company, UserClaimDTO ssn)
         {
 
             Retorno<CompanyResponseDTO> oRetorno = new();
@@ -110,7 +111,7 @@ namespace DocumentinAPI.Repository
 
         }
 
-        public async Task<Retorno<CompanyResponseDTO>> UpdateCompanyAsync(CompanyRequestDTO company, UserSession ssn)
+        public async Task<Retorno<CompanyResponseDTO>> UpdateCompanyAsync(CompanyRequestDTO company, UserClaimDTO ssn)
         {
 
             Retorno<CompanyResponseDTO> oRetorno = new();
@@ -151,7 +152,7 @@ namespace DocumentinAPI.Repository
 
         }
 
-        public async Task<Retorno<CompanyResponseDTO>> ToggleStatusCompanyAsync(int companyId, UserSession ssn)
+        public async Task<Retorno<CompanyResponseDTO>> ToggleStatusCompanyAsync(int companyId, UserClaimDTO ssn)
         {
 
             Retorno<CompanyResponseDTO> oRetorno = new();

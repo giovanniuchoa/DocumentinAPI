@@ -4,6 +4,7 @@ using DocumentinAPI.Data;
 using DocumentinAPI.Domain.DTOs.Auth;
 using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IRepository;
+using Mapster;
 using Microsoft.EntityFrameworkCore;
 
 namespace DocumentinAPI.Repository
@@ -22,8 +23,6 @@ namespace DocumentinAPI.Repository
             try
             {
 
-                /* TODO por enquanto esta simples só para teste */
-
                 var usuario = await _context.Users
                     .Where(u => u.Email == model.Login
                         && u.IsActive == true)
@@ -34,7 +33,24 @@ namespace DocumentinAPI.Repository
                     throw new Exception("invalidCredentials");
                 }
 
-                oRetorno.Objeto = new(await TokenService.GenerateTokenAsync(usuario));
+                var userClaims = usuario.Adapt<UserSession>();
+
+                var userGroups = await _context.UserXGroups
+                    .Where(ug => ug.UserId == usuario.UserId)
+                    .Select(ug => ug.Group.GroupId)
+                    .ToListAsync();
+
+                var userFolders = await _context.FolderXGroups
+                    .Where(fg => userGroups.Contains(fg.GroupId))
+                    .Select(fg => fg.FolderId)
+                    .Distinct()
+                    .ToListAsync();
+
+                userClaims.GroupsIds = userGroups?.Any() == true ? string.Join(",", userGroups) : null;
+
+                userClaims.FoldersIds = userFolders?.Any() == true ? string.Join(",", userFolders) : null;
+
+                oRetorno.Objeto = new(await TokenService.GenerateTokenAsync(userClaims));
 
                 oRetorno.SetSucesso();
             }

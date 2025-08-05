@@ -1,6 +1,6 @@
-﻿namespace DocumentinAPI.Domain.Utils
+﻿namespace DocumentinAPI.Domain.DTOs.Auth
 {
-    public class UserSession
+    public class UserClaimDTO
     {
 
         public int UserId { get; set; }
@@ -11,9 +11,9 @@
 
         public int CompanyId { get; set; }
 
-        public string GroupsIds { get; set; }
+        public List<int> GroupsIdsList { get; set; }
 
-        public string FoldersIds { get; set; }
+        public List<int> FoldersIdsList { get; set; }
 
     }
 }

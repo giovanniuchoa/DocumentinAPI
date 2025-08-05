@@ -3,6 +3,7 @@ using DocumentinAPI.Domain.DTOs.DocumentVersion;
 using DocumentinAPI.Domain.Models;
 using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IRepository;
+using DocumentinAPI.Domain.DTOs.Auth;
 using DocumentinAPI.Interfaces.IServices;
 
 namespace DocumentinAPI.Services
@@ -17,7 +18,7 @@ namespace DocumentinAPI.Services
             _repository = repository;
         }
 
-        public async Task<Retorno<DocumentVersionResponseDTO>> GetDocumentVersionByIdAsync(int documentVersionId, UserSession ssn)
+        public async Task<Retorno<DocumentVersionResponseDTO>> GetDocumentVersionByIdAsync(int documentVersionId, UserClaimDTO ssn)
         {
 
             Retorno<DocumentVersionResponseDTO> oRetorno = new();
@@ -38,7 +39,7 @@ namespace DocumentinAPI.Services
 
         }
 
-        public async Task<Retorno<ICollection<DocumentVersionResponseDTO>>> GetDocumentVersionsByDocumentIdAsync(int documentId, UserSession ssn)
+        public async Task<Retorno<ICollection<DocumentVersionResponseDTO>>> GetDocumentVersionsByDocumentIdAsync(int documentId, UserClaimDTO ssn)
         {
 
             Retorno<ICollection<DocumentVersionResponseDTO>> oRetorno = new();
@@ -59,7 +60,7 @@ namespace DocumentinAPI.Services
 
         }
 
-        public async Task<Retorno<DocumentVersionResponseDTO>> AddDocumentVersionAsync(DocumentVersionRequestDTO dto, UserSession ssn)
+        public async Task<Retorno<DocumentVersionResponseDTO>> AddDocumentVersionAsync(DocumentVersionRequestDTO dto, UserClaimDTO ssn)
         {
 
             Retorno<DocumentVersionResponseDTO> oRetorno = new();
@@ -80,7 +81,7 @@ namespace DocumentinAPI.Services
 
         }
 
-        public async Task<Retorno<DocumentVersionResponseDTO>> AddCommentDocumentVersionAsync(DocumentVersionAddCommentRequestDTO dto, UserSession ssn)
+        public async Task<Retorno<DocumentVersionResponseDTO>> AddCommentDocumentVersionAsync(DocumentVersionAddCommentRequestDTO dto, UserClaimDTO ssn)
         {
 
             Retorno<DocumentVersionResponseDTO> oRetorno = new();

@@ -55,7 +55,7 @@ namespace DocumentinAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("DocumentinAPI.Domain.Models.Company", b =>
@@ -101,7 +101,7 @@ namespace DocumentinAPI.Migrations
 
                     b.HasKey("CompanyId");
 
-                    b.ToTable("Companies");
+                    b.ToTable("Companies", (string)null);
                 });
 
             modelBuilder.Entity("DocumentinAPI.Domain.Models.Document", b =>
@@ -144,7 +144,7 @@ namespace DocumentinAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Documents");
+                    b.ToTable("Documents", (string)null);
                 });
 
             modelBuilder.Entity("DocumentinAPI.Domain.Models.DocumentValidation", b =>
@@ -212,7 +212,7 @@ namespace DocumentinAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("DocumentVersions");
+                    b.ToTable("DocumentVersions", (string)null);
                 });
 
             modelBuilder.Entity("DocumentinAPI.Domain.Models.DocumentXTag", b =>
@@ -230,7 +230,7 @@ namespace DocumentinAPI.Migrations
 
                     b.HasIndex("TagId");
 
-                    b.ToTable("DocumentXTags");
+                    b.ToTable("DocumentXTags", (string)null);
                 });
 
             modelBuilder.Entity("DocumentinAPI.Domain.Models.Folder", b =>
@@ -272,6 +272,7 @@ namespace DocumentinAPI.Migrations
                     b.HasIndex("ValidatorId");
 
                     b.ToTable("Folders");
+
                 });
 
             modelBuilder.Entity("DocumentinAPI.Domain.Models.FolderXGroup", b =>
@@ -289,7 +290,7 @@ namespace DocumentinAPI.Migrations
 
                     b.HasIndex("GroupId");
 
-                    b.ToTable("FolderXGroups");
+                    b.ToTable("FolderXGroups", (string)null);
                 });
 
             modelBuilder.Entity("DocumentinAPI.Domain.Models.Group", b =>
@@ -324,7 +325,7 @@ namespace DocumentinAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Groups");
+                    b.ToTable("Groups", (string)null);
                 });
 
             modelBuilder.Entity("DocumentinAPI.Domain.Models.PasswordRecovery", b =>
@@ -355,7 +356,7 @@ namespace DocumentinAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PasswordRecoveries");
+                    b.ToTable("PasswordRecoveries", (string)null);
                 });
 
             modelBuilder.Entity("DocumentinAPI.Domain.Models.Tag", b =>
@@ -381,7 +382,7 @@ namespace DocumentinAPI.Migrations
 
                     b.HasKey("TagId");
 
-                    b.ToTable("Tags");
+                    b.ToTable("Tags", (string)null);
                 });
 
             modelBuilder.Entity("DocumentinAPI.Domain.Models.Task", b =>
@@ -435,7 +436,7 @@ namespace DocumentinAPI.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Tasks");
+                    b.ToTable("Tasks", (string)null);
                 });
 
             modelBuilder.Entity("DocumentinAPI.Domain.Models.Template", b =>
@@ -465,7 +466,7 @@ namespace DocumentinAPI.Migrations
 
                     b.HasKey("TemplateId");
 
-                    b.ToTable("Templates");
+                    b.ToTable("Templates", (string)null);
                 });
 
             modelBuilder.Entity("DocumentinAPI.Domain.Models.User", b =>
@@ -516,7 +517,7 @@ namespace DocumentinAPI.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("DocumentinAPI.Domain.Models.UserXGroup", b =>
@@ -534,7 +535,7 @@ namespace DocumentinAPI.Migrations
 
                     b.HasIndex("GroupId");
 
-                    b.ToTable("UserXGroups");
+                    b.ToTable("UserXGroups", (string)null);
                 });
 
             modelBuilder.Entity("DocumentinAPI.Domain.Models.Comment", b =>

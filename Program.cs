@@ -77,6 +77,7 @@ builder.Services.AddSwaggerGen(c =>
 
 //var connectionString = builder.Configuration.GetConnectionString("Local_NotebookGio");
 //var connectionString = builder.Configuration.GetConnectionString("Local_NotebookJao");
+//var connectionString = builder.Configuration.GetConnectionString("Local_NotebookMengo");
 var connectionString = builder.Configuration.GetConnectionString("Local_PcEmpresaGio");
 
 builder.Services.AddDbContext<DBContext>(opt => opt.UseSqlServer(connectionString));
@@ -94,6 +95,7 @@ builder.Services.AddTransient<IDocumentRepository, DocumentRepository>();
 builder.Services.AddTransient<ITaskRepository, TaskRepository>();
 builder.Services.AddTransient<IDocumentVersionRepository, DocumentVersionRepository>();
 builder.Services.AddTransient<ISupabaseRepository, SupabaseRepository>();
+builder.Services.AddTransient<IFolderRepository, FolderRepository>();
 
 /* Service */
 builder.Services.AddTransient<IAuthService, AuthService>();
@@ -105,6 +107,7 @@ builder.Services.AddTransient<IDocumentService, DocumentService>();
 builder.Services.AddTransient<ITaskService, TaskService>();
 builder.Services.AddTransient<IDocumentVersionService, DocumentVersionService>();
 builder.Services.AddTransient<ISupabaseService, SupabaseService>();
+builder.Services.AddTransient<IFolderService, FolderService>();
 
 #endregion
 

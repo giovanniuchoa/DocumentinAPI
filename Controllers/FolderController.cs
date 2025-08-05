@@ -1,4 +1,5 @@
 ﻿using DocumentinAPI.Domain.DTOs.Folder;
+using DocumentinAPI.Domain.DTOs.FolderXGroup;
 using DocumentinAPI.Interfaces.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +20,7 @@ namespace DocumentinAPI.Controllers
         }
 
         /// <summary>
-        /// Obtém uma pasta pelo identificador.
+        /// Obtém uma pasta pelo identificador com a lista de seus documentos.
         /// </summary>
         /// <response code="200">Retorna a pasta correspondente ao identificador.</response>
         /// <response code="401">Usuário não autorizado.</response>
@@ -43,7 +44,7 @@ namespace DocumentinAPI.Controllers
         }
 
         /// <summary>
-        /// Obtém uma lista de pastas.
+        /// Obtém uma lista de pastas cada uma com a lista de seus documentos.
         /// </summary>
         /// <response code="200">Retorna uma lista de pastas.</response>
         /// <response code="401">Usuário não autorizado.</response>
@@ -134,6 +135,122 @@ namespace DocumentinAPI.Controllers
             else
             {
                 return Ok(ret);
+            }
+
+        }
+
+        /// <summary>
+        /// Altera a "pasta pai" da pasta.
+        /// </summary>
+        /// <response code="200">Retorna o DTO de resposta da pasta atualizada.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
+        [HttpPut("MoveFolder")]
+        public async Task<IActionResult> MoveFolderAsync([FromBody] MoveFolderRequestDTO dto)
+        {
+
+            var ret = await _service.MoveFolderAsync(dto, ssn);
+
+            if (ret.Erro == true)
+            {
+                return BadRequest(ret);
+            }
+            else
+            {
+                return Ok(ret);
+            }
+
+        }
+
+        /// <summary>
+        /// Adiciona um vínculo de acesso de grupo com a pasta.
+        /// </summary>
+        /// <response code="200">Retorna uma lista com os grupos da pasta alterada.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
+        [HttpPost("AddFolderXGroup")]
+        public async Task<IActionResult> AddFolderXGroupAsync([FromBody] FolderXGroupRequestDTO dto)
+        {
+
+
+
+            if (("1,2").Contains(ssn.Profile.ToString()))
+            {
+
+                var ret = await _service.AddFolderXGroupAsync(dto, ssn);
+
+                if (ret.Erro == true)
+                {
+                    return BadRequest(ret);
+                }
+                else
+                {
+                    return Ok(ret);
+                }
+            }
+            else
+            {
+                return Forbid("noPermission");
+            }
+
+        }
+
+        /// <summary>
+        /// Remove um vínculo de acesso de grupo com a pasta.
+        /// </summary>
+        /// <response code="200">Retorna uma lista com os grupos da pasta alterada.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
+        [HttpDelete("DeleteFolderXGroup")]
+        public async Task<IActionResult> DeleteFolderXGroupAsync([FromBody] FolderXGroupRequestDTO dto)
+        {
+
+
+
+            if (("1,2").Contains(ssn.Profile.ToString()))
+            {
+
+                var ret = await _service.DeleteFolderXGroupAsync(dto, ssn);
+
+                if (ret.Erro == true)
+                {
+                    return BadRequest(ret);
+                }
+                else
+                {
+                    return Ok(ret);
+                }
+            }
+            else
+            {
+                return Forbid("noPermission");
+            }
+
+        }
+
+        /// <summary>
+        /// Obtém uma lista de grupos vinculados a pasta correspondente ao identificador.
+        /// </summary>
+        /// <response code="200">Retorna uma lista de grupos vinculados a pasta correspondente ao identificador.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
+        [HttpGet("GetListFolderXGroupByFolder/{folderId}")]
+        public async Task<IActionResult> GetListFolderXGroupByFolderAsync(int folderId)
+        {
+
+            var retorno = await _service.GetListFolderXGroupByFolderAsync(folderId, ssn);
+
+            if (retorno.Erro)
+            {
+                return BadRequest(retorno);
+            }
+            else
+            {
+                return Ok(retorno);
             }
 
         }

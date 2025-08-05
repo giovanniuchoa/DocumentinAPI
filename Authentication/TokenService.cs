@@ -1,4 +1,5 @@
-﻿using DocumentinAPI.Domain.Models;
+﻿using DocumentinAPI.Domain.DTOs.Auth;
+using DocumentinAPI.Domain.Models;
 using DocumentinAPI.Domain.Utils;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -11,7 +12,7 @@ namespace DocumentinAPI.Authentication
     public static class TokenService
     {
 
-        public static string GenerateToken(User usuario)
+        public static string GenerateToken(UserSession usuario)
         {
 
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -25,7 +26,9 @@ namespace DocumentinAPI.Authentication
                     new Claim(ClaimTypes.NameIdentifier, usuario.UserId.ToString()),
                     new Claim(ClaimTypes.Name, usuario.Name),
                     new Claim(ClaimTypes.Role, usuario.Profile.ToString()),
-                    new Claim("CompanyId", usuario.CompanyId.ToString())
+                    new Claim("CompanyId", usuario.CompanyId.ToString()),
+                    new Claim("GroupsIds", usuario.GroupsIds != null ? usuario.GroupsIds : ""),
+                    new Claim("FoldersIds", usuario.FoldersIds != null ? usuario.FoldersIds : "")
                 }),
 
                 Expires = DateTime.UtcNow.AddHours(8),
@@ -41,7 +44,7 @@ namespace DocumentinAPI.Authentication
         }
 
         /* Possibilita chamada do método assíncrono */
-        public static Task<string> GenerateTokenAsync(User usuario)
+        public static Task<string> GenerateTokenAsync(UserSession usuario)
         {
             return System.Threading.Tasks.Task.FromResult(GenerateToken(usuario));
         }
@@ -53,14 +56,26 @@ namespace DocumentinAPI.Authentication
             return claims.FindFirst(field).Value;
         }
 
-        public static UserSession GetClaimsData(ClaimsPrincipal user)
+        private static List<int> ConvertStringToIntList(string commaSeparatedIds)
         {
-            return new UserSession
+            if (string.IsNullOrEmpty(commaSeparatedIds))
+                return new List<int>();
+
+            return commaSeparatedIds.Split(',')
+                                   .Select(id => int.Parse(id.Trim()))
+                                   .ToList();
+        }
+
+        public static UserClaimDTO GetClaimsData(ClaimsPrincipal user)
+        {
+            return new UserClaimDTO
             {
                 UserId = int.Parse(user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value),
                 Name = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value,
                 Profile = int.Parse(user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value),
-                CompanyId = int.Parse(user.Claims.FirstOrDefault(c => c.Type == "CompanyId")?.Value)
+                CompanyId = int.Parse(user.Claims.FirstOrDefault(c => c.Type == "CompanyId")?.Value),
+                GroupsIdsList = ConvertStringToIntList(user.Claims.FirstOrDefault(c => c.Type == "GroupsIds")?.Value),
+                FoldersIdsList = ConvertStringToIntList(user.Claims.FirstOrDefault(c => c.Type == "FoldersIds")?.Value)
 
             };
         }
