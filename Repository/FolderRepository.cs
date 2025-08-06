@@ -29,7 +29,7 @@ namespace DocumentinAPI.Repository
 
                 var folderDB = await _context.Folders
                     .Include(f => f.User)
-                    .Include(f => f.Documents)
+                    .Include(f => f.Documents.Where(d => d.IsValid == true))
                     .Where(f => f.FolderId == folderId
                         && f.User.CompanyId == ssn.CompanyId
                         && ssn.FoldersIdsList.Contains(f.FolderId))
@@ -63,7 +63,7 @@ namespace DocumentinAPI.Repository
 
                 var folderListDB = await _context.Folders
                     .Include(t => t.User)
-                    .Include(t => t.Documents)
+                    .Include(t => t.Documents.Where(d => d.IsValid == true))
                     .Where(t => t.User.CompanyId == ssn.CompanyId
                         && ssn.FoldersIdsList.Contains(t.FolderId))
                     .ToListAsync();

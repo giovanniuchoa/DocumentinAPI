@@ -176,7 +176,7 @@ namespace DocumentinAPI.Migrations
 
                     b.HasIndex("FolderId");
 
-                    b.ToTable("DocumentValidations");
+                    b.ToTable("DocumentValidations", (string)null);
                 });
 
             modelBuilder.Entity("DocumentinAPI.Domain.Models.DocumentVersion", b =>
@@ -271,8 +271,7 @@ namespace DocumentinAPI.Migrations
 
                     b.HasIndex("ValidatorId");
 
-                    b.ToTable("Folders");
-
+                    b.ToTable("Folders", (string)null);
                 });
 
             modelBuilder.Entity("DocumentinAPI.Domain.Models.FolderXGroup", b =>
