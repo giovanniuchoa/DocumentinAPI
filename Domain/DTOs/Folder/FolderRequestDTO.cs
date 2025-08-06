@@ -24,5 +24,10 @@ namespace DocumentinAPI.Domain.DTOs.Folder
         /// </summary>
         public int? ParentFolderId { get; set; }
 
+        /// <summary>
+        /// Identificador do usuário responsável por validar documentos da pasta.
+        /// </summary>
+        public int ValidatorId { get; set; }
+
     }
 }

@@ -102,6 +102,36 @@ namespace DocumentinAPI.Repository
                     throw new Exception("folderNameAlreadyExists");
                 }
 
+                if (dto.ParentFolderId != null)
+                {
+
+                    var parentFolderDB = await _context.Folders
+                        .Include(t => t.User)
+                        .Where(t => t.FolderId == dto.ParentFolderId
+                            && t.User.CompanyId == ssn.CompanyId
+                            && t.IsActive == true)
+                        .FirstOrDefaultAsync();
+
+                    if (parentFolderDB == null)
+                    {
+                        throw new Exception("parentFolderNotFound");
+                    }
+
+                }
+
+                var validatorDB = await _context.Users
+                    .Where(v => v.UserId == dto.ValidatorId
+                        && v.CompanyId == ssn.CompanyId
+                        && v.IsActive == true)
+                    .FirstOrDefaultAsync();
+
+                if (validatorDB == null)
+                {
+
+                    throw new Exception("validatorNotFound");
+
+                }
+
                 folderDB = dto.Adapt<Folder>();
 
                 folderDB.UserId = ssn.UserId;
@@ -147,8 +177,39 @@ namespace DocumentinAPI.Repository
                     throw new Exception("folderNotFound");
                 }
 
+                if (dto.ParentFolderId != null)
+                {
+
+                    var parentFolderDB = await _context.Folders
+                        .Include(t => t.User)
+                        .Where(t => t.FolderId == dto.ParentFolderId
+                            && t.User.CompanyId == ssn.CompanyId
+                            && t.IsActive == true)
+                        .FirstOrDefaultAsync();
+
+                    if (parentFolderDB == null)
+                    {
+                        throw new Exception("parentFolderNotFound");
+                    }
+
+                }
+
+                var validatorDB = await _context.Users
+                    .Where(v => v.UserId == dto.ValidatorId
+                        && v.CompanyId == ssn.CompanyId
+                        && v.IsActive == true)
+                    .FirstOrDefaultAsync();
+
+                if (validatorDB == null)
+                {
+
+                    throw new Exception("validatorNotFound");
+
+                }
+
                 folderDB.Name = dto.Name;
                 folderDB.ParentFolderId = dto.ParentFolderId;
+                folderDB.ValidatorId = dto.ValidatorId;
                 folderDB.UpdatedAt = DateTime.Now;
 
                 await _context.SaveChangesAsync();
