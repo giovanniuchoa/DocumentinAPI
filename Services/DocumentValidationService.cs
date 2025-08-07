@@ -16,14 +16,33 @@ namespace DocumentinAPI.Services
             _repository = repository;
         }
 
-        public async Task<Retorno<IEnumerable<DocumentResponseDTO>>> GetListDocumentValidationAsync(UserClaimDTO ssn)
+        public async Task<Retorno<IEnumerable<DocumentResponseDTO>>> GetListDocumentValidationByValidatorAsync(UserClaimDTO ssn)
         {
 
             Retorno<IEnumerable<DocumentResponseDTO>> oRetorno = new();
 
             try
             {
-                var ret = await _repository.GetListDocumentValidationAsync(ssn);
+                var ret = await _repository.GetListDocumentValidationByValidatorAsync(ssn);
+                oRetorno = ret;
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
+
+        public async Task<Retorno<IEnumerable<DocumentResponseDTO>>> GetListDocumentValidationToEditAsync(UserClaimDTO ssn)
+        {
+
+            Retorno<IEnumerable<DocumentResponseDTO>> oRetorno = new();
+
+            try
+            {
+                var ret = await _repository.GetListDocumentValidationToEditAsync(ssn);
                 oRetorno = ret;
             }
             catch (Exception ex)

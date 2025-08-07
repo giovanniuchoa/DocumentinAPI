@@ -7,7 +7,7 @@
         {
             EmAndamento = 0,
             Validado = 1,
-            Invalidado = 2
+            Retornado = 2
         }
 
 

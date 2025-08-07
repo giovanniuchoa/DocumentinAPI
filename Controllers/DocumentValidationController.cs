@@ -24,11 +24,34 @@ namespace DocumentinAPI.Controllers
         /// <response code="401">Usuário não autorizado.</response>
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
-        [HttpGet("GetListDocumentValidation")]
-        public async Task<IActionResult> GetListDocumentValidationAsync()
+        [HttpGet("GetListDocumentValidationByValidator")]
+        public async Task<IActionResult> GetListDocumentValidationByValidatorAsync()
         {
 
-            var ret = await _service.GetListDocumentValidationAsync(ssn);
+            var ret = await _service.GetListDocumentValidationByValidatorAsync(ssn);
+
+            if (ret.Erro == true)
+            {
+                return BadRequest(ret);
+            }
+            else
+            {
+                return Ok(ret);
+            }
+        }
+
+        /// <summary>
+        /// Obtém uma lista de Documentos retornados para edição do usuário da sessão.
+        /// </summary>
+        /// <response code="200">Retorna uma lista de documentos retornados para edição do usuário da sessão.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
+        [HttpGet("GetListDocumentValidationToEdit")]
+        public async Task<IActionResult> GetListDocumentValidationToEditAsync()
+        {
+
+            var ret = await _service.GetListDocumentValidationToEditAsync(ssn);
 
             if (ret.Erro == true)
             {

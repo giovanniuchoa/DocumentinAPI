@@ -151,7 +151,8 @@ namespace DocumentinAPI.Repository
                         FolderId = documentoDB.FolderId,
                         Status = (short)Enums.StatusValidacao.EmAndamento,    
                         CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now
+                        UpdatedAt = DateTime.Now,
+                        UserId = ssn.UserId
                     };
 
                     await _context.DocumentValidations.AddAsync(documentValidationDB);

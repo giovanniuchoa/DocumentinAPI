@@ -7,7 +7,8 @@ namespace DocumentinAPI.Interfaces.IRepository
     public interface IDocumentValidationRepository
     {
 
-        public Task<Retorno<IEnumerable<DocumentResponseDTO>>> GetListDocumentValidationAsync(UserClaimDTO ssn);
+        public Task<Retorno<IEnumerable<DocumentResponseDTO>>> GetListDocumentValidationByValidatorAsync(UserClaimDTO ssn);
+        public Task<Retorno<IEnumerable<DocumentResponseDTO>>> GetListDocumentValidationToEditAsync(UserClaimDTO ssn);
 
     }
 }
