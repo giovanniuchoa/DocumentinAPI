@@ -92,11 +92,18 @@ namespace DocumentinAPI.Repository
             {
 
                 var documentValidationDB = await _context.DocumentValidations
+                    .Include(d => d.Folder)
+                    .Include(d => d.Document)
                     .Where(d => d.DocumentId == dto.DocumentId)
                     .FirstOrDefaultAsync();
 
                 documentValidationDB.Status = dto.Status;
                 documentValidationDB.UpdatedAt = DateTime.Now;
+
+                if (documentValidationDB.Folder.ValidatorId == ssn.UserId)
+                {
+                    documentValidationDB.Comment = dto.Comment;
+                }
 
                 await _context.SaveChangesAsync();
 
@@ -112,6 +119,32 @@ namespace DocumentinAPI.Repository
                     await _context.SaveChangesAsync();
 
                 }
+
+                oRetorno.Objeto = documentValidationDB.Adapt<DocumentValidationResponseDTO>();
+                oRetorno.SetSucesso();
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
+
+        public async Task<Retorno<DocumentValidationResponseDTO>> GetDocumentValidationByIdAsync(int documentId, UserClaimDTO ssn)
+        {
+
+            Retorno<DocumentValidationResponseDTO> oRetorno = new();
+
+            try
+            {
+
+                var documentValidationDB = await _context.DocumentValidations
+                    .Include(d => d.Document)
+                    .Where(d => d.DocumentId == documentId)
+                    .FirstOrDefaultAsync();
 
                 oRetorno.Objeto = documentValidationDB.Adapt<DocumentValidationResponseDTO>();
                 oRetorno.SetSucesso();

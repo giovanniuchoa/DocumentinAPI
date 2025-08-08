@@ -87,5 +87,28 @@ namespace DocumentinAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Obtém o objeto de validação de documento.
+        /// </summary>
+        /// <response code="200">Retorna o objeto de validação de documento.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="400">Se ocorrer algum erro inesperado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
+        [HttpGet("GetDocumentValidationById/{documentId}")]
+        public async Task<IActionResult> GetDocumentValidationByIdAsync(int documentId)
+        {
+
+            var ret = await _service.GetDocumentValidationByIdAsync(documentId, ssn);
+
+            if (ret.Erro == true)
+            {
+                return BadRequest(ret);
+            }
+            else
+            {
+                return Ok(ret);
+            }
+        }
+
     }
 }

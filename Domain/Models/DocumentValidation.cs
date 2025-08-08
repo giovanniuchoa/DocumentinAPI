@@ -28,6 +28,9 @@ namespace DocumentinAPI.Domain.Models
         [Required]
         public int UserId { get; set; }
 
+        [Column(TypeName = "varchar(500)")]
+        public string Comment { get; set; }
+
         [ForeignKey(nameof(DocumentId))]
         public virtual Document Document { get; set; }
 

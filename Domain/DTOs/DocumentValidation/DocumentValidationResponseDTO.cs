@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DocumentinAPI.Domain.DTOs.Document;
+using System.ComponentModel.DataAnnotations;
 
 namespace DocumentinAPI.Domain.DTOs.DocumentValidation
 {
@@ -18,6 +19,10 @@ namespace DocumentinAPI.Domain.DTOs.DocumentValidation
         public DateTime UpdatedAt { get; set; }
 
         public int UserId { get; set; }
+
+        public string Comment { get; set; }
+
+        public DocumentResponseDTO Document { get; set; }
 
     }
 }

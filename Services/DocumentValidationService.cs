@@ -73,5 +73,24 @@ namespace DocumentinAPI.Services
             return oRetorno;
 
         }
+
+        public async Task<Retorno<DocumentValidationResponseDTO>> GetDocumentValidationByIdAsync(int documentId, UserClaimDTO ssn)
+        {
+
+            Retorno<DocumentValidationResponseDTO> oRetorno = new();
+
+            try
+            {
+                var ret = await _repository.GetDocumentValidationByIdAsync(documentId, ssn);
+                oRetorno = ret;
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
     }
 }

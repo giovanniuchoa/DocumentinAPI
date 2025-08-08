@@ -17,5 +17,10 @@
         /// </summary>
         public short Status { get; set; }
 
+        /// <summary>
+        /// Comentário sobre a validação do documento. (somente para o validador)
+        /// </summary>
+        public string Comment { get; set; }
+
     }
 }

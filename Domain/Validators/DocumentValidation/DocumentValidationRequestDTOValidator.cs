@@ -16,6 +16,10 @@ namespace DocumentinAPI.Domain.Validators.DocumentValidation
             RuleFor(x => x.Status)
                 .Must(s => s == (short)Enums.StatusValidacao.EmAndamento || s == (short)Enums.StatusValidacao.Validado || s == (short)Enums.StatusValidacao.Retornado)
                 .WithMessage("validStatusRequired");
+
+            RuleFor(x => x.Comment)
+                .MaximumLength(500).WithMessage("commentMaxLength");
+
         }
 
     }
