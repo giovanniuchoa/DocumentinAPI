@@ -1,6 +1,7 @@
 ﻿using DocumentinAPI.Data;
 using DocumentinAPI.Domain.DTOs.Auth;
 using DocumentinAPI.Domain.DTOs.Document;
+using DocumentinAPI.Domain.DTOs.DocumentValidation;
 using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IRepository;
 using Mapster;
@@ -70,6 +71,49 @@ namespace DocumentinAPI.Repository
                     .ToListAsync();
 
                 oRetorno.Objeto = documentsDB.Adapt<IEnumerable<DocumentResponseDTO>>();
+                oRetorno.SetSucesso();
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
+
+        public async Task<Retorno<DocumentValidationResponseDTO>> UpdateDocumentValidationStatusAsync(DocumentValidationRequestDTO dto, UserClaimDTO ssn)
+        {
+
+            Retorno<DocumentValidationResponseDTO> oRetorno = new();
+
+            try
+            {
+
+                var documentValidationDB = await _context.DocumentValidations
+                    .Where(d => d.DocumentId == dto.DocumentId)
+                    .FirstOrDefaultAsync();
+
+                documentValidationDB.Status = dto.Status;
+                documentValidationDB.UpdatedAt = DateTime.Now;
+
+                await _context.SaveChangesAsync();
+
+                if (dto.Status == (short)Enums.StatusValidacao.Validado)
+                {
+
+                    var documentDB = await _context.Documents
+                        .Where(d => d.DocumentId == dto.DocumentId)
+                        .FirstOrDefaultAsync();
+
+                    documentDB.IsValid = true;  
+
+                    await _context.SaveChangesAsync();
+
+                }
+
+                oRetorno.Objeto = documentValidationDB.Adapt<DocumentValidationResponseDTO>();
                 oRetorno.SetSucesso();
 
             }
