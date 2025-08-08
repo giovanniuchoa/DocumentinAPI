@@ -20,6 +20,8 @@ namespace DocumentinAPI.Domain.DTOs.Folder
 
         public DateTime UpdatedAt { get; set; }
 
+        public int ValidatorId { get; set; }
+
         public ICollection<DocumentResponseDTO> Documents { get; set; } = [];
 
     }

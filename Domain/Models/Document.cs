@@ -32,6 +32,8 @@ namespace DocumentinAPI.Domain.Models
         [Required]
         public bool IsActive { get; set; }
 
+        public Nullable<bool> IsValid { get; set; }
+
         [ForeignKey(nameof(UserId))]
         public virtual User User { get; set; }
 

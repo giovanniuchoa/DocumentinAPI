@@ -20,6 +20,9 @@ namespace DocumentinAPI.Domain.Validators.Folder
                 .GreaterThan(0).WithMessage("validParentFolderIdRequired")
                 .When(x => x.ParentFolderId.HasValue);
 
+            RuleFor(x => x.ValidatorId)
+                .GreaterThan(0).WithMessage("validValidatorIdRequired");
+
         }
 
     }

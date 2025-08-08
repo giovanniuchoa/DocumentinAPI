@@ -96,6 +96,7 @@ builder.Services.AddTransient<ITaskRepository, TaskRepository>();
 builder.Services.AddTransient<IDocumentVersionRepository, DocumentVersionRepository>();
 builder.Services.AddTransient<ISupabaseRepository, SupabaseRepository>();
 builder.Services.AddTransient<IFolderRepository, FolderRepository>();
+builder.Services.AddTransient<IDocumentValidationRepository, DocumentValidationRepository>();
 
 /* Service */
 builder.Services.AddTransient<IAuthService, AuthService>();
@@ -108,6 +109,7 @@ builder.Services.AddTransient<ITaskService, TaskService>();
 builder.Services.AddTransient<IDocumentVersionService, DocumentVersionService>();
 builder.Services.AddTransient<ISupabaseService, SupabaseService>();
 builder.Services.AddTransient<IFolderService, FolderService>();
+builder.Services.AddTransient<IDocumentValidationService, DocumentValidationService>();
 
 #endregion
 

@@ -4,6 +4,7 @@ using DocumentinAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DocumentinAPI.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20250805193415_migration_20250805_001")]
+    partial class migration_20250805_001
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -155,9 +158,6 @@ namespace DocumentinAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DocumentValidationId"));
 
-                    b.Property<string>("Comment")
-                        .HasColumnType("varchar(500)");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -173,16 +173,11 @@ namespace DocumentinAPI.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("DocumentValidationId");
 
                     b.HasIndex("DocumentId");
 
                     b.HasIndex("FolderId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("DocumentValidations");
                 });
@@ -567,7 +562,7 @@ namespace DocumentinAPI.Migrations
             modelBuilder.Entity("DocumentinAPI.Domain.Models.Document", b =>
                 {
                     b.HasOne("DocumentinAPI.Domain.Models.Folder", "Folder")
-                        .WithMany("Documents")
+                        .WithMany()
                         .HasForeignKey("FolderId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -597,17 +592,9 @@ namespace DocumentinAPI.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("DocumentinAPI.Domain.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.Navigation("Document");
 
                     b.Navigation("Folder");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("DocumentinAPI.Domain.Models.DocumentVersion", b =>
@@ -650,7 +637,7 @@ namespace DocumentinAPI.Migrations
 
             modelBuilder.Entity("DocumentinAPI.Domain.Models.Folder", b =>
                 {
-                    b.HasOne("DocumentinAPI.Domain.Models.Folder", "ParentFolder")
+                    b.HasOne("DocumentinAPI.Domain.Models.Folder", "ParentFoler")
                         .WithMany()
                         .HasForeignKey("ParentFolderId")
                         .OnDelete(DeleteBehavior.NoAction);
@@ -667,7 +654,7 @@ namespace DocumentinAPI.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ParentFolder");
+                    b.Navigation("ParentFoler");
 
                     b.Navigation("User");
 
@@ -769,11 +756,6 @@ namespace DocumentinAPI.Migrations
                     b.Navigation("Group");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("DocumentinAPI.Domain.Models.Folder", b =>
-                {
-                    b.Navigation("Documents");
                 });
 #pragma warning restore 612, 618
         }

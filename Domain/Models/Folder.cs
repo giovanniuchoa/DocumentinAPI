@@ -27,6 +27,9 @@ namespace DocumentinAPI.Domain.Models
         [Required]
         public DateTime UpdatedAt { get; set; }
 
+        [Required]
+        public int ValidatorId { get; set; }
+
         public ICollection<Document> Documents { get; set; } = [];
 
         [ForeignKey(nameof(ParentFolderId))]
@@ -34,6 +37,9 @@ namespace DocumentinAPI.Domain.Models
 
         [ForeignKey(nameof(UserId))]
         public virtual User User { get; set; }
+
+        [ForeignKey(nameof(ValidatorId))]
+        public virtual User Validator { get; set; }
 
     }
 }

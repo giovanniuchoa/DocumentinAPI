@@ -140,6 +140,31 @@ namespace DocumentinAPI.Repository
                     throw;
                 }
 
+                try
+                {
+
+                    /* Grava na DocumentValidation */
+
+                    var documentValidationDB = new DocumentValidation
+                    {
+                        DocumentId = documentoDB.DocumentId,
+                        FolderId = documentoDB.FolderId,
+                        Status = (short)Enums.StatusValidacao.EmAndamento,    
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now,
+                        UserId = ssn.UserId
+                    };
+
+                    await _context.DocumentValidations.AddAsync(documentValidationDB);
+
+                    await _context.SaveChangesAsync();
+
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+
                 oRetorno.Objeto = documentoDB.Adapt<DocumentResponseDTO>();
                 oRetorno.SetSucesso();
 
