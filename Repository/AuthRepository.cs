@@ -50,6 +50,10 @@ namespace DocumentinAPI.Repository
 
                 userClaims.FoldersIds = userFolders?.Any() == true ? string.Join(",", userFolders) : null;
 
+                usuario.LastLoginAt = DateTime.Now;
+
+                await _context.SaveChangesAsync();
+
                 oRetorno.Objeto = new(await TokenService.GenerateTokenAsync(userClaims));
 
                 oRetorno.SetSucesso();

@@ -25,11 +25,20 @@ namespace DocumentinAPI.Domain.Models
         [Required]
         public DateTime UpdatedAt { get; set; }
 
+        [Required]
+        public int UserId { get; set; }
+
+        [Column(TypeName = "varchar(500)")]
+        public string Comment { get; set; }
+
         [ForeignKey(nameof(DocumentId))]
         public virtual Document Document { get; set; }
 
         [ForeignKey(nameof(FolderId))]
         public virtual Folder Folder { get; set; }
+
+        [ForeignKey(nameof(UserId))]
+        public virtual User User { get; set; }
 
     }
 }

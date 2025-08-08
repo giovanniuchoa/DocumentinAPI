@@ -12,6 +12,7 @@ namespace DocumentinAPI.Domain.DTOs.Document
         public int UserId { get; set; }
         public int FolderId { get; set; }
         public bool IsActive { get; set; }
+        public Nullable<bool> IsValid { get; set; }
 
     }
 }
