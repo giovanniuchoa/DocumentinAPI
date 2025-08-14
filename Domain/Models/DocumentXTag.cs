@@ -15,11 +15,17 @@ namespace DocumentinAPI.Domain.Models
         [Required]
         public DateTime CreatedAt { get; set; }
 
+        [Required]
+        public int UserId { get; set; }
+
         [ForeignKey(nameof(TagId))]
         public virtual Tag Tag { get; set; }
 
         [ForeignKey(nameof(DocumentId))]
         public virtual Document Document { get; set; }
+
+        [ForeignKey(nameof(UserId))]
+        public virtual User User { get; set; }
 
     }
 }
