@@ -8,6 +8,7 @@ namespace DocumentinAPI.Domain.DTOs.Tag
         public int TagId { get; set; }
         public int DocumentId { get; set; }
         public DateTime CreatedAt { get; set; }
+        public int UserId { get; set; }
 
     }
 }
