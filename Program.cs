@@ -75,10 +75,10 @@ builder.Services.AddSwaggerGen(c =>
 
 #region DataBase
 
-var connectionString = builder.Configuration.GetConnectionString("Local_NotebookGio");
+//var connectionString = builder.Configuration.GetConnectionString("Local_NotebookGio");
 //var connectionString = builder.Configuration.GetConnectionString("Local_NotebookJao");
 //var connectionString = builder.Configuration.GetConnectionString("Local_NotebookMengo");
-//var connectionString = builder.Configuration.GetConnectionString("Local_PcEmpresaGio");
+var connectionString = builder.Configuration.GetConnectionString("Local_PcEmpresaGio");
 
 builder.Services.AddDbContext<DBContext>(opt => opt.UseSqlServer(connectionString));
 
@@ -98,6 +98,7 @@ builder.Services.AddTransient<ISupabaseRepository, SupabaseRepository>();
 builder.Services.AddTransient<IFolderRepository, FolderRepository>();
 builder.Services.AddTransient<IDocumentValidationRepository, DocumentValidationRepository>();
 builder.Services.AddTransient<ITemplateRepository, TemplateRepository>();
+builder.Services.AddTransient<ICommentRepository, CommentRepository>();
 
 /* Service */
 builder.Services.AddTransient<IAuthService, AuthService>();
@@ -112,6 +113,7 @@ builder.Services.AddTransient<ISupabaseService, SupabaseService>();
 builder.Services.AddTransient<IFolderService, FolderService>();
 builder.Services.AddTransient<IDocumentValidationService, DocumentValidationService>();
 builder.Services.AddTransient<ITemplateService, TemplateService>();
+builder.Services.AddTransient<ICommentService, CommentService>();
 
 #endregion
 
