@@ -17,7 +17,7 @@ namespace DocumentinAPI.Repository
         {
         }
 
-        public async Task<Retorno<DocumentXTagResponseDTO>> AddDocumentXTagAsync(int documentId, int tagId, UserClaimDTO ssn)
+        public async Task<Retorno<DocumentXTagResponseDTO>> AddDocumentXTagAsync(DocumentXTagRequestDTO dto, UserClaimDTO ssn)
         {
 
             Retorno<DocumentXTagResponseDTO> oRetorno = new();
@@ -27,9 +27,10 @@ namespace DocumentinAPI.Repository
 
                 var documentoDB = await _context.Documents
                     .Include(d => d.User)
-                    .Where(d => d.DocumentId == documentId
+                    .Where(d => d.DocumentId == dto.DocumentId
                         && d.User.CompanyId == ssn.CompanyId
-                        && d.IsActive == true)
+                        && d.IsActive
+                        && d.IsValid == true)
                     .FirstOrDefaultAsync();
 
                 if (documentoDB == null)
@@ -39,8 +40,9 @@ namespace DocumentinAPI.Repository
 
                 var tagDB = await _context.Tags
                     .Include(t => t.User)
-                    .Where(t => t.TagId == tagId
-                        && t.User.CompanyId == ssn.CompanyId)
+                    .Where(t => t.TagId == dto.TagId
+                        && t.User.CompanyId == ssn.CompanyId
+                        && t.IsActive)
                     .FirstOrDefaultAsync();
 
                 if (tagDB == null)
@@ -50,8 +52,8 @@ namespace DocumentinAPI.Repository
 
                 var documentXTagDB = new DocumentXTag();
 
-                documentXTagDB.DocumentId = documentId;
-                documentXTagDB.TagId = tagId;
+                documentXTagDB.DocumentId = dto.DocumentId;
+                documentXTagDB.TagId = dto.TagId;
                 documentXTagDB.CreatedAt = DateTime.Now;
                 documentXTagDB.UserId = ssn.UserId;
 
@@ -65,7 +67,7 @@ namespace DocumentinAPI.Repository
             }
             catch (Exception ex)
             {
-                oRetorno.SetErro();
+                oRetorno.SetErro(ex.Message);
             }
 
             return oRetorno;
@@ -85,6 +87,7 @@ namespace DocumentinAPI.Repository
                 tagDB.CreatedAt = DateTime.Now;
                 tagDB.UpdatedAt = DateTime.Now;
                 tagDB.UserId = ssn.UserId;
+                tagDB.IsActive = true;
 
                 await _context.Tags.AddAsync(tagDB);
 
@@ -103,11 +106,6 @@ namespace DocumentinAPI.Repository
 
         }
 
-        public async Task<Retorno<DocumentXTagResponseDTO>> DeleteDocumentXTagAsync(int documentId, int tagId, UserClaimDTO ssn)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<Retorno<IEnumerable<TagResponseDTO>>> GetDocumentXTagByDocumentIdAsync(int documentId, UserClaimDTO ssn)
         {
 
@@ -118,7 +116,8 @@ namespace DocumentinAPI.Repository
 
                 var tagListDB = await _context.DocumentXTags
                     .Include(dxt => dxt.Tag)
-                    .Where(dxt => dxt.DocumentId == documentId)
+                    .Where(dxt => dxt.DocumentId == documentId
+                        && dxt.Tag.IsActive)
                     .Select(dxt => dxt.Tag)
                     .ToListAsync();
 
@@ -144,7 +143,9 @@ namespace DocumentinAPI.Repository
 
                 var documentListDB = await _context.DocumentXTags
                     .Include(dxt => dxt.Document)
-                    .Where(dxt => dxt.TagId == tagId)
+                    .Where(dxt => dxt.TagId == tagId
+                        && dxt.Document.IsActive 
+                        && dxt.Document.IsValid == true)
                     .Select(dxt => dxt.Document)
                     .ToListAsync();
 
@@ -285,6 +286,46 @@ namespace DocumentinAPI.Repository
                 await _context.SaveChangesAsync();
 
                 oRetorno.Objeto = tagDB.Adapt<TagResponseDTO>();
+                oRetorno.SetSucesso();
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
+
+        public async Task<Retorno<IEnumerable<TagResponseDTO>>> DeleteDocumentXTagAsync(DocumentXTagRequestDTO dto, UserClaimDTO ssn)
+        {
+
+            Retorno<IEnumerable<TagResponseDTO>> oRetorno = new();
+
+            try
+            {
+
+                var documentXTagDB = await _context.DocumentXTags
+                    .Where(dxt => dxt.DocumentId == dto.DocumentId && dxt.TagId == dto.TagId)
+                    .FirstOrDefaultAsync();
+
+                if (documentXTagDB == null)
+                {
+                    throw new Exception("documentXTagNotFound");
+                }
+
+                _context.DocumentXTags.Remove(documentXTagDB);
+
+                await _context.SaveChangesAsync();
+
+                var tagListDB = await _context.DocumentXTags
+                    .Include(dxt => dxt.Tag)
+                    .Where(dxt => dxt.DocumentId == dto.DocumentId)
+                    .Select(dxt => dxt.Tag)
+                    .ToListAsync();
+
+                oRetorno.Objeto = tagListDB.Adapt<List<TagResponseDTO>>();
                 oRetorno.SetSucesso();
 
             }
