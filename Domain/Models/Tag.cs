@@ -22,5 +22,11 @@ namespace DocumentinAPI.Domain.Models
         [Required]
         public DateTime UpdatedAt { get; set; }
 
+        [Required]
+        public int UserId { get; set; }
+
+        [ForeignKey(nameof(UserId))]
+        public virtual User User { get; set; }
+
     }
 }
