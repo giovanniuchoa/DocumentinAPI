@@ -14,7 +14,7 @@ namespace DocumentinAPI.Domain.Models
         public string Name { get; set; }
 
         [Required]
-        [Column(TypeName = "varchar(15)")]
+        [Column(TypeName = "varchar(20)")]
         public string TaxId { get; set; }
 
         [Required]
