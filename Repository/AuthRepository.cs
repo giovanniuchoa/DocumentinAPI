@@ -24,8 +24,10 @@ namespace DocumentinAPI.Repository
             {
 
                 var usuario = await _context.Users
+                    .Include(u => u.Company)
                     .Where(u => u.Email == model.Login
-                        && u.IsActive == true)
+                        && u.IsActive == true
+                        && u.Company.IsActive)
                     .FirstOrDefaultAsync();
 
                 if (usuario == null || usuario.Password != model.Password.GenerateHash())
