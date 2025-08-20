@@ -100,6 +100,7 @@ builder.Services.AddTransient<IDocumentValidationRepository, DocumentValidationR
 builder.Services.AddTransient<ITemplateRepository, TemplateRepository>();
 builder.Services.AddTransient<ICommentRepository, CommentRepository>();
 builder.Services.AddTransient<ITagRepository, TagRepository>();
+builder.Services.AddTransient<IAIRepository, AIRepository>();
 
 /* Service */
 builder.Services.AddTransient<IAuthService, AuthService>();
@@ -116,6 +117,7 @@ builder.Services.AddTransient<IDocumentValidationService, DocumentValidationServ
 builder.Services.AddTransient<ITemplateService, TemplateService>();
 builder.Services.AddTransient<ICommentService, CommentService>();
 builder.Services.AddTransient<ITagService, TagService>();
+builder.Services.AddTransient<IAIService, AIService>();
 
 #endregion
 
