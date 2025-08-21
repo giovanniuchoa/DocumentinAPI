@@ -26,6 +26,7 @@ namespace DocumentinAPI.Data
         public DbSet<Company> Companies { get; set; }
         public DbSet<PasswordRecovery> PasswordRecoveries { get; set; }
         public DbSet<DocumentValidation> DocumentValidations { get; set; }
+        public DbSet<LogAIRequest> LogAIRequests { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

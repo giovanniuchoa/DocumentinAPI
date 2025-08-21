@@ -75,10 +75,10 @@ builder.Services.AddSwaggerGen(c =>
 
 #region DataBase
 
-//var connectionString = builder.Configuration.GetConnectionString("Local_NotebookGio");
+var connectionString = builder.Configuration.GetConnectionString("Local_NotebookGio");
 //var connectionString = builder.Configuration.GetConnectionString("Local_NotebookJao");
 //var connectionString = builder.Configuration.GetConnectionString("Local_NotebookMengo");
-var connectionString = builder.Configuration.GetConnectionString("Local_PcEmpresaGio");
+//var connectionString = builder.Configuration.GetConnectionString("Local_PcEmpresaGio");
 
 builder.Services.AddDbContext<DBContext>(opt => opt.UseSqlServer(connectionString));
 
