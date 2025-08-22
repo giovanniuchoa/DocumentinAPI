@@ -15,7 +15,24 @@ namespace DocumentinAPI.Repository
 
         public async Task<Retorno<AIResponseDTO>> GenerateSummaryAsync(AIRequestDTO dto, UserClaimDTO ssn)
         {
-            throw new NotImplementedException();
+            
+            Retorno<AIResponseDTO> oRetorno = new();
+
+            try
+            {
+
+                /* TODO: Requisição OpenAI */
+
+                /* TODO: Gravar em LogAPIRequests */
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
         }
     }
 }
