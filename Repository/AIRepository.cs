@@ -124,6 +124,8 @@ namespace DocumentinAPI.Repository
                 configDB.ApiKey = dto.ApiKey;
                 configDB.UpdatedAt = DateTime.Now;
 
+                await _context.SaveChangesAsync();
+
                 oRetorno.Objeto = configDB.Adapt<OpenAIConfigResponseDTO>();
                 oRetorno.SetSucesso();
 

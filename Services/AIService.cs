@@ -57,7 +57,13 @@ namespace DocumentinAPI.Services
             try
             {
 
-                var apiKey = _config["OpenAI:ApiKey"];
+                var apiKey = (await _repository.GetOpenAIConfigByCompanyAsync(ssn))?.Objeto?.ApiKey;
+
+                if (apiKey == null)
+                {
+                    throw new Exception("apiKeyRequired");
+                }
+
                 var model = _config["OpenAI:Model"];
                 var baseUrl = _config["OpenAI:BaseUrl"];
 
@@ -81,12 +87,18 @@ namespace DocumentinAPI.Services
 
                 var response = await client.PostAsync($"{baseUrl}/chat/completions", content);
 
+                if (!response.IsSuccessStatusCode)
+                {
+                    oRetorno.SetErro("errorCallingOpenAI");
+                }
+
+
                 var responseString = await response.Content.ReadAsStringAsync();
 
                 using var doc = JsonDocument.Parse(responseString);
 
-                int tokensEnviados = doc.RootElement.GetProperty("usage").GetProperty("prompt_tokens").GetInt32();
-                int tokensRecebidos = doc.RootElement.GetProperty("usage").GetProperty("completion_tokens").GetInt32();
+                int tokensEnviados = response.IsSuccessStatusCode ? doc.RootElement.GetProperty("usage").GetProperty("prompt_tokens").GetInt32() : 0;
+                int tokensRecebidos = response.IsSuccessStatusCode ? doc.RootElement.GetProperty("usage").GetProperty("completion_tokens").GetInt32() : 0;
 
                 var resumo = doc.RootElement
                                 .GetProperty("choices")[0]
