@@ -118,7 +118,7 @@ namespace DocumentinAPI.Services
 
         }
 
-        public async Task<Retorno<OpenAIConfigResponseDTO>> GetOpenAIConfigByIdAsync(int openAiConfigId, UserClaimDTO ssn)
+        public async Task<Retorno<OpenAIConfigResponseDTO>> GetOpenAIConfigByCompanyAsync(UserClaimDTO ssn)
         {
 
             Retorno<OpenAIConfigResponseDTO> oRetorno = new();
@@ -126,7 +126,7 @@ namespace DocumentinAPI.Services
             try
             {
 
-                var ret = await _repository.GetOpenAIConfigByIdAsync(openAiConfigId, ssn);
+                var ret = await _repository.GetOpenAIConfigByCompanyAsync(ssn);
 
                 oRetorno = ret;
 

@@ -10,7 +10,7 @@ namespace DocumentinAPI.Interfaces.IRepository
     {
 
         public Task LogAIRequestAsync(LogAIRequestDTO dto, UserClaimDTO ssn);
-        public Task<Retorno<OpenAIConfigResponseDTO>> GetOpenAIConfigByIdAsync(int openAiConfigId, UserClaimDTO ssn);
+        public Task<Retorno<OpenAIConfigResponseDTO>> GetOpenAIConfigByCompanyAsync(UserClaimDTO ssn);
         public Task<Retorno<OpenAIConfigResponseDTO>> AddOpenAIConfigAsync(OpenAIConfigRequestDTO dto, UserClaimDTO ssn);
         public Task<Retorno<OpenAIConfigResponseDTO>> UpdateOpenAIConfigAsync(OpenAIConfigRequestDTO dto, UserClaimDTO ssn);
     }

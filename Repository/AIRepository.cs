@@ -50,7 +50,7 @@ namespace DocumentinAPI.Repository
 
         }
 
-        public async Task<Retorno<OpenAIConfigResponseDTO>> GetOpenAIConfigByIdAsync(int openAiConfigId, UserClaimDTO ssn)
+        public async Task<Retorno<OpenAIConfigResponseDTO>> GetOpenAIConfigByCompanyAsync(UserClaimDTO ssn)
         {
 
             Retorno<OpenAIConfigResponseDTO> oRetorno = new();
@@ -59,8 +59,7 @@ namespace DocumentinAPI.Repository
             {
 
                 var configDB = await _context.OpenAIConfigs
-                    .Where(c => c.OpenAIConfigId == openAiConfigId 
-                        && c.CompanyId == ssn.CompanyId)
+                    .Where(c => c.CompanyId == ssn.CompanyId)
                     .FirstOrDefaultAsync();
 
                 if (configDB == null)

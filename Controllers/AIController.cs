@@ -51,11 +51,11 @@ namespace DocumentinAPI.Controllers
         /// <response code="401">Usuário não autorizado.</response>
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
-        [HttpGet("GetOpenAIConfigById/{openAiConfigId}")]
-        public async Task<IActionResult> GetOpenAIConfigByIdAsync(int openAiConfigId)
+        [HttpGet("GetOpenAIConfigByCompany")]
+        public async Task<IActionResult> GetOpenAIConfigByCompanyAsync()
         {
 
-            var ret = await _service.GetOpenAIConfigByIdAsync(openAiConfigId, ssn);
+            var ret = await _service.GetOpenAIConfigByCompanyAsync(ssn);
 
             if (ret.Erro == true)
             {
