@@ -2,6 +2,7 @@
 using DocumentinAPI.Domain.DTOs.Auth;
 using DocumentinAPI.Domain.DTOs.Comment;
 using DocumentinAPI.Domain.DTOs.LogAPIRequest;
+using DocumentinAPI.Domain.DTOs.OpenAIConfig;
 using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IRepository;
 using DocumentinAPI.Interfaces.IServices;
@@ -22,6 +23,28 @@ namespace DocumentinAPI.Services
         {
             _repository = repository;
             _config = config;
+        }
+
+        public async Task<Retorno<OpenAIConfigResponseDTO>> AddOpenAIConfigAsync(OpenAIConfigRequestDTO dto, UserClaimDTO ssn)
+        {
+
+            Retorno<OpenAIConfigResponseDTO> oRetorno = new();
+
+            try
+            {
+
+                var ret = await _repository.AddOpenAIConfigAsync(dto, ssn);
+
+                oRetorno = ret;
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
         }
 
         public async Task<Retorno<AIResponseDTO>> GenerateSummaryAsync(AIRequestDTO dto, UserClaimDTO ssn)
@@ -89,6 +112,50 @@ namespace DocumentinAPI.Services
 
                 await _repository.LogAIRequestAsync(logDTO, ssn);
 
+            }
+
+            return oRetorno;
+
+        }
+
+        public async Task<Retorno<OpenAIConfigResponseDTO>> GetOpenAIConfigByIdAsync(int openAiConfigId, UserClaimDTO ssn)
+        {
+
+            Retorno<OpenAIConfigResponseDTO> oRetorno = new();
+
+            try
+            {
+
+                var ret = await _repository.GetOpenAIConfigByIdAsync(openAiConfigId, ssn);
+
+                oRetorno = ret;
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
+
+        public async Task<Retorno<OpenAIConfigResponseDTO>> UpdateOpenAIConfigAsync(OpenAIConfigRequestDTO dto, UserClaimDTO ssn)
+        {
+
+            Retorno<OpenAIConfigResponseDTO> oRetorno = new();
+
+            try
+            {
+
+                var ret = await _repository.UpdateOpenAIConfigAsync(dto, ssn);
+
+                oRetorno = ret;
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
             }
 
             return oRetorno;

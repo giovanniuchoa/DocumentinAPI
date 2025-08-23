@@ -27,6 +27,7 @@ namespace DocumentinAPI.Data
         public DbSet<PasswordRecovery> PasswordRecoveries { get; set; }
         public DbSet<DocumentValidation> DocumentValidations { get; set; }
         public DbSet<LogAIRequest> LogAIRequests { get; set; }
+        public DbSet<OpenAIConfig> OpenAIConfigs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
