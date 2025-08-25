@@ -10,6 +10,13 @@
             Retornado = 2
         }
 
+        public enum TipoUsuario
+        {
+            AdministradorDev = 1,
+            Gerente = 2,
+            Funcionario = 3
+        }
+
 
     }
 }
