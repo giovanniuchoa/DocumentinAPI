@@ -65,7 +65,7 @@ namespace DocumentinAPI.Repository
                     .Include(t => t.User)
                     .Include(t => t.Documents.Where(d => d.IsValid == true))
                     .Where(t => t.User.CompanyId == ssn.CompanyId
-                        && ssn.FoldersIdsList.Contains(t.FolderId))
+                        && (ssn.Profile == (int)Enums.TipoUsuario.AdministradorDev || ssn.FoldersIdsList.Contains(t.FolderId)) )
                     .ToListAsync();
 
                 oRetorno.Objeto = folderListDB.Adapt<List<FolderResponseDTO>>();
