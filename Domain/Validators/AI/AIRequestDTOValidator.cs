@@ -8,9 +8,8 @@ namespace DocumentinAPI.Domain.Validators.AI
 
         public AIRequestDTOValidator()
         {
-            RuleFor(x => x.Content)
-                .NotEmpty()
-                .WithMessage("validContentRequired");
+            RuleFor(x => x.DocumentId)
+                .GreaterThan(0).WithMessage("validDocumentIdRequired");
         }
 
     }

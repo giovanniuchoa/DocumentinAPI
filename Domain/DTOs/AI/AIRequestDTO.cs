@@ -8,9 +8,9 @@
     {
 
         /// <summary>
-        /// Conteúdo do documento a ser resumido.
+        /// Identificador documento a ser resumido.
         /// </summary>
-        public string Content { get; set; }
+        public int DocumentId { get; set; }
 
     }
 }

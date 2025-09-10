@@ -6,6 +6,8 @@ using DocumentinAPI.Domain.DTOs.OpenAIConfig;
 using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IRepository;
 using DocumentinAPI.Interfaces.IServices;
+using Org.BouncyCastle.Asn1.Crmf;
+using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 
@@ -16,13 +18,18 @@ namespace DocumentinAPI.Services
 
         private readonly IAIRepository _repository;
 
+        private readonly IDocumentRepository _documentRepository;
 
         private readonly IConfiguration _config;
 
-        public AIService(IAIRepository repository, IConfiguration config)
+        private readonly HttpClient _client;
+
+        public AIService(IAIRepository repository, IConfiguration config, IDocumentRepository documentRepository, IHttpClientFactory clientFactory)
         {
             _repository = repository;
             _config = config;
+            _documentRepository = documentRepository;
+            _client = clientFactory.CreateClient();
         }
 
         public async Task<Retorno<OpenAIConfigResponseDTO>> AddOpenAIConfigAsync(OpenAIConfigRequestDTO dto, UserClaimDTO ssn)
@@ -57,62 +64,33 @@ namespace DocumentinAPI.Services
             try
             {
 
-                var apiKey = (await _repository.GetOpenAIConfigByCompanyAsync(ssn))?.Objeto?.ApiKey;
+                var apiKey = ((await _repository.GetOpenAIConfigByCompanyAsync(ssn))?.Objeto?.ApiKey) ?? throw new Exception("apiKeyRequired");
 
-                if (apiKey == null)
-                {
-                    throw new Exception("apiKeyRequired");
-                }
+                var contentDB = await _documentRepository.GetDocumentByIdAsync(dto.DocumentId, ssn);            
 
-                var model = _config["OpenAI:Model"];
-                var baseUrl = _config["OpenAI:BaseUrl"];
+                OpenAIRequestDTO body = BuildRequestBody(contentDB.Objeto.Content);
 
-                var client = new HttpClient();
+                _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey);
 
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey);
-
-                var body = new
-                {
-                    model = model,
-                    messages = new[]
-                    {
-                        new { role = "system", content = "Você receberá um texto estruturado em XML e deve sempre responder apenas com o conteúdo em XML resumido, mantendo o formato XML válido." },
-                        new { role = "user", content = dto.Content }
-                    }
-                };
-
-                var json = JsonSerializer.Serialize(body);
-
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-                var response = await client.PostAsync($"{baseUrl}/chat/completions", content);
+                var response = await _client.PostAsJsonAsync($"{_config["OpenAI:BaseUrl"]}/chat/completions", body);
 
                 if (!response.IsSuccessStatusCode)
                 {
                     oRetorno.SetErro("errorCallingOpenAI");
                 }
 
-
                 var responseString = await response.Content.ReadAsStringAsync();
 
-                using var doc = JsonDocument.Parse(responseString);
+                var result = JsonSerializer.Deserialize<ChatCompletionResponseDTO>(responseString);
 
-                int tokensEnviados = response.IsSuccessStatusCode ? doc.RootElement.GetProperty("usage").GetProperty("prompt_tokens").GetInt32() : 0;
-                int tokensRecebidos = response.IsSuccessStatusCode ? doc.RootElement.GetProperty("usage").GetProperty("completion_tokens").GetInt32() : 0;
+                oRetorno.Objeto = new AIResponseDTO { Content = result?.Choices?.FirstOrDefault()?.Message?.Content };
 
-                var resumo = doc.RootElement
-                                .GetProperty("choices")[0]
-                                .GetProperty("message")
-                                .GetProperty("content")
-                                .GetString();
-
-                oRetorno.Objeto = new AIResponseDTO { Content = resumo };
-                oRetorno.SetSucesso();
-
-                logDTO.RequestJson = json;
+                logDTO.RequestJson = JsonSerializer.Serialize(body);
                 logDTO.ResponseJson = responseString;
-                logDTO.RequestTokens = tokensEnviados;
-                logDTO.ResponseTokens = tokensRecebidos;
+                logDTO.RequestTokens = result?.Usage?.PromptTokens ?? 0;
+                logDTO.ResponseTokens = result?.Usage?.CompletionTokens ?? 0;
+
+                oRetorno.SetSucesso();
 
             }
             catch (Exception ex)
@@ -173,5 +151,27 @@ namespace DocumentinAPI.Services
             return oRetorno;
 
         }
+
+        private OpenAIRequestDTO BuildRequestBody(string documentContent)
+        {
+            return new OpenAIRequestDTO
+            {
+                Model = _config["OpenAI:Model"],
+                Messages =
+                [
+                    new ChatMessageDTO 
+                    { 
+                        Role = "system",
+                        Content = "Você recebera um documento em formato XML. Sua tarefa eh devolver uma versao resumida somente em XML valido, sem explicacoes ou comentarios. Mantenha a hierarquia, preserve apenas informacoes essenciais e reduza detalhes irrelevantes."
+                    },
+                    new ChatMessageDTO 
+                    { 
+                        Role = "user", 
+                        Content = documentContent 
+                    }
+                ]
+            };
+        }
+
     }
 }
