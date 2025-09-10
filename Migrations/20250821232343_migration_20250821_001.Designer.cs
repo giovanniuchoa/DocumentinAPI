@@ -4,6 +4,7 @@ using DocumentinAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DocumentinAPI.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20250821232343_migration_20250821_001")]
+    partial class migration_20250821_001
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -373,34 +376,6 @@ namespace DocumentinAPI.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("LogAIRequests");
-                });
-
-            modelBuilder.Entity("DocumentinAPI.Domain.Models.OpenAIConfig", b =>
-                {
-                    b.Property<int>("OpenAIConfigId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OpenAIConfigId"));
-
-                    b.Property<string>("ApiKey")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("OpenAIConfigId");
-
-                    b.HasIndex("CompanyId");
-
-                    b.ToTable("OpenAIConfigs");
                 });
 
             modelBuilder.Entity("DocumentinAPI.Domain.Models.PasswordRecovery", b =>
@@ -794,17 +769,6 @@ namespace DocumentinAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("DocumentinAPI.Domain.Models.OpenAIConfig", b =>
-                {
-                    b.HasOne("DocumentinAPI.Domain.Models.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Company");
                 });
 
             modelBuilder.Entity("DocumentinAPI.Domain.Models.PasswordRecovery", b =>
