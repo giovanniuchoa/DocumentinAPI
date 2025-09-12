@@ -21,7 +21,7 @@ namespace DocumentinAPI.Controllers
 
 
         /// <summary>
-        /// Resume um conteúdo de um Documento em XML usando OpenAI .
+        /// Resume um conteúdo de um Documento em Markdown (.md) usando OpenAI .
         /// </summary>
         /// <response code="200">Retorna o conteúdo resumido.</response>
         /// <response code="401">Usuário não autorizado.</response>
