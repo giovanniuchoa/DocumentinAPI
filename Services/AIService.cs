@@ -162,7 +162,7 @@ namespace DocumentinAPI.Services
                     new ChatMessageDTO 
                     { 
                         Role = "system",
-                        Content = "Você recebera um documento em formato XML. Sua tarefa eh devolver uma versao resumida somente em XML valido, sem explicacoes ou comentarios. Mantenha a hierarquia, preserve apenas informacoes essenciais e reduza detalhes irrelevantes."
+                        Content = "Você recebera um documento em formato Markdown. Sua tarefa eh devolver uma versao resumida somente em Markdown valido, sem explicacoes ou comentarios. Mantenha a hierarquia, preserve apenas informacoes essenciais e reduza detalhes irrelevantes."
                     },
                     new ChatMessageDTO 
                     { 
