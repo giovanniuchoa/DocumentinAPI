@@ -32,7 +32,8 @@ namespace DocumentinAPI.Repository
                     .Include(f => f.Documents.Where(d => d.IsValid == true))
                     .Where(f => f.FolderId == folderId
                         && f.User.CompanyId == ssn.CompanyId
-                        && ssn.FoldersIdsList.Contains(f.FolderId))
+                        && ((ssn.Profile == (int)Enums.TipoUsuario.AdministradorDev || ssn.Profile == (int)Enums.TipoUsuario.Gerente)
+                            || ssn.FoldersIdsList.Contains(f.FolderId)))
                     .FirstOrDefaultAsync();
 
                 if (folderDB == null)
@@ -65,7 +66,8 @@ namespace DocumentinAPI.Repository
                     .Include(t => t.User)
                     .Include(t => t.Documents.Where(d => d.IsValid == true))
                     .Where(t => t.User.CompanyId == ssn.CompanyId
-                        && (ssn.Profile == (int)Enums.TipoUsuario.AdministradorDev || ssn.FoldersIdsList.Contains(t.FolderId)) )
+                        && ((ssn.Profile == (int)Enums.TipoUsuario.AdministradorDev || ssn.Profile == (int)Enums.TipoUsuario.Gerente) 
+                            || ssn.FoldersIdsList.Contains(t.FolderId)) )
                     .ToListAsync();
 
                 oRetorno.Objeto = folderListDB.Adapt<List<FolderResponseDTO>>();

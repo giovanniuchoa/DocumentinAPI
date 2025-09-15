@@ -15,6 +15,9 @@ using Supabase;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Text;
+using DotNetEnv;
+
+Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -77,10 +80,7 @@ builder.Services.AddSwaggerGen(c =>
 
 #region DataBase
 
-//var connectionString = builder.Configuration.GetConnectionString("Local_NotebookGio");
-//var connectionString = builder.Configuration.GetConnectionString("Local_NotebookJao");
-//var connectionString = builder.Configuration.GetConnectionString("Local_NotebookMengo");
-var connectionString = builder.Configuration.GetConnectionString("Local_PcEmpresaGio");
+var connectionString = builder.Configuration.GetConnectionString("Local");
 
 builder.Services.AddDbContext<DBContext>(opt => opt.UseSqlServer(connectionString));
 

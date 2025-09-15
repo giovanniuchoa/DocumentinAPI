@@ -121,7 +121,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="401">Usuário não autorizado.</response>
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
-        [HttpGet("ToggleStatusTemplate/{templateId}")]
+        [HttpPut("ToggleStatusTemplate/{templateId}")]
         public async Task<IActionResult> ToggleStatusTemplateAsync(int templateId)
         {
 
