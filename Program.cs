@@ -103,7 +103,6 @@ builder.Services.AddTransient<ITemplateRepository, TemplateRepository>();
 builder.Services.AddTransient<ICommentRepository, CommentRepository>();
 builder.Services.AddTransient<ITagRepository, TagRepository>();
 builder.Services.AddTransient<IAIRepository, AIRepository>();
-builder.Services.AddTransient<IImportRepository, ImportRepository>();
 
 /* Service */
 builder.Services.AddTransient<IAuthService, AuthService>();

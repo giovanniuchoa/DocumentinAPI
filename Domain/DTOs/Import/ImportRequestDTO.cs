@@ -3,7 +3,9 @@
     public class ImportRequestDTO
     {
 
-        public string Base64 { get; set; }
+        public IFormFile Pdf { get; set; }
+
+        public int FolderId { get; set; }
 
     }
 }
