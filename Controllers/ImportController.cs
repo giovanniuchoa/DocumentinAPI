@@ -20,13 +20,13 @@ namespace DocumentinAPI.Controllers
         }
 
         /// <summary>
-        /// Importa um arquivo pdf e grava como um documento markdown no banco.
+        /// Importa um arquivo pdf ou docx e grava como um documento markdown no banco.
         /// </summary>
         /// <response code="200">Retorna o documento salvo.</response>
         /// <response code="401">Usuário não autorizado.</response>
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
-        [HttpPost("ImportDocumentPdf")]
+        [HttpPost("ImportDocument")]
         public async Task<IActionResult> ImportDocumentAsync([FromForm] ImportRequestDTO dto)
         {
 

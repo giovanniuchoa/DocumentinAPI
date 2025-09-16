@@ -10,7 +10,7 @@ namespace DocumentinAPI.Domain.Models
         public int DocumentId { get; set; }
 
         [Required]
-        [Column(TypeName = "varchar(50)")]
+        [Column(TypeName = "varchar(100)")]
         public string Title { get; set; }
 
         [Required]
