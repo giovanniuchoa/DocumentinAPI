@@ -1,5 +1,7 @@
 ﻿using DocumentinAPI.Cryptography;
 using DocumentinAPI.Data;
+using DocumentinAPI.Domain.DTOs.Auth;
+using DocumentinAPI.Domain.DTOs.Email;
 using DocumentinAPI.Domain.DTOs.Group;
 using DocumentinAPI.Domain.DTOs.PasswordRecovery;
 using DocumentinAPI.Domain.DTOs.User;
@@ -13,7 +15,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using static DocumentinAPI.Domain.Utils.Helpers;
 using static DocumentinAPI.Domain.Utils.TemplateHelpers;
-using DocumentinAPI.Domain.DTOs.Auth;
 
 namespace DocumentinAPI.Repository
 {
@@ -430,15 +431,13 @@ namespace DocumentinAPI.Repository
 
                 await _context.SaveChangesAsync();
 
-                var dados = new Dictionary<string, string>
+                var dados = new PasswordRecoveryEmailTemplateDTO
                 {
-                    { "NOME", userDB.Name },
-                    { "TOKEN", passwordRecoveryDB.Token }
+                    Name = userDB.Name,
+                    Token = passwordRecoveryDB.Token
                 };
 
-                var body = await GetEmailBodyFromTemplateAsync("PasswordRecovery.html", dados);
-
-                await _emailService.SendEmailAsync(userDB.Email, "Recuperação de Senha - Token", body);
+                await _emailService.SendEmailPasswordRecovery(userDB.Email, dados);
 
                 oRetorno.Objeto = passwordRecoveryDB.Adapt<PasswordRecoveryResponseDTO>();
 

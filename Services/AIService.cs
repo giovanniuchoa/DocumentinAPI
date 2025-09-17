@@ -18,17 +18,17 @@ namespace DocumentinAPI.Services
 
         private readonly IAIRepository _repository;
 
-        private readonly IDocumentRepository _documentRepository;
+        private readonly IDocumentService _documentService;
 
         private readonly IConfiguration _config;
 
         private readonly HttpClient _client;
 
-        public AIService(IAIRepository repository, IConfiguration config, IDocumentRepository documentRepository, IHttpClientFactory clientFactory)
+        public AIService(IAIRepository repository, IConfiguration config, IDocumentService documentService, IHttpClientFactory clientFactory)
         {
             _repository = repository;
             _config = config;
-            _documentRepository = documentRepository;
+            _documentService = documentService;
             _client = clientFactory.CreateClient();
         }
 
@@ -66,7 +66,7 @@ namespace DocumentinAPI.Services
 
                 var apiKey = ((await _repository.GetOpenAIConfigByCompanyAsync(ssn))?.Objeto?.ApiKey) ?? throw new Exception("apiKeyRequired");
 
-                var contentDB = await _documentRepository.GetDocumentByIdAsync(dto.DocumentId, ssn);            
+                var contentDB = await _documentService.GetDocumentByIdAsync(dto.DocumentId, ssn);            
 
                 OpenAIRequestDTO body = BuildRequestBody(contentDB.Objeto.Content);
 

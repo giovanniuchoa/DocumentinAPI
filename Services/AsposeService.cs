@@ -3,9 +3,9 @@ using DocumentinAPI.Domain.DTOs.Supabase;
 using DocumentinAPI.Interfaces.IServices;
 using Microsoft.AspNetCore.Http;
 
-namespace DocumentinAPI.Domain.Utils
+namespace DocumentinAPI.Services
 {
-    public class SupabaseImageSavingCallback : IImageSavingCallback
+    public class AsposeService : IImageSavingCallback
     {
 
         private readonly List<(string TempName, MemoryStream Stream)> _imagens = new();

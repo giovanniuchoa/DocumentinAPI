@@ -1,10 +1,11 @@
 ﻿using DocumentinAPI.Data;
 using DocumentinAPI.Domain.DTOs.Auth;
 using DocumentinAPI.Domain.DTOs.Document;
-using DocumentinAPI.Domain.DTOs.Group;
+using DocumentinAPI.Domain.DTOs.Email;
 using DocumentinAPI.Domain.Models;
 using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IRepository;
+using DocumentinAPI.Interfaces.IServices;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,8 +13,12 @@ namespace DocumentinAPI.Repository
 {
     public class DocumentRepository : BaseRepository, IDocumentRepository
     {
-        public DocumentRepository(DBContext context) : base(context)
+
+        private readonly IEmailService _emailService;
+
+        public DocumentRepository(DBContext context, IEmailService emailService) : base(context)
         {
+            _emailService = emailService;
         }
 
         public async Task<Retorno<DocumentResponseDTO>> GetDocumentByIdAsync(int documentId, UserClaimDTO ssn)
@@ -106,7 +111,7 @@ namespace DocumentinAPI.Repository
                     throw new Exception("folderNotFound");
                 }
 
-                documentoDB = document.Adapt<Document>();
+                documentoDB = document.Adapt<Domain.Models.Document>();
 
                 documentoDB.UserId = ssn.UserId;
                 documentoDB.CreatedAt = DateTime.Now;
@@ -158,6 +163,36 @@ namespace DocumentinAPI.Repository
                     await _context.DocumentValidations.AddAsync(documentValidationDB);
 
                     await _context.SaveChangesAsync();
+
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+
+                try
+                {
+
+                    /* Envia email para o validador e criador */
+
+                    var validatorEmail = await _context.Users
+                        .Where(u => u.UserId == folderDB.ValidatorId)
+                        .Select(u => u.Email)
+                        .FirstOrDefaultAsync();
+
+                    var dados = new DocumentEmailTemplateDTO
+                    {
+                        Title = documentoDB.Title,
+                        Username = ssn.Name,
+                        FolderName = folderDB.Name,
+                        CreatedAt = documentoDB.CreatedAt
+                    };
+
+                    await _emailService.SendEmailNewDocumentToValidator(validatorEmail, dados);
+
+                    dados.Username = folderDB.Validator.Name;
+
+                    await _emailService.SendEmailNewDocumentToCreator(documentoDB.User.Email, dados);
 
                 }
                 catch (Exception)

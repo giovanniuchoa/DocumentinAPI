@@ -2,8 +2,10 @@
 using DocumentinAPI.Domain.DTOs.Auth;
 using DocumentinAPI.Domain.DTOs.Document;
 using DocumentinAPI.Domain.DTOs.DocumentValidation;
+using DocumentinAPI.Domain.DTOs.Email;
 using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IRepository;
+using DocumentinAPI.Interfaces.IServices;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,8 +14,11 @@ namespace DocumentinAPI.Repository
     public class DocumentValidationRepository : BaseRepository, IDocumentValidationRepository
     {
 
-        public DocumentValidationRepository(DBContext context) : base(context)
+        private readonly IEmailService _emailService;
+
+        public DocumentValidationRepository(DBContext context, IEmailService emailService) : base(context)
         {
+            _emailService = emailService;
         }
 
         public async Task<Retorno<IEnumerable<DocumentResponseDTO>>> GetListDocumentValidationByValidatorAsync(UserClaimDTO ssn)
@@ -93,6 +98,7 @@ namespace DocumentinAPI.Repository
 
                 var documentValidationDB = await _context.DocumentValidations
                     .Include(d => d.Folder)
+                    .Include(d => d.Folder.Validator)
                     .Include(d => d.Document)
                     .Where(d => d.DocumentId == dto.DocumentId)
                     .FirstOrDefaultAsync();
@@ -118,6 +124,26 @@ namespace DocumentinAPI.Repository
 
                     await _context.SaveChangesAsync();
 
+                }
+
+                try
+                {
+
+                    var dados = new DocumentValidationStatusEmailTemplateDTO
+                    {
+                        Title = documentValidationDB.Document.Title,
+                        ValidatorName = documentValidationDB.Folder.Validator.Name,
+                        FolderName = documentValidationDB.Folder.Name,
+                        UpdatedAt = documentValidationDB.UpdatedAt,
+                        Status = dto.Status
+                    };
+
+                    await _emailService.SendEmailDocumentValidationStatusChange(documentValidationDB.User.Email, dados);
+
+                }
+                catch (Exception)
+                {
+                    throw;
                 }
 
                 oRetorno.Objeto = documentValidationDB.Adapt<DocumentValidationResponseDTO>();
