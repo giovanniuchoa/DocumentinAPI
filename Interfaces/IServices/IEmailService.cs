@@ -1,9 +1,14 @@
-﻿namespace DocumentinAPI.Interfaces.IServices
+﻿using DocumentinAPI.Domain.DTOs.Email;
+
+namespace DocumentinAPI.Interfaces.IServices
 {
     public interface IEmailService
     {
 
-        public Task SendEmailAsync(string to, string subject, string body);
+        public Task SendEmailNewDocumentToValidator(string email, DocumentEmailTemplateDTO dto);
+        public Task SendEmailNewDocumentToCreator(string email, DocumentEmailTemplateDTO dto);
+        public Task SendEmailPasswordRecovery(string email, PasswordRecoveryEmailTemplateDTO dto);
+        public Task SendEmailDocumentValidationStatusChange(string email, DocumentValidationStatusEmailTemplateDTO dto);
 
     }
 }
