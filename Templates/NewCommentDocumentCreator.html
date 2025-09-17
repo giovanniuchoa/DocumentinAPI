@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Novo comentário no seu documento</title>
+</head>
+<body style="font-family: Arial, Helvetica, sans-serif; background-color:#f5f7fa; margin:0; padding:40px 0;">
+    <div style="max-width:600px; margin:0 auto; background-color:#ffffff; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.08); padding:30px;">
+
+        <h2 style="color:#333333; text-align:center; margin-top:0; font-weight:500;">
+            Novo comentário no seu documento
+        </h2>
+
+        <p style="font-size:15px; color:#444444; line-height:1.6; margin-top:20px;">
+            Olá <span style="font-weight:bold;">{{CRIADOR}}</span>,
+        </p>
+
+        <p style="font-size:15px; color:#444444; line-height:1.6; margin-top:10px;">
+            <span style="font-weight:bold; color:#0056b3;">{{COMENTARISTA}}</span> adicionou um comentário no documento:
+        </p>
+
+        <p style="font-size:16px; font-weight:bold; color:#0056b3; margin:15px 0;">
+            {{TITULO_DOCUMENTO}}
+        </p>
+
+        <p style="font-size:15px; color:#444444; line-height:1.6; margin-top:10px;">
+            Comentário:
+        </p>
+
+        <blockquote style="font-size:15px; color:#555555; line-height:1.6; border-left:4px solid #ddd; padding-left:12px; margin:10px 0;">
+            {{COMENTARIO}}
+        </blockquote>
+
+        <p style="font-size:14px; color:#666666; margin-top:10px;">
+            Adicionado em {{DATA_COMENTARIO}}.
+        </p>
+
+        <p style="font-size:15px; color:#444444; line-height:1.6; margin-top:20px;">
+            Acesse o sistema para visualizar o comentário completo e continuar a discussão.
+        </p>
+
+        <p style="font-size:13px; color:#777777; text-align:center; margin-top:35px;">
+            Este é um e-mail automático. Por favor, não responda diretamente a esta mensagem.
+        </p>
+    </div>
+</body>
+</html>

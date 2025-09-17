@@ -1,46 +1,127 @@
-﻿using DocumentinAPI.Interfaces.IServices;
-using MailKit.Net.Smtp;
-using MimeKit;
+﻿using DocumentinAPI.Domain.DTOs.Email;
+using DocumentinAPI.Domain.Utils;
+using DocumentinAPI.Interfaces.IRepository;
+using DocumentinAPI.Interfaces.IServices;
+using static DocumentinAPI.Domain.Utils.TemplateHelpers;
 
 namespace DocumentinAPI.Services
 {
     public class EmailService : IEmailService
     {
 
-        private readonly IConfiguration _config;
+        private readonly IEmailRepository _repository;
 
-        public EmailService(IConfiguration config)
+        public EmailService(IEmailRepository repository)
         {
-            _config = config;
+            _repository = repository;
         }
 
-        public async Task SendEmailAsync(string to, string subject, string body)
+        public async Task SendEmailDocumentValidationStatusChange(string email, DocumentValidationStatusEmailTemplateDTO dto)
         {
-            
+
             try
             {
 
-                var email = new MimeMessage();
-                var smtpServer = _config["Email:SmtpServer"];
-                var smtpPort = int.Parse(_config["Email:Port"]);
-                var from = _config["Email:From"];
-                var appPassword = _config["Email:AppPassword"];
+                var status = dto.Status == (short)Enums.StatusValidacao.Validado ? "APROVADO" : "REJEITADO";
 
-                email.From.Add(MailboxAddress.Parse(from));
-                email.To.Add(MailboxAddress.Parse(to));
-                email.Subject = subject;
-                email.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = body };
+                var body = await MontarEmailBodyStatusValidacaoDocumento(dto);
 
-                using var smtp = new SmtpClient();
-                await smtp.ConnectAsync(smtpServer, smtpPort, MailKit.Security.SecureSocketOptions.StartTls);
-                await smtp.AuthenticateAsync(from, appPassword);
-                await smtp.SendAsync(email);
-                await smtp.DisconnectAsync(true);
+                await _repository.SendEmailAsync(email, $"Documento {status}", body);
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new Exception(ex.Message);
+                throw;
+            }
+
+        }
+
+        public async Task SendEmailNewCommentToDocumentCreator(string email, CommentEmailTemplateDTO dto)
+        {
+
+            try
+            {
+
+                var body = await MontarEmailBodyNovoComentarioNoDocumento(dto);
+
+                await _repository.SendEmailAsync(email, "Novo Comentário no Documento", body);
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+
+        public async Task SendEmailNewDocumentToCreator(string email, DocumentEmailTemplateDTO dto)
+        {
+
+            try
+            {
+
+                var body = await MontarEmailBodyNovoDocumento_Criador(dto);
+
+                await _repository.SendEmailAsync(email, "Novo Documento - Aguardando aprovação", body);
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+
+        public async Task SendEmailNewDocumentToValidator(string email, DocumentEmailTemplateDTO dto)
+        {
+
+            try
+            {
+
+                var body = await MontarEmailBodyNovoDocumento_Validador(dto);
+
+                await _repository.SendEmailAsync(email, "Novo Documento - Aguardando aprovação", body);
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+
+        public async Task SendEmailNewTaskToAssignee(string email, TaskEmailTemplateDTO dto)
+        {
+
+            try
+            {
+
+                var body = await MontarEmailBodyNovaTarefa(dto);
+
+                await _repository.SendEmailAsync(email, "Nova Tarefa", body);
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+
+        public async Task SendEmailPasswordRecovery(string email, PasswordRecoveryEmailTemplateDTO dto)
+        {
+
+            try
+            {
+
+                var body = await MontarEmailPasswordRecovery(dto);
+
+                await _repository.SendEmailAsync(email, "Recuperação de Senha - Token", body);
+
+            }
+            catch (Exception)
+            {
+                throw;
             }
 
         }

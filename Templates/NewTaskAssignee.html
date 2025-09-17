@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Nova Tarefa Atribuída</title>
+</head>
+<body style="font-family: Arial, Helvetica, sans-serif; background-color:#f5f7fa; margin:0; padding:40px 0;">
+    <div style="max-width:600px; margin:0 auto; background-color:#ffffff; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.08); padding:30px;">
+
+        <h2 style="color:#333333; text-align:center; margin-top:0; font-weight:500;">
+            Você recebeu uma nova tarefa
+        </h2>
+
+        <p style="font-size:15px; color:#444444; line-height:1.6; margin-top:20px;">
+            Olá <span style="font-weight:bold;">{{USUARIO}}</span>,
+        </p>
+
+        <p style="font-size:15px; color:#444444; line-height:1.6; margin-top:10px;">
+            Uma nova tarefa foi atribuída a você:
+        </p>
+
+        <p style="font-size:16px; font-weight:bold; color:#0056b3; margin:15px 0;">
+            {{TITULO}}
+        </p>
+
+        <p style="font-size:15px; color:#444444; line-height:1.6; margin-top:10px;">
+            Descrição:<br>
+            <span style="color:#555555;">{{DESCRICAO}}</span>
+        </p>
+
+        <p style="font-size:15px; color:#444444; line-height:1.6; margin-top:20px;">
+            Data de entrega: <strong>{{DATA_ENTREGA}}</strong>
+        </p>
+
+        <p style="font-size:15px; color:#444444; line-height:1.6; margin-top:20px;">
+            Acesse o sistema para mais detalhes e para acompanhar o progresso.
+        </p>
+
+        <p style="font-size:13px; color:#777777; text-align:center; margin-top:35px;">
+            Este é um e-mail automático. Por favor, não responda diretamente a esta mensagem.
+        </p>
+    </div>
+</body>
+</html>
