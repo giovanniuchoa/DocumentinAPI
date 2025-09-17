@@ -13,13 +13,13 @@ namespace DocumentinAPI.Services
     public class ImportService : IImportService
     {
 
-        private readonly IDocumentRepository _documentRepository;
+        private readonly IDocumentService _documentService;
 
         private readonly ISupabaseService _supabaseService;
 
-        public ImportService(IDocumentRepository repository, ISupabaseService supabaseService)
+        public ImportService(IDocumentService documentService, ISupabaseService supabaseService)
         {
-            _documentRepository = repository;
+            _documentService = documentService;
             _supabaseService = supabaseService;
         }
 
@@ -40,7 +40,7 @@ namespace DocumentinAPI.Services
 
                 var doc = new Aspose.Words.Document(pdfStream, loadOptions);
 
-                var callback = new SupabaseImageSavingCallback();
+                var callback = new AsposeService();
 
                 var saveOptions = new Aspose.Words.Saving.MarkdownSaveOptions
                 {
@@ -83,7 +83,7 @@ namespace DocumentinAPI.Services
                         FolderId = dto.FolderId
                     };
 
-                    var ret = await _documentRepository.AddDocumentAsync(documentDTO, ssn);
+                    var ret = await _documentService.AddDocumentAsync(documentDTO, ssn);
 
                     oRetorno.Objeto = ret.Objeto;
 
