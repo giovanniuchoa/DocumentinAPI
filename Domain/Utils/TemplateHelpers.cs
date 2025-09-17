@@ -90,5 +90,22 @@ namespace DocumentinAPI.Domain.Utils
 
         }
 
+        public static async Task<string> MontarEmailBodyNovaTarefa(TaskEmailTemplateDTO dto)
+        {
+
+            var dados = new Dictionary<string, string>
+            {
+                { "USUARIO", dto.AssigneeName },
+                { "TITULO", dto.Title },
+                { "DATA_ENTREGA", dto.DueDate.ToString() },
+                { "DESCRICAO", dto.Description }
+            };
+
+            var body = await GetEmailBodyFromTemplateAsync("NewTaskAssignee.html", dados);
+
+            return body;
+
+        }
+
     }
 }

@@ -72,6 +72,24 @@ namespace DocumentinAPI.Services
 
         }
 
+        public async Task SendEmailNewTaskToAssignee(string email, TaskEmailTemplateDTO dto)
+        {
+
+            try
+            {
+
+                var body = await MontarEmailBodyNovaTarefa(dto);
+
+                await _repository.SendEmailAsync(email, "Nova Tarefa", body);
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+
         public async Task SendEmailPasswordRecovery(string email, PasswordRecoveryEmailTemplateDTO dto)
         {
 

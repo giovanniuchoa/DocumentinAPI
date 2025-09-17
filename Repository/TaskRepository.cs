@@ -1,18 +1,23 @@
 ﻿using DocumentinAPI.Data;
+using DocumentinAPI.Domain.DTOs.Auth;
+using DocumentinAPI.Domain.DTOs.Email;
 using DocumentinAPI.Domain.DTOs.Task;
 using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IRepository;
+using DocumentinAPI.Interfaces.IServices;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
-using DocumentinAPI.Domain.DTOs.Auth;
 
 namespace DocumentinAPI.Repository
 {
     public class TaskRepository : BaseRepository, ITaskRepository
     {
 
-        public TaskRepository(DBContext context) : base(context)
+        private readonly IEmailService _emailService;
+
+        public TaskRepository(DBContext context, IEmailService emailService) : base(context)
         {
+            _emailService = emailService;
         }
 
         public async Task<Retorno<TaskResponseDTO>> GetTaskByIdAsync(int taskId, UserClaimDTO ssn)
@@ -83,6 +88,7 @@ namespace DocumentinAPI.Repository
             {
 
                 var taskDB = await _context.Tasks
+                    .Include(t => t.Assignee)
                     .Where(t => t.TaskId == dto.TaskId)
                     .FirstOrDefaultAsync();
 
@@ -101,6 +107,29 @@ namespace DocumentinAPI.Repository
                 await _context.Tasks.AddAsync(taskDB);
 
                 await _context.SaveChangesAsync();
+
+                try
+                {
+
+                    var assignee = await _context.Users
+                        .Where(u => u.UserId == dto.AssigneeId && u.IsActive)
+                        .FirstOrDefaultAsync();
+
+                    var dados = new TaskEmailTemplateDTO
+                    {
+                        AssigneeName = assignee.Name,
+                        Title = taskDB.Title,
+                        DueDate = taskDB.DueDate,
+                        Description = taskDB.Description
+                    };
+
+                    await _emailService.SendEmailNewTaskToAssignee(assignee.Email, dados);
+
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
 
                 oRetorno.Objeto = taskDB.Adapt<TaskResponseDTO>();
                 oRetorno.SetSucesso();
