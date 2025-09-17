@@ -10,6 +10,7 @@ namespace DocumentinAPI.Interfaces.IServices
         public Task SendEmailPasswordRecovery(string email, PasswordRecoveryEmailTemplateDTO dto);
         public Task SendEmailDocumentValidationStatusChange(string email, DocumentValidationStatusEmailTemplateDTO dto);
         public Task SendEmailNewTaskToAssignee(string email, TaskEmailTemplateDTO dto);
+        public Task SendEmailNewCommentToDocumentCreator(string email, CommentEmailTemplateDTO dto);
 
     }
 }

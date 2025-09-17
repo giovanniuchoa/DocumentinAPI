@@ -107,5 +107,23 @@ namespace DocumentinAPI.Domain.Utils
 
         }
 
+        public static async Task<string> MontarEmailBodyNovoComentarioNoDocumento(CommentEmailTemplateDTO dto)
+        {
+
+            var dados = new Dictionary<string, string>
+            {
+                { "CRIADOR", dto.UserDocument },
+                { "COMENTARISTA", dto.UserComment },
+                { "TITULO_DOCUMENTO", dto.DocumentTitle },
+                { "COMENTARIO", dto.Comment },
+                { "DATA_COMENTARIO", dto.CommentDate.ToString() }
+            };
+
+            var body = await GetEmailBodyFromTemplateAsync("NewCommentDocumentCreator.html", dados);
+
+            return body;
+
+        }
+
     }
 }

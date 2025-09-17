@@ -1,9 +1,11 @@
 ﻿using DocumentinAPI.Data;
 using DocumentinAPI.Domain.DTOs.Auth;
 using DocumentinAPI.Domain.DTOs.Comment;
+using DocumentinAPI.Domain.DTOs.Email;
 using DocumentinAPI.Domain.Models;
 using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IRepository;
+using DocumentinAPI.Interfaces.IServices;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.Design;
@@ -13,8 +15,11 @@ namespace DocumentinAPI.Repository
     public class CommentRepository : BaseRepository, ICommentRepository
     {
 
-        public CommentRepository(DBContext context) : base(context)
+        private readonly IEmailService _emailService;
+
+        public CommentRepository(DBContext context, IEmailService emailService) : base(context)
         {
+            _emailService = emailService;
         }
 
         public async Task<Retorno<CommentResponseDTO>> AddCommentAsync(CommentRequestDTO dto, UserClaimDTO ssn)
@@ -35,6 +40,31 @@ namespace DocumentinAPI.Repository
                 await _context.Comments.AddAsync(commentDB);
 
                 await _context.SaveChangesAsync();
+
+                try
+                {
+
+                    var documentDB = await _context.Documents
+                        .Include(d => d.User)
+                        .Where(d => d.DocumentId == commentDB.DocumentId)
+                        .FirstOrDefaultAsync();
+
+                    var dados = new CommentEmailTemplateDTO
+                    {
+                        UserDocument = documentDB.User.Name,
+                        UserComment = ssn.Name,
+                        DocumentTitle = documentDB.Title,
+                        Comment = commentDB.Content,
+                        CommentDate = commentDB.CreatedAt
+                    };
+
+                    await _emailService.SendEmailNewCommentToDocumentCreator(documentDB.User.Email, dados);
+
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
 
                 oRetorno.Objeto = commentDB.Adapt<CommentResponseDTO>();
                 oRetorno.SetSucesso();

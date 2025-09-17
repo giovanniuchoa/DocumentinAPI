@@ -36,6 +36,24 @@ namespace DocumentinAPI.Services
 
         }
 
+        public async Task SendEmailNewCommentToDocumentCreator(string email, CommentEmailTemplateDTO dto)
+        {
+
+            try
+            {
+
+                var body = await MontarEmailBodyNovoComentarioNoDocumento(dto);
+
+                await _repository.SendEmailAsync(email, "Novo Comentário no Documento", body);
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
+
         public async Task SendEmailNewDocumentToCreator(string email, DocumentEmailTemplateDTO dto)
         {
 
