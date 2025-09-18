@@ -100,6 +100,7 @@ namespace DocumentinAPI.Repository
                 }
 
                 var folderDB = await _context.Folders
+                    .Include(f => f.Validator)
                     .Include(f => f.User)
                     .Where(f => f.FolderId == document.FolderId
                         && f.User.CompanyId == ssn.CompanyId
