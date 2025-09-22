@@ -45,5 +45,10 @@ namespace DocumentinAPI.Domain.DTOs.User
         /// </summary>
         public short PreferredTheme { get; set; }
 
+        /// <summary>
+        /// Identificador da empresa do usuário
+        /// </summary>
+        public int CompanyId { get; set; }
+
     }
 }

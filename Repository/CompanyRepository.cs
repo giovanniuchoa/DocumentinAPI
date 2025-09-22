@@ -26,6 +26,7 @@ namespace DocumentinAPI.Repository
             {
 
                 var empresaDB = await _context.Companies
+                    .Where(c => !c.IsInternal)
                     .ToListAsync();
 
                 var empresa = empresaDB.Adapt<List<CompanyResponseDTO>>();
@@ -92,7 +93,12 @@ namespace DocumentinAPI.Repository
                     throw new Exception("alreadyExistsTaxId");
                 }
 
-                    empresaDB = company.Adapt<Company>();
+                empresaDB = company.Adapt<Company>();
+
+                empresaDB.IsInternal = false;
+                empresaDB.CreatedAt = DateTime.Now;
+                empresaDB.UpdatedAt = DateTime.Now;
+                empresaDB.IsActive = true;
 
                 await _context.Companies.AddAsync(empresaDB);
 
