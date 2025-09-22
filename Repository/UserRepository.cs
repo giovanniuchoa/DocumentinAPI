@@ -39,7 +39,6 @@ namespace DocumentinAPI.Repository
                 var userDB = await _context.Users
                     .Where(u => u.UserId == userId
                         && u.IsActive == true
-                        && u.CompanyId == ssn.CompanyId
                         && (ssn.Profile == 1 || (ssn.Profile == 2 && u.Profile != 1) || (u.UserId == ssn.UserId)) )
                     .FirstOrDefaultAsync();
 
@@ -63,7 +62,7 @@ namespace DocumentinAPI.Repository
 
         }
 
-        public async Task<Retorno<IEnumerable<UserResponseDTO>>> GetListUserAsync(int? companyId, UserClaimDTO ssn)
+        public async Task<Retorno<IEnumerable<UserResponseDTO>>> GetListUserAsync(UserClaimDTO ssn)
         {
             Retorno<IEnumerable<UserResponseDTO>> oRetorno = new();
 
@@ -71,8 +70,7 @@ namespace DocumentinAPI.Repository
             {
 
                 var userListDB = await _context.Users
-                    .Where(u => u.CompanyId == companyId
-                        && (ssn.Profile == 1 || (ssn.Profile == 2 && u.Profile != 1) || (u.UserId == ssn.UserId) ) )
+                    .Where(u => ssn.Profile == 1 || (ssn.Profile == 2 && u.Profile != 1) || (u.UserId == ssn.UserId) )
                     .ToListAsync();
 
                 oRetorno.Objeto = userListDB.Adapt<List<UserResponseDTO>>();
