@@ -22,7 +22,7 @@ namespace DocumentinAPI.Domain.Models
         public string Phone { get; set; }
 
         [Required]
-        [Column(TypeName = "varchar(30)")]
+        [Column(TypeName = "varchar(60)")]
         public string Email { get; set; }
 
         [Required]
@@ -41,6 +41,9 @@ namespace DocumentinAPI.Domain.Models
 
         [Required]
         public DateTime UpdatedAt { get; set; }
+
+        [Required]
+        public bool IsInternal { get; set; } = false;
 
     }
 }
