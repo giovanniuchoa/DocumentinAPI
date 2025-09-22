@@ -54,10 +54,10 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetListUser")]
-        public async Task<IActionResult> GetListUserAsync()
+        public async Task<IActionResult> GetListUserAsync([FromQuery] int? companyId)
         {
 
-            var retorno = await _service.GetListUserAsync(ssn);
+            var retorno = await _service.GetListUserAsync(companyId, ssn);
 
             if (retorno.Erro)
             {
