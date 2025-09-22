@@ -110,7 +110,7 @@ namespace DocumentinAPI.Repository
                 userDB = dto.Adapt<User>();
 
                 userDB.Password = userDB.Password.GenerateHash();
-                userDB.CompanyId = ssn.CompanyId;
+                userDB.CompanyId = dto.CompanyId;
                 userDB.CreatedAt = DateTime.Now;
                 userDB.UpdatedAt = DateTime.Now;
                 userDB.IsActive = true;

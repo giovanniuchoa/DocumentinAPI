@@ -28,6 +28,10 @@ namespace DocumentinAPI.Domain.Validators
             
             RuleFor(x => x.PreferredTheme)
                 .InclusiveBetween((short)1, (short)2).WithMessage("preferredThemeMustBeBetween1And2");
+
+            RuleFor(x => x.CompanyId)
+                .GreaterThan(0).WithMessage("validCompanyIdRequired");
+
         }
     }
 }
