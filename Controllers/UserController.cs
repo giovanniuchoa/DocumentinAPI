@@ -2,7 +2,6 @@
 using DocumentinAPI.Domain.DTOs.PasswordRecovery;
 using DocumentinAPI.Domain.DTOs.User;
 using DocumentinAPI.Domain.DTOs.UserXGroup;
-using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -54,10 +53,10 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetListUser")]
-        public async Task<IActionResult> GetListUserAsync([FromQuery] int? companyId)
+        public async Task<IActionResult> GetListUserAsync()
         {
 
-            var retorno = await _service.GetListUserAsync(companyId, ssn);
+            var retorno = await _service.GetListUserAsync(ssn);
 
             if (retorno.Erro)
             {

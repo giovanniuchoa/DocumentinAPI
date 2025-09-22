@@ -42,19 +42,14 @@ namespace DocumentinAPI.Services
 
         }
 
-        public async Task<Retorno<IEnumerable<UserResponseDTO>>> GetListUserAsync(int? companyId, UserClaimDTO ssn)
+        public async Task<Retorno<IEnumerable<UserResponseDTO>>> GetListUserAsync(UserClaimDTO ssn)
         {
 
             Retorno<IEnumerable<UserResponseDTO>> oRetorno = new();
             try
             {
 
-                if (ssn.Profile != 1 || companyId == null)
-                {
-                    companyId = ssn.CompanyId;
-                }
-
-                var ret = await _repository.GetListUserAsync(companyId, ssn);
+                var ret = await _repository.GetListUserAsync(ssn);
 
                 oRetorno = ret;
 
