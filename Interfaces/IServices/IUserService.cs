@@ -11,7 +11,7 @@ namespace DocumentinAPI.Interfaces.IServices
     {
 
         public Task<Retorno<UserResponseDTO>> GetUserByIdAsync(int userId, UserClaimDTO ssn);
-        public Task<Retorno<IEnumerable<UserResponseDTO>>> GetListUserAsync(UserClaimDTO ssn);
+        public Task<Retorno<IEnumerable<UserResponseDTO>>> GetListUserAsync(int? companyId, UserClaimDTO ssn);
         public Task<Retorno<UserResponseDTO>> AddUserAsync(UserRequestDTO dto, UserClaimDTO ssn);
         public Task<Retorno<UserResponseDTO>> UpdateUserAsync(UserRequestDTO dto, UserClaimDTO ssn);
         public Task<Retorno<UserResponseDTO>> ToggleStatusUserAsync(int userId, UserClaimDTO ssn);

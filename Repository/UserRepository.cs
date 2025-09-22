@@ -63,7 +63,7 @@ namespace DocumentinAPI.Repository
 
         }
 
-        public async Task<Retorno<IEnumerable<UserResponseDTO>>> GetListUserAsync(UserClaimDTO ssn)
+        public async Task<Retorno<IEnumerable<UserResponseDTO>>> GetListUserAsync(int? companyId, UserClaimDTO ssn)
         {
             Retorno<IEnumerable<UserResponseDTO>> oRetorno = new();
 
@@ -71,7 +71,7 @@ namespace DocumentinAPI.Repository
             {
 
                 var userListDB = await _context.Users
-                    .Where(u => u.CompanyId == ssn.CompanyId
+                    .Where(u => u.CompanyId == companyId
                         && (ssn.Profile == 1 || (ssn.Profile == 2 && u.Profile != 1) || (u.UserId == ssn.UserId) ) )
                     .ToListAsync();
 
@@ -110,7 +110,7 @@ namespace DocumentinAPI.Repository
                 userDB = dto.Adapt<User>();
 
                 userDB.Password = userDB.Password.GenerateHash();
-                userDB.CompanyId = ssn.CompanyId;
+                userDB.CompanyId = dto.CompanyId;
                 userDB.CreatedAt = DateTime.Now;
                 userDB.UpdatedAt = DateTime.Now;
                 userDB.IsActive = true;
