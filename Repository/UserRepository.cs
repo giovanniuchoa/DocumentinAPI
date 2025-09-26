@@ -70,7 +70,7 @@ namespace DocumentinAPI.Repository
             {
 
                 var userListDB = await _context.Users
-                    .Where(u => ssn.Profile == 1 || (ssn.Profile == 2 && u.Profile != 1) || (u.UserId == ssn.UserId) )
+                    .Where(u => ssn.Profile == 1 || (ssn.Profile == 2 && u.Profile != 1) && u.CompanyId == ssn.CompanyId || (u.UserId == ssn.UserId) )
                     .ToListAsync();
 
                 oRetorno.Objeto = userListDB.Adapt<List<UserResponseDTO>>();
