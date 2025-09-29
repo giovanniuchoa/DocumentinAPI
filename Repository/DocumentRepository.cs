@@ -193,9 +193,14 @@ namespace DocumentinAPI.Repository
 
                     await _emailService.SendEmailNewDocumentToValidator(validatorEmail, dados);
 
+                    var creatorEmail = await _context.Users
+                        .Where(u => u.UserId == ssn.UserId)
+                        .Select(u => u.Email)
+                        .FirstOrDefaultAsync();
+
                     dados.Username = folderDB.Validator.Name;
 
-                    await _emailService.SendEmailNewDocumentToCreator(documentoDB.User.Email, dados);
+                    await _emailService.SendEmailNewDocumentToCreator(creatorEmail, dados);
 
                 }
                 catch (Exception)
