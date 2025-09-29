@@ -73,32 +73,24 @@ namespace DocumentinAPI.Controllers
         public async Task<IActionResult> AddDocumentAsync([FromBody] DocumentRequestDTO document)
         {
 
-            if (("1,2").Contains(ssn.Profile.ToString()))
+            var ret = await _service.AddDocumentAsync(document, ssn);
+
+            if (ret.Erro)
             {
 
-                var ret = await _service.AddDocumentAsync(document, ssn);
-
-                if (ret.Erro)
+                if (ret.Mensagem == "noPermission")
                 {
-
-                    if (ret.Mensagem == "noPermission")
-                    {
-                        return Forbid(ret.Mensagem);
-                    }
-                    else
-                    {
-                        return BadRequest(ret);
-                    }
-
+                    return Forbid(ret.Mensagem);
                 }
                 else
                 {
-                    return Ok(ret);
+                    return BadRequest(ret);
                 }
+
             }
             else
             {
-                return Forbid("noPermission");
+                return Ok(ret);
             }
 
         }
