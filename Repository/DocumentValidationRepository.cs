@@ -100,6 +100,7 @@ namespace DocumentinAPI.Repository
                     .Include(d => d.Folder)
                     .Include(d => d.Folder.Validator)
                     .Include(d => d.Document)
+                    .Include(d => d.User)
                     .Where(d => d.DocumentId == dto.DocumentId)
                     .FirstOrDefaultAsync();
 
