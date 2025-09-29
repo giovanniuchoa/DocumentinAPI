@@ -29,8 +29,7 @@ namespace DocumentinAPI.Repository
                     .Include(d => d.User)
                     .Where(d => d.DocumentId == dto.DocumentId
                         && d.User.CompanyId == ssn.CompanyId
-                        && d.IsActive
-                        && d.IsValid == true)
+                        && d.IsActive)
                     .FirstOrDefaultAsync();
 
                 if (documentoDB == null)
