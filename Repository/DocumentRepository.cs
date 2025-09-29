@@ -61,7 +61,9 @@ namespace DocumentinAPI.Repository
 
                 var documentListDB = await _context.Documents
                     .Include(d => d.User)
-                    .Where(d => d.User.CompanyId == ssn.CompanyId)
+                    .Where(d => d.User.CompanyId == ssn.CompanyId
+                        && d.IsValid == true
+                        && ssn.FoldersIdsList.Contains(d.FolderId))
                     .ToListAsync();
 
                 oRetorno.Objeto = documentListDB.Adapt<List<DocumentResponseDTO>>();
