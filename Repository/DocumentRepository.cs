@@ -16,9 +16,12 @@ namespace DocumentinAPI.Repository
 
         private readonly IEmailService _emailService;
 
-        public DocumentRepository(DBContext context, IEmailService emailService) : base(context)
+        private readonly IEmbeddingService _embeddingService;
+
+        public DocumentRepository(DBContext context, IEmailService emailService, IEmbeddingService embeddingService) : base(context)
         {
             _emailService = emailService;
+            _embeddingService = embeddingService;
         }
 
         public async Task<Retorno<DocumentResponseDTO>> GetDocumentByIdAsync(int documentId, UserClaimDTO ssn)
@@ -120,6 +123,16 @@ namespace DocumentinAPI.Repository
                 documentoDB.CreatedAt = DateTime.Now;
                 documentoDB.UpdatedAt = DateTime.Now;
                 documentoDB.IsActive = true;
+
+                /* Gera o Embedding */
+                Retorno<List<float>> embedding = await _embeddingService.GetEmbeddingAsync(documentoDB.Content, ssn);
+
+                if (embedding.Erro)
+                {
+                    throw new Exception("embeddingGenerationFailed");
+                }
+
+                documentoDB.Embedding = embedding.Objeto;
 
                 await _context.Documents.AddAsync(documentoDB);
                 await _context.SaveChangesAsync();
@@ -253,6 +266,15 @@ namespace DocumentinAPI.Repository
                     throw new Exception("folderNotFound");
                 }
 
+                /* Gera o Embedding */
+                Retorno<List<float>> embedding = await _embeddingService.GetEmbeddingAsync(documentoDB.Content, ssn);
+
+                if (embedding.Erro)
+                {
+                    throw new Exception("embeddingGenerationFailed");
+                }
+
+                documentoDB.Embedding = embedding.Objeto;
                 documentoDB.Title = document.Title;
                 documentoDB.Content = document.Content;
                 documentoDB.UpdatedAt = DateTime.Now;

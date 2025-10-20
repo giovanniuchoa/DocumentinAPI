@@ -122,6 +122,7 @@ builder.Services.AddTransient<ICommentService, CommentService>();
 builder.Services.AddTransient<ITagService, TagService>();
 builder.Services.AddTransient<IAIService, AIService>();
 builder.Services.AddTransient<IImportService, ImportService>();
+builder.Services.AddTransient<IEmbeddingService, EmbeddingService>();
 
 #endregion
 

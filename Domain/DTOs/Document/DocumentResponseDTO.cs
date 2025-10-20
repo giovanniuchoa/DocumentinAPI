@@ -13,6 +13,7 @@ namespace DocumentinAPI.Domain.DTOs.Document
         public int FolderId { get; set; }
         public bool IsActive { get; set; }
         public Nullable<bool> IsValid { get; set; }
+        public List<float> Embedding { get; set; }
 
     }
 }
