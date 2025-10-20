@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json;
 
 namespace DocumentinAPI.Domain.Models
 {
@@ -33,6 +34,19 @@ namespace DocumentinAPI.Domain.Models
         public bool IsActive { get; set; }
 
         public Nullable<bool> IsValid { get; set; }
+
+        [Required]
+        public string EmbeddingJson { get; set; } = string.Empty;
+
+        [NotMapped]
+        public List<float> Embedding
+        {
+            get => string.IsNullOrEmpty(EmbeddingJson)
+                ? new List<float>()
+                : JsonSerializer.Deserialize<List<float>>(EmbeddingJson)!;
+
+            set => EmbeddingJson = JsonSerializer.Serialize(value);
+        }
 
         [ForeignKey(nameof(UserId))]
         public virtual User User { get; set; }
