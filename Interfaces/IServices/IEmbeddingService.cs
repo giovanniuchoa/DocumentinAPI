@@ -1,9 +1,12 @@
-﻿namespace DocumentinAPI.Interfaces.IServices
+﻿using DocumentinAPI.Domain.DTOs.Auth;
+using DocumentinAPI.Domain.Utils;
+
+namespace DocumentinAPI.Interfaces.IServices
 {
     public interface IEmbeddingService
     {
 
-        public Task<string> GetEmbeddingAsync(string input);
+        public Task<Retorno<List<float>>> GetEmbeddingAsync(string input, UserClaimDTO ssn);
 
     }
 }
