@@ -17,6 +17,13 @@
             Funcionario = 3
         }
 
+        public enum OpenAIModels
+        {
+            ResumoSimples = 1,
+            ConteudoCurto = 2,
+            ConteudoLongo = 3
+        }
+
 
     }
 }
