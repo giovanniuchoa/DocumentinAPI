@@ -12,5 +12,10 @@
         /// </summary>
         public int DocumentId { get; set; }
 
+        /// <summary>
+        /// Identificador do modelo do OpenAI a ser utilizado no resumo.
+        /// </summary>
+        public short Model { get; set; }
+
     }
 }

@@ -68,7 +68,7 @@ namespace DocumentinAPI.Services
 
                 var contentDB = await _documentService.GetDocumentByIdAsync(dto.DocumentId, ssn);            
 
-                OpenAIRequestDTO body = BuildRequestBody(contentDB.Objeto.Content);
+                OpenAIRequestDTO body = BuildRequestBody(contentDB.Objeto.Content, dto.Model);
 
                 _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey);
 
@@ -152,11 +152,37 @@ namespace DocumentinAPI.Services
 
         }
 
-        private OpenAIRequestDTO BuildRequestBody(string documentContent)
+        private OpenAIRequestDTO BuildRequestBody(string documentContent, short model)
         {
+
+            var openAImodel = "";
+
+            switch (model)
+            {
+                case (short)Enums.OpenAIModels.ResumoSimples:
+                    openAImodel = "gpt-3.5-turbo";
+
+                    break;
+
+                case (short)Enums.OpenAIModels.ConteudoCurto:
+                    openAImodel = "gpt-4o-mini";
+
+                    break;
+
+                case (short)Enums.OpenAIModels.ConteudoLongo:
+                    openAImodel = "gpt-4-turbo";
+
+                    break;
+
+                default:
+                    openAImodel = _config["OpenAI:Model"];
+
+                    break;
+            }
+
             return new OpenAIRequestDTO
             {
-                Model = _config["OpenAI:Model"],
+                Model = openAImodel,
                 Messages =
                 [
                     new ChatMessageDTO 
