@@ -155,40 +155,40 @@ namespace DocumentinAPI.Services
         private OpenAIRequestDTO BuildRequestBody(string documentContent, short model)
         {
 
-            var openAImodel = "";
+            var prompt = "";
 
             switch (model)
             {
-                case (short)Enums.OpenAIModels.ResumoSimples:
-                    openAImodel = "gpt-3.5-turbo";
+                case (short)Enums.OpenAIModels.ResumoEstruturado:
+                    prompt = "Você receberá um documento em formato Markdown. Resuma o conteúdo em tópicos curtos e objetivos, mantendo apenas as informações essenciais. A resposta deve ser devolvida exclusivamente em formato Markdown válido, preservando a estrutura hierárquica com títulos e subtítulos.";
 
                     break;
 
-                case (short)Enums.OpenAIModels.ConteudoCurto:
-                    openAImodel = "gpt-4o-mini";
+                case (short)Enums.OpenAIModels.ResumoComparativo:
+                    prompt = "Você receberá um texto em formato Markdown contendo comparações, listas ou discussões. Resuma apenas os pontos de contraste ou semelhança principais. A resposta deve ser devolvida somente em formato Markdown válido, sem adicionar explicações ou comentários.";
 
                     break;
 
-                case (short)Enums.OpenAIModels.ConteudoLongo:
-                    openAImodel = "gpt-4-turbo";
+                case (short)Enums.OpenAIModels.ResumoAnalitico:
+                    prompt = "Você receberá um documento em formato Markdown. Crie uma versão resumida que destaque as ideias centrais e suas relações lógicas. A resposta deve ser devolvida em Markdown válido, mantendo a hierarquia e eliminando exemplos ou explicações desnecessárias.";
 
                     break;
 
                 default:
-                    openAImodel = _config["OpenAI:Model"];
+                    prompt = "Você recebera um documento em formato Markdown. Sua tarefa eh devolver uma versao resumida somente em Markdown valido, sem explicacoes ou comentarios. Mantenha a hierarquia, preserve apenas informacoes essenciais e reduza detalhes irrelevantes.";
 
                     break;
             }
 
             return new OpenAIRequestDTO
             {
-                Model = openAImodel,
+                Model = _config["OpenAI:Model"],
                 Messages =
                 [
                     new ChatMessageDTO 
                     { 
                         Role = "system",
-                        Content = "Você recebera um documento em formato Markdown. Sua tarefa eh devolver uma versao resumida somente em Markdown valido, sem explicacoes ou comentarios. Mantenha a hierarquia, preserve apenas informacoes essenciais e reduza detalhes irrelevantes."
+                        Content = prompt
                     },
                     new ChatMessageDTO 
                     { 
