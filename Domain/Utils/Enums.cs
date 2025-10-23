@@ -19,9 +19,9 @@
 
         public enum OpenAIModels
         {
-            ResumoSimples = 1,
-            ConteudoCurto = 2,
-            ConteudoLongo = 3
+            ResumoEstruturado = 1,
+            ResumoComparativo = 2,
+            ResumoAnalitico = 3
         }
 
 
