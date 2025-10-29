@@ -207,10 +207,39 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-var port = Environment.GetEnvironmentVariable("PORT") ?? "7198";
-app.Urls.Add($"https://0.0.0.0:{port}");
+var port = Environment.GetEnvironmentVariable("PORT");
+if (!string.IsNullOrEmpty(port))
+{
+    app.Urls.Add($"http://0.0.0.0:{port}");
+}
 
-app.MapGet("/health", () => Results.Ok(new { status = "healthy", timestamp = DateTime.UtcNow }));
+app.MapGet("/health", async (DBContext db) =>
+{
+    try
+    {
+        await db.Database.CanConnectAsync();
+        return Results.Ok(new
+        {
+            status = "healthy",
+            database = "connected",
+            timestamp = DateTime.UtcNow,
+            port = port
+        });
+    }
+    catch (Exception ex)
+    {
+        return Results.Json(
+            new
+            {
+                status = "unhealthy",
+                database = "error",
+                message = ex.Message,
+                port = port
+            },
+            statusCode: 503
+        );
+    }
+});
 
 app.Run();
 
