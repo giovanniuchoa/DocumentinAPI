@@ -207,4 +207,11 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+var port = Environment.GetEnvironmentVariable("PORT") ?? "7198";
+app.Urls.Add($"https://0.0.0.0:{port}");
+
+app.MapGet("/health", () => Results.Ok(new { status = "healthy", timestamp = DateTime.UtcNow }));
+
+app.Run();
+
 app.Run();
