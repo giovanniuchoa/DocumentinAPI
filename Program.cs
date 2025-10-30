@@ -104,6 +104,7 @@ builder.Services.AddTransient<ICommentRepository, CommentRepository>();
 builder.Services.AddTransient<ITagRepository, TagRepository>();
 builder.Services.AddTransient<IAIRepository, AIRepository>();
 builder.Services.AddTransient<IEmailRepository, EmailRepository>();
+builder.Services.AddTransient<IDashboardRepositoy, DashboardRepository>();
 
 /* Service */
 builder.Services.AddTransient<IAuthService, AuthService>();
@@ -123,6 +124,7 @@ builder.Services.AddTransient<ITagService, TagService>();
 builder.Services.AddTransient<IAIService, AIService>();
 builder.Services.AddTransient<IImportService, ImportService>();
 builder.Services.AddTransient<IEmbeddingService, EmbeddingService>();
+builder.Services.AddTransient<IDashboardService, DashboardService>();
 
 #endregion
 
