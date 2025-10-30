@@ -9,18 +9,29 @@ namespace DocumentinAPI.Domain.Utils
 
         public static async Task<string> GetEmailBodyFromTemplateAsync(string templateFileName, Dictionary<string, string> replacements)
         {
-        
-            var assembly = typeof(TemplateHelpers).Assembly;
-            var resourceName = $"DocumentinAPI.Templates.{templateFileName}";
 
-            using var stream = assembly.GetManifestResourceStream(resourceName);
-            if (stream == null)
+            var currentDir = Directory.GetCurrentDirectory();
+            var filePath = Path.Combine(currentDir, "Templates", templateFileName);
+
+            Console.WriteLine($"Current Directory: {currentDir}");
+            Console.WriteLine($"Template Path: {filePath}");
+            Console.WriteLine($"File Exists: {File.Exists(filePath)}");
+
+            if (!File.Exists(filePath))
             {
-                throw new FileNotFoundException($"Template não encontrado: {resourceName}");
+               
+                var templatesDir = Path.Combine(currentDir, "Templates");
+                if (Directory.Exists(templatesDir))
+                {
+                    Console.WriteLine($"Files in Templates: {string.Join(", ", Directory.GetFiles(templatesDir))}");
+                }
+                else
+                {
+                    Console.WriteLine("Templates directory does not exist!");
+                }
             }
 
-            using var reader = new StreamReader(stream);
-            var html = await reader.ReadToEndAsync();
+            var html = await File.ReadAllTextAsync(filePath);
 
             foreach (var item in replacements)
             {
