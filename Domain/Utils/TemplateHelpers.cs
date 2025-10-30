@@ -9,12 +9,22 @@ namespace DocumentinAPI.Domain.Utils
 
         public static async Task<string> GetEmailBodyFromTemplateAsync(string templateFileName, Dictionary<string, string> replacements)
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Templates", templateFileName);
-            var html = await File.ReadAllTextAsync(filePath);
+        
+            var assembly = typeof(TemplateHelpers).Assembly;
+            var resourceName = $"DocumentinAPI.Templates.{templateFileName}";
+
+            using var stream = assembly.GetManifestResourceStream(resourceName);
+            if (stream == null)
+            {
+                throw new FileNotFoundException($"Template não encontrado: {resourceName}");
+            }
+
+            using var reader = new StreamReader(stream);
+            var html = await reader.ReadToEndAsync();
 
             foreach (var item in replacements)
             {
-                html = html.Replace($"{{{{{item.Key}}}}}", item.Value); 
+                html = html.Replace($"{{{{{item.Key}}}}}", item.Value);
             }
 
             return html;

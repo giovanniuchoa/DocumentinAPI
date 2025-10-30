@@ -9,10 +9,8 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<Content Include="Templates\**\*.html">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-	</ItemGroup>	
+		<EmbeddedResource Include="Templates\**\*.html" />
+	</ItemGroup>
 	
   <ItemGroup>
     <PackageReference Include="DotNetEnv" Version="3.1.1" />
