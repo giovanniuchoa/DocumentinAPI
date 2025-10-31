@@ -31,6 +31,12 @@ namespace DocumentinAPI.Repository
                 email.Subject = subject;
                 email.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = body };
 
+                Console.WriteLine(smtpPort);
+                Console.WriteLine(smtpServer);
+                Console.WriteLine(email);
+                Console.WriteLine(from);
+                Console.WriteLine(appPassword);
+
                 using var smtp = new SmtpClient();
                 await smtp.ConnectAsync(smtpServer, smtpPort, MailKit.Security.SecureSocketOptions.StartTls);
                 await smtp.AuthenticateAsync(from, appPassword);
