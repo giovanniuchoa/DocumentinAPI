@@ -26,6 +26,8 @@ namespace DocumentinAPI.Services
 
                 var body = await MontarEmailBodyStatusValidacaoDocumento(dto);
 
+                Console.WriteLine("CHEGUEI AQUI");
+
                 await _repository.SendEmailAsync(email, $"Documento {status}", body);
 
             }

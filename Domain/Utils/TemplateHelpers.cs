@@ -38,6 +38,8 @@ namespace DocumentinAPI.Domain.Utils
                 html = html.Replace($"{{{{{item.Key}}}}}", item.Value);
             }
 
+            Console.WriteLine(html);
+
             return html;
         }
 
