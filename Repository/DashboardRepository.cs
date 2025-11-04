@@ -1,5 +1,6 @@
 ﻿using DocumentinAPI.Data;
 using DocumentinAPI.Domain.DTOs.Auth;
+using DocumentinAPI.Domain.DTOs.Dashboard;
 using DocumentinAPI.Domain.DTOs.Document;
 using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IRepository;
@@ -15,7 +16,7 @@ namespace DocumentinAPI.Repository
         {
         }
 
-        public async Task<Retorno<DocumentDashboardResponseDTO>> GetDocumentDashboardInfoAsync(DocumentDashboardRequestDTO dto, UserClaimDTO ssn)
+        public async Task<Retorno<DocumentDashboardResponseDTO>> GetDocumentDashboardInfoAsync(DashboardRequestDTO dto, UserClaimDTO ssn)
         {
 
             Retorno<DocumentDashboardResponseDTO> oRetorno = new();
@@ -45,6 +46,11 @@ namespace DocumentinAPI.Repository
 
             return oRetorno;
 
+        }
+
+        public async Task<Retorno<List<DocumentMonthDashResponseDTO>>> GetDocumentMonthDashInfoAsync(DashboardRequestDTO dto, UserClaimDTO ssn)
+        {
+            throw new NotImplementedException();
         }
     }
 }

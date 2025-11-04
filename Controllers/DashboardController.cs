@@ -1,4 +1,4 @@
-﻿using DocumentinAPI.Domain.DTOs.Document;
+﻿using DocumentinAPI.Domain.DTOs.Dashboard;
 using DocumentinAPI.Interfaces.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +26,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("documents")]
-        public async Task<IActionResult> GetDocumentsInfoDashAsync([FromQuery] DocumentDashboardRequestDTO dto)
+        public async Task<IActionResult> GetDocumentsInfoDashAsync([FromQuery] DashboardRequestDTO dto)
         {
             var ret = await _service.GetDocumentDashboardInfoAsync(dto, ssn);
 

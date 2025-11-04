@@ -3,6 +3,7 @@ using DocumentinAPI.Interfaces.IRepository;
 using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Domain.DTOs.Document;
 using DocumentinAPI.Domain.DTOs.Auth;
+using DocumentinAPI.Domain.DTOs.Dashboard;
 
 namespace DocumentinAPI.Services
 {
@@ -16,7 +17,7 @@ namespace DocumentinAPI.Services
             _repository = repositoy;
         }
 
-        public async Task<Retorno<DocumentDashboardResponseDTO>> GetDocumentDashboardInfoAsync(DocumentDashboardRequestDTO dto, UserClaimDTO ssn)
+        public async Task<Retorno<DocumentDashboardResponseDTO>> GetDocumentDashboardInfoAsync(DashboardRequestDTO dto, UserClaimDTO ssn)
         {
 
             Retorno<DocumentDashboardResponseDTO> oRetorno = new();

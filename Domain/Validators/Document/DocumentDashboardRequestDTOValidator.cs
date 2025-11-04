@@ -1,9 +1,9 @@
-﻿using DocumentinAPI.Domain.DTOs.Document;
+﻿using DocumentinAPI.Domain.DTOs.Dashboard;
 using FluentValidation;
 
 namespace DocumentinAPI.Domain.Validators.Document
 {
-    public class DocumentDashboardRequestDTOValidator : AbstractValidator<DocumentDashboardRequestDTO>
+    public class DocumentDashboardRequestDTOValidator : AbstractValidator<DashboardRequestDTO>
     {
         public DocumentDashboardRequestDTOValidator()
         {
