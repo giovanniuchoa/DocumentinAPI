@@ -73,7 +73,7 @@ namespace DocumentinAPI.Domain.Utils
         public static async Task<string> MontarEmailBodyStatusValidacaoDocumento(DocumentValidationStatusEmailTemplateDTO dto)
         {
 
-            var status = dto.Status == (short)Enums.StatusValidacao.Validado ? "APROVADO" : "REJEITADO";
+            var status = dto.Status == (short)Enums.StatusValidacao.Validado ? "APROVADO" : dto.Status == (short)Enums.StatusValidacao.Retornado ? "REJEITADO" : "EM VALIDAÇÃO";
 
             var dados = new Dictionary<string, string>
             {
