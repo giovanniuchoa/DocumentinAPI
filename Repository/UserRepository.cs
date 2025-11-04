@@ -142,7 +142,7 @@ namespace DocumentinAPI.Repository
                 var userDB = await _context.Users
                     .Where(u => u.UserId == dto.UserId
                         && u.IsActive == true
-                        && u.CompanyId == ssn.CompanyId)
+                        && (ssn.Profile == (int)Enums.TipoUsuario.AdministradorDev || u.CompanyId == ssn.CompanyId))
                     .FirstOrDefaultAsync();
 
                 if (userDB == null)
@@ -189,7 +189,7 @@ namespace DocumentinAPI.Repository
 
                 var userDB = await _context.Users
                     .Where(u => u.UserId == userId
-                        && u.CompanyId == ssn.CompanyId)
+                        && (ssn.Profile == (int)Enums.TipoUsuario.AdministradorDev || u.CompanyId == ssn.CompanyId))
                     .FirstOrDefaultAsync();
 
                 if (ssn.Profile == 2 && userDB.Profile == 1)
