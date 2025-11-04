@@ -279,6 +279,7 @@ namespace DocumentinAPI.Repository
                 documentoDB.Content = document.Content;
                 documentoDB.UpdatedAt = DateTime.Now;
                 documentoDB.FolderId = document.FolderId;
+                documentoDB.IsValid = false;
 
                 await _context.SaveChangesAsync();
 
