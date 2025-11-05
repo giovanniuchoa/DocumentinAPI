@@ -35,5 +35,8 @@ namespace DocumentinAPI.Services
             return oRetorno;
 
         }
+
+        public async Task<Retorno<List<DocumentMonthDashResponseDTO>>> GetDocumentMonthDashInfoAsync(DashboardRequestDTO dto, UserClaimDTO ssn)
+            => await _repository.GetDocumentMonthDashInfoAsync(dto, ssn);
     }
 }

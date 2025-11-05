@@ -9,6 +9,7 @@ namespace DocumentinAPI.Interfaces.IServices
     {
 
         public Task<Retorno<DocumentDashboardResponseDTO>> GetDocumentDashboardInfoAsync(DashboardRequestDTO dto, UserClaimDTO ssn);
+        public Task<Retorno<List<DocumentMonthDashResponseDTO>>> GetDocumentMonthDashInfoAsync(DashboardRequestDTO dto, UserClaimDTO ssn);
 
     }
 }

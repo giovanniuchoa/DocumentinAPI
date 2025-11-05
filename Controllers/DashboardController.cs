@@ -40,5 +40,20 @@ namespace DocumentinAPI.Controllers
             }
         }
 
+        [HttpGet("documentsMonths")]
+        public async Task<IActionResult> GetDocumentMonthDashInfoAsync([FromQuery] DashboardRequestDTO dto)
+        {
+            var ret = await _service.GetDocumentMonthDashInfoAsync(dto, ssn);
+
+            if (ret.Erro == true)
+            {
+                return BadRequest(ret);
+            }
+            else
+            {
+                return Ok(ret);
+            }
+        }
+
     }
 }
