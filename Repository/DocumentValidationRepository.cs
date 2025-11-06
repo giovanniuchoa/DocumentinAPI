@@ -139,7 +139,7 @@ namespace DocumentinAPI.Repository
                         Status = dto.Status
                     };
 
-                    await _emailService.SendEmailDocumentValidationStatusChange(documentValidationDB.User.Email, dados);
+                    _emailService.SendEmailDocumentValidationStatusChange(documentValidationDB.User.Email, dados);
 
                 }
                 catch (Exception)

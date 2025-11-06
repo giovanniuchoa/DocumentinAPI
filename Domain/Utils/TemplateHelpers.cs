@@ -82,7 +82,8 @@ namespace DocumentinAPI.Domain.Utils
                 { "PASTA", dto.FolderName },
                 { "DATA_ATUALIZACAO", dto.UpdatedAt.ToString() },
                 { "STATUS", status },
-                { "COR_STATUS", status == "APROVADO" ?  "#28a745" : "#dc3545"}
+                { "COR_STATUS", status == "APROVADO" ?  "#28a745" : (status == "EM VALIDAÇÃO" ? "#ffde21" : "#dc3545")},
+                { "ESTADO", status == "EM VALIDAÇÃO" ? "está" : "foi" }
             };
 
             var body = await GetEmailBodyFromTemplateAsync("UpdateDocumentValidationStatus.html", dados);

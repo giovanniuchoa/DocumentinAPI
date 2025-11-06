@@ -435,7 +435,7 @@ namespace DocumentinAPI.Repository
                     Token = passwordRecoveryDB.Token
                 };
 
-                await _emailService.SendEmailPasswordRecovery(userDB.Email, dados);
+                _emailService.SendEmailPasswordRecovery(userDB.Email, dados);
 
                 oRetorno.Objeto = passwordRecoveryDB.Adapt<PasswordRecoveryResponseDTO>();
 
