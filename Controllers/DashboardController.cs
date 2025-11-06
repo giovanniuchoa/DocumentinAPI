@@ -85,5 +85,35 @@ namespace DocumentinAPI.Controllers
             }
         }
 
+        [HttpGet("task")]
+        public async Task<IActionResult> GetTaskInfoDashAsync([FromQuery] DashboardRequestDTO dto)
+        {
+            var ret = await _service.GetTaskInfoDashAsync(dto, ssn);
+
+            if (ret.Erro == true)
+            {
+                return BadRequest(ret);
+            }
+            else
+            {
+                return Ok(ret);
+            }
+        }
+
+        [HttpGet("taskPriority")]
+        public async Task<IActionResult> GetTaskPriorityDashInfoAsync([FromQuery] DashboardRequestDTO dto)
+        {
+            var ret = await _service.GetTaskPriorityDashInfoAsync(dto, ssn);
+
+            if (ret.Erro == true)
+            {
+                return BadRequest(ret);
+            }
+            else
+            {
+                return Ok(ret);
+            }
+        }
+
     }
 }

@@ -5,6 +5,7 @@ using DocumentinAPI.Domain.DTOs.Document;
 using DocumentinAPI.Domain.DTOs.Auth;
 using DocumentinAPI.Domain.DTOs.Dashboard;
 using DocumentinAPI.Domain.DTOs.AI;
+using DocumentinAPI.Domain.DTOs.Task;
 
 namespace DocumentinAPI.Services
 {
@@ -45,5 +46,12 @@ namespace DocumentinAPI.Services
 
         public async Task<Retorno<List<DocumentMonthDashResponseDTO>>> GetDocumentMonthDashInfoAsync(DashboardRequestDTO dto, UserClaimDTO ssn)
             => await _repository.GetDocumentMonthDashInfoAsync(dto, ssn);
+
+        public Task<Retorno<TaskDashResponseDTO>> GetTaskInfoDashAsync(DashboardRequestDTO dto, UserClaimDTO ssn)
+            => _repository.GetTaskInfoDashAsync(dto, ssn);
+
+        public Task<Retorno<List<TaskPriorityDashResponseDTO>>> GetTaskPriorityDashInfoAsync(DashboardRequestDTO dto, UserClaimDTO ssn)
+            => _repository.GetTaskPriorityDashInfoAsync(dto, ssn);
+
     }
 }
