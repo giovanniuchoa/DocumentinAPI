@@ -5,12 +5,12 @@ namespace DocumentinAPI.Interfaces.IServices
     public interface IEmailService
     {
 
-        public Task SendEmailNewDocumentToValidator(string email, DocumentEmailTemplateDTO dto);
-        public Task SendEmailNewDocumentToCreator(string email, DocumentEmailTemplateDTO dto);
-        public Task SendEmailPasswordRecovery(string email, PasswordRecoveryEmailTemplateDTO dto);
-        public Task SendEmailDocumentValidationStatusChange(string email, DocumentValidationStatusEmailTemplateDTO dto);
-        public Task SendEmailNewTaskToAssignee(string email, TaskEmailTemplateDTO dto);
-        public Task SendEmailNewCommentToDocumentCreator(string email, CommentEmailTemplateDTO dto);
+        public void SendEmailNewDocumentToValidator(string email, DocumentEmailTemplateDTO dto);
+        public void SendEmailNewDocumentToCreator(string email, DocumentEmailTemplateDTO dto);
+        public void SendEmailPasswordRecovery(string email, PasswordRecoveryEmailTemplateDTO dto);
+        public void SendEmailDocumentValidationStatusChange(string email, DocumentValidationStatusEmailTemplateDTO dto);
+        public void SendEmailNewTaskToAssignee(string email, TaskEmailTemplateDTO dto);
+        public void SendEmailNewCommentToDocumentCreator(string email, CommentEmailTemplateDTO dto);
 
     }
 }

@@ -58,7 +58,7 @@ namespace DocumentinAPI.Repository
                         CommentDate = commentDB.CreatedAt
                     };
 
-                    await _emailService.SendEmailNewCommentToDocumentCreator(documentDB.User.Email, dados);
+                    _emailService.SendEmailNewCommentToDocumentCreator(documentDB.User.Email, dados);
 
                 }
                 catch (Exception)
