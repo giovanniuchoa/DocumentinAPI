@@ -356,5 +356,30 @@ namespace DocumentinAPI.Repository
             return oRetorno;
 
         }
+
+        public async Task<Retorno<IEnumerable<DocumentResponseDTO>>> GetUserDocumentsAsync(UserClaimDTO ssn)
+        {
+
+            Retorno<IEnumerable<DocumentResponseDTO>> oRetorno = new();
+
+            try
+            {
+
+                var documentList = await _context.Documents
+                    .Where(d => d.UserId == ssn.UserId)
+                    .ToListAsync();
+
+                oRetorno.Objeto = documentList.Adapt<List<DocumentResponseDTO>>();
+                oRetorno.SetSucesso();
+
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
     }
 }

@@ -12,6 +12,7 @@ namespace DocumentinAPI.Interfaces.IServices
         public Task<Retorno<DocumentResponseDTO>> AddDocumentAsync(DocumentRequestDTO document, UserClaimDTO ssn);
         public Task<Retorno<DocumentResponseDTO>> UpdateDocumentAsync(DocumentRequestDTO document, UserClaimDTO ssn);
         public Task<Retorno<DocumentResponseDTO>> ToogleStatusDocumentAsync(int documentId, UserClaimDTO ssn);
+        public Task<Retorno<IEnumerable<DocumentResponseDTO>>> GetUserDocumentsAsync(UserClaimDTO ssn);
 
     }
 }

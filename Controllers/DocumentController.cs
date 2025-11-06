@@ -169,5 +169,19 @@ namespace DocumentinAPI.Controllers
 
         }
 
+        [HttpGet("GetUserDocuments")]
+        public async Task<IActionResult> GetUserDocumentsAsync()
+        {
+            var ret = await _service.GetUserDocumentsAsync(ssn);
+            if (ret.Erro == true)
+            {
+                return BadRequest(ret);
+            }
+            else
+            {
+                return Ok(ret);
+            }
+        }
+
     }
 }
