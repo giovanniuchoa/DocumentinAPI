@@ -1,4 +1,5 @@
 ﻿using DocumentinAPI.Data;
+using DocumentinAPI.Domain.DTOs.AI;
 using DocumentinAPI.Domain.DTOs.Auth;
 using DocumentinAPI.Domain.DTOs.Dashboard;
 using DocumentinAPI.Domain.DTOs.Document;
@@ -14,6 +15,38 @@ namespace DocumentinAPI.Repository
 
         public DashboardRepository(DBContext context) : base(context)
         {
+        }
+
+        public async Task<Retorno<AIDashboardResponseDTO>> GetAIDashboardInfoAsync(DashboardRequestDTO dto, UserClaimDTO ssn)
+        {
+
+            Retorno<AIDashboardResponseDTO> oRetorno = new();
+
+            try
+            {
+                var companyIdParam = new SqlParameter("@CompanyId", ssn.CompanyId);
+                var createdAtFromParam = new SqlParameter("@DataInicio", dto.CreatedAtFrom ?? (object)DBNull.Value);
+                var createdAtToParam = new SqlParameter("@DataFim", dto.CreatedAtTo ?? (object)DBNull.Value);
+
+                var ret = await _context.Database
+                    .SqlQueryRaw<AIDashboardResponseDTO>(
+                        "EXEC spGetIAInfoDash @DataInicio, @DataFim, @CompanyId",
+                        companyIdParam,
+                        createdAtFromParam,
+                        createdAtToParam
+                    )
+                    .ToListAsync();
+
+                oRetorno.Objeto = ret.FirstOrDefault();
+                oRetorno.SetSucesso();
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
         }
 
         public async Task<Retorno<DocumentDashboardResponseDTO>> GetDocumentDashboardInfoAsync(DashboardRequestDTO dto, UserClaimDTO ssn)

@@ -4,6 +4,7 @@ using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Domain.DTOs.Document;
 using DocumentinAPI.Domain.DTOs.Auth;
 using DocumentinAPI.Domain.DTOs.Dashboard;
+using DocumentinAPI.Domain.DTOs.AI;
 
 namespace DocumentinAPI.Services
 {
@@ -16,6 +17,9 @@ namespace DocumentinAPI.Services
         {
             _repository = repositoy;
         }
+
+        public Task<Retorno<AIDashboardResponseDTO>> GetAIDashboardInfoAsync(DashboardRequestDTO dto, UserClaimDTO ssn)
+            => _repository.GetAIDashboardInfoAsync(dto, ssn);
 
         public async Task<Retorno<DocumentDashboardResponseDTO>> GetDocumentDashboardInfoAsync(DashboardRequestDTO dto, UserClaimDTO ssn)
         {

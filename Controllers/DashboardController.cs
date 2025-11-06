@@ -55,5 +55,20 @@ namespace DocumentinAPI.Controllers
             }
         }
 
+        [HttpGet("ai")]
+        public async Task<IActionResult> GetAIDashboardInfoAsync([FromQuery] DashboardRequestDTO dto)
+        {
+            var ret = await _service.GetAIDashboardInfoAsync(dto, ssn);
+
+            if (ret.Erro == true)
+            {
+                return BadRequest(ret);
+            }
+            else
+            {
+                return Ok(ret);
+            }
+        }
+
     }
 }
