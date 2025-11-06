@@ -75,6 +75,9 @@ namespace DocumentinAPI.Services
 
         }
 
+        public Task<Retorno<IEnumerable<DocumentResponseDTO>>> GetUserDocumentsAsync(UserClaimDTO ssn)
+            => _repository.GetUserDocumentsAsync(ssn);
+
         public async Task<Retorno<DocumentResponseDTO>> ToogleStatusDocumentAsync(int documentId, UserClaimDTO ssn)
         {
             
