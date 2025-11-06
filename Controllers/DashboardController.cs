@@ -1,4 +1,4 @@
-﻿using DocumentinAPI.Domain.DTOs.Document;
+﻿using DocumentinAPI.Domain.DTOs.Dashboard;
 using DocumentinAPI.Interfaces.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -26,9 +26,84 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("documents")]
-        public async Task<IActionResult> GetDocumentsInfoDashAsync([FromQuery] DocumentDashboardRequestDTO dto)
+        public async Task<IActionResult> GetDocumentsInfoDashAsync([FromQuery] DashboardRequestDTO dto)
         {
             var ret = await _service.GetDocumentDashboardInfoAsync(dto, ssn);
+
+            if (ret.Erro == true)
+            {
+                return BadRequest(ret);
+            }
+            else
+            {
+                return Ok(ret);
+            }
+        }
+
+        [HttpGet("documentsMonths")]
+        public async Task<IActionResult> GetDocumentMonthDashInfoAsync([FromQuery] DashboardRequestDTO dto)
+        {
+            var ret = await _service.GetDocumentMonthDashInfoAsync(dto, ssn);
+
+            if (ret.Erro == true)
+            {
+                return BadRequest(ret);
+            }
+            else
+            {
+                return Ok(ret);
+            }
+        }
+
+        [HttpGet("ai")]
+        public async Task<IActionResult> GetAIDashboardInfoAsync([FromQuery] DashboardRequestDTO dto)
+        {
+            var ret = await _service.GetAIDashboardInfoAsync(dto, ssn);
+
+            if (ret.Erro == true)
+            {
+                return BadRequest(ret);
+            }
+            else
+            {
+                return Ok(ret);
+            }
+        }
+
+        [HttpGet("aiUsers")]
+        public async Task<IActionResult> GetAIUsersUsageDashInfoAsync([FromQuery] DashboardRequestDTO dto)
+        {
+            var ret = await _service.GetAIUsersUsageDashInfoAsync(dto, ssn);
+
+            if (ret.Erro == true)
+            {
+                return BadRequest(ret);
+            }
+            else
+            {
+                return Ok(ret);
+            }
+        }
+
+        [HttpGet("task")]
+        public async Task<IActionResult> GetTaskInfoDashAsync([FromQuery] DashboardRequestDTO dto)
+        {
+            var ret = await _service.GetTaskInfoDashAsync(dto, ssn);
+
+            if (ret.Erro == true)
+            {
+                return BadRequest(ret);
+            }
+            else
+            {
+                return Ok(ret);
+            }
+        }
+
+        [HttpGet("taskPriority")]
+        public async Task<IActionResult> GetTaskPriorityDashInfoAsync([FromQuery] DashboardRequestDTO dto)
+        {
+            var ret = await _service.GetTaskPriorityDashInfoAsync(dto, ssn);
 
             if (ret.Erro == true)
             {
