@@ -1,6 +1,6 @@
-﻿namespace DocumentinAPI.Domain.DTOs.Document
+﻿namespace DocumentinAPI.Domain.DTOs.Dashboard
 {
-    public class DocumentDashboardRequestDTO
+    public class DashboardRequestDTO
     {
 
         public DateTime? CreatedAtFrom { get; set; }

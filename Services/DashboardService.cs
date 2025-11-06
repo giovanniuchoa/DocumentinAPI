@@ -3,6 +3,9 @@ using DocumentinAPI.Interfaces.IRepository;
 using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Domain.DTOs.Document;
 using DocumentinAPI.Domain.DTOs.Auth;
+using DocumentinAPI.Domain.DTOs.Dashboard;
+using DocumentinAPI.Domain.DTOs.AI;
+using DocumentinAPI.Domain.DTOs.Task;
 
 namespace DocumentinAPI.Services
 {
@@ -16,7 +19,13 @@ namespace DocumentinAPI.Services
             _repository = repositoy;
         }
 
-        public async Task<Retorno<DocumentDashboardResponseDTO>> GetDocumentDashboardInfoAsync(DocumentDashboardRequestDTO dto, UserClaimDTO ssn)
+        public Task<Retorno<AIDashboardResponseDTO>> GetAIDashboardInfoAsync(DashboardRequestDTO dto, UserClaimDTO ssn)
+            => _repository.GetAIDashboardInfoAsync(dto, ssn);
+
+        public Task<Retorno<List<AIUsageDashboardResponseDTO>>> GetAIUsersUsageDashInfoAsync(DashboardRequestDTO dto, UserClaimDTO ssn)
+            => _repository.GetAIUsersUsageDashInfoAsync(dto, ssn);
+
+        public async Task<Retorno<DocumentDashboardResponseDTO>> GetDocumentDashboardInfoAsync(DashboardRequestDTO dto, UserClaimDTO ssn)
         {
 
             Retorno<DocumentDashboardResponseDTO> oRetorno = new();
@@ -34,5 +43,15 @@ namespace DocumentinAPI.Services
             return oRetorno;
 
         }
+
+        public async Task<Retorno<List<DocumentMonthDashResponseDTO>>> GetDocumentMonthDashInfoAsync(DashboardRequestDTO dto, UserClaimDTO ssn)
+            => await _repository.GetDocumentMonthDashInfoAsync(dto, ssn);
+
+        public Task<Retorno<TaskDashResponseDTO>> GetTaskInfoDashAsync(DashboardRequestDTO dto, UserClaimDTO ssn)
+            => _repository.GetTaskInfoDashAsync(dto, ssn);
+
+        public Task<Retorno<List<TaskPriorityDashResponseDTO>>> GetTaskPriorityDashInfoAsync(DashboardRequestDTO dto, UserClaimDTO ssn)
+            => _repository.GetTaskPriorityDashInfoAsync(dto, ssn);
+
     }
 }
