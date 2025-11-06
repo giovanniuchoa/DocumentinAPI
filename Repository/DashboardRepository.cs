@@ -179,6 +179,38 @@ namespace DocumentinAPI.Repository
 
         }
 
+        public async Task<Retorno<List<DocumentValidationUserDashResponseDTO>>> GetDocumentValidationUsersDashInfoAsync(DashboardRequestDTO dto, UserClaimDTO ssn)
+        {
+
+            Retorno<List<DocumentValidationUserDashResponseDTO>> oRetorno = new();
+
+            try
+            {
+                var companyIdParam = new SqlParameter("@CompanyId", ssn.CompanyId);
+                var createdAtFromParam = new SqlParameter("@DataInicio", dto.CreatedAtFrom ?? (object)DBNull.Value);
+                var createdAtToParam = new SqlParameter("@DataFim", dto.CreatedAtTo ?? (object)DBNull.Value);
+
+                var ret = await _context.Database
+                    .SqlQueryRaw<DocumentValidationUserDashResponseDTO>(
+                        "EXEC spDocumentValidationUsersDash @CompanyId, @DataInicio, @DataFim",
+                        companyIdParam,
+                        createdAtFromParam,
+                        createdAtToParam
+                    )
+                    .ToListAsync();
+
+                oRetorno.Objeto = ret;
+                oRetorno.SetSucesso();
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
+
         public async Task<Retorno<TaskDashResponseDTO>> GetTaskInfoDashAsync(DashboardRequestDTO dto, UserClaimDTO ssn)
         {
 

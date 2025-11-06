@@ -130,5 +130,20 @@ namespace DocumentinAPI.Controllers
             }
         }
 
+        [HttpGet("documentvalidationUsers")]
+        public async Task<IActionResult> GetDocumentValidationUsersDashInfoAsync([FromQuery] DashboardRequestDTO dto)
+        {
+            var ret = await _service.GetDocumentValidationUsersDashInfoAsync(dto, ssn);
+
+            if (ret.Erro == true)
+            {
+                return BadRequest(ret);
+            }
+            else
+            {
+                return Ok(ret);
+            }
+        }
+
     }
 }

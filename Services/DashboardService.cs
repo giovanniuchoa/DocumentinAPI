@@ -51,6 +51,9 @@ namespace DocumentinAPI.Services
         public Task<Retorno<DocumentValidationDashResponseDTO>> GetDocumentValidationDashInfoAsync(DashboardRequestDTO dto, UserClaimDTO ssn)
             => _repository.GetDocumentValidationDashInfoAsync(dto, ssn);
 
+        public Task<Retorno<List<DocumentValidationUserDashResponseDTO>>> GetDocumentValidationUsersDashInfoAsync(DashboardRequestDTO dto, UserClaimDTO ssn)
+            => _repository.GetDocumentValidationUsersDashInfoAsync(dto, ssn);
+
         public Task<Retorno<TaskDashResponseDTO>> GetTaskInfoDashAsync(DashboardRequestDTO dto, UserClaimDTO ssn)
             => _repository.GetTaskInfoDashAsync(dto, ssn);
 

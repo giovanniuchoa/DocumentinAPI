@@ -18,6 +18,7 @@ namespace DocumentinAPI.Interfaces.IRepository
         public Task<Retorno<TaskDashResponseDTO>> GetTaskInfoDashAsync(DashboardRequestDTO dto, UserClaimDTO ssn);
         public Task<Retorno<List<TaskPriorityDashResponseDTO>>> GetTaskPriorityDashInfoAsync(DashboardRequestDTO dto, UserClaimDTO ssn);
         public Task<Retorno<DocumentValidationDashResponseDTO>> GetDocumentValidationDashInfoAsync(DashboardRequestDTO dto, UserClaimDTO ssn);
+        public Task<Retorno<List<DocumentValidationUserDashResponseDTO>>> GetDocumentValidationUsersDashInfoAsync(DashboardRequestDTO dto, UserClaimDTO ssn);
 
     }
 }
