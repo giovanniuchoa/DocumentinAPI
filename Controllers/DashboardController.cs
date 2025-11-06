@@ -70,5 +70,20 @@ namespace DocumentinAPI.Controllers
             }
         }
 
+        [HttpGet("aiUsers")]
+        public async Task<IActionResult> GetAIUsersUsageDashInfoAsync([FromQuery] DashboardRequestDTO dto)
+        {
+            var ret = await _service.GetAIUsersUsageDashInfoAsync(dto, ssn);
+
+            if (ret.Erro == true)
+            {
+                return BadRequest(ret);
+            }
+            else
+            {
+                return Ok(ret);
+            }
+        }
+
     }
 }

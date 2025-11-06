@@ -21,6 +21,9 @@ namespace DocumentinAPI.Services
         public Task<Retorno<AIDashboardResponseDTO>> GetAIDashboardInfoAsync(DashboardRequestDTO dto, UserClaimDTO ssn)
             => _repository.GetAIDashboardInfoAsync(dto, ssn);
 
+        public Task<Retorno<List<AIUsageDashboardResponseDTO>>> GetAIUsersUsageDashInfoAsync(DashboardRequestDTO dto, UserClaimDTO ssn)
+            => _repository.GetAIUsersUsageDashInfoAsync(dto, ssn);
+
         public async Task<Retorno<DocumentDashboardResponseDTO>> GetDocumentDashboardInfoAsync(DashboardRequestDTO dto, UserClaimDTO ssn)
         {
 

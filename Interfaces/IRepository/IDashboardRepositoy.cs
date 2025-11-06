@@ -12,6 +12,7 @@ namespace DocumentinAPI.Interfaces.IRepository
         public Task<Retorno<DocumentDashboardResponseDTO>> GetDocumentDashboardInfoAsync(DashboardRequestDTO dto, UserClaimDTO ssn);
         public Task<Retorno<List<DocumentMonthDashResponseDTO>>> GetDocumentMonthDashInfoAsync(DashboardRequestDTO dto, UserClaimDTO ssn);
         public Task<Retorno<AIDashboardResponseDTO>> GetAIDashboardInfoAsync(DashboardRequestDTO dto, UserClaimDTO ssn);
+        public Task<Retorno<List<AIUsageDashboardResponseDTO>>> GetAIUsersUsageDashInfoAsync(DashboardRequestDTO dto, UserClaimDTO ssn);
 
     }
 }
