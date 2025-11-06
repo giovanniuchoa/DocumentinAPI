@@ -123,7 +123,7 @@ namespace DocumentinAPI.Repository
                         Description = taskDB.Description
                     };
 
-                    await _emailService.SendEmailNewTaskToAssignee(assignee.Email, dados);
+                    _emailService.SendEmailNewTaskToAssignee(assignee.Email, dados);
 
                 }
                 catch (Exception)

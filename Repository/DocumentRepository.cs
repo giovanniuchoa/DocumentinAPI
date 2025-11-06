@@ -204,7 +204,7 @@ namespace DocumentinAPI.Repository
                         CreatedAt = documentoDB.CreatedAt
                     };
 
-                    await _emailService.SendEmailNewDocumentToValidator(validatorEmail, dados);
+                    _emailService.SendEmailNewDocumentToValidator(validatorEmail, dados);
 
                     var creatorEmail = await _context.Users
                         .Where(u => u.UserId == ssn.UserId)
@@ -213,7 +213,7 @@ namespace DocumentinAPI.Repository
 
                     dados.Username = folderDB.Validator.Name;
 
-                    await _emailService.SendEmailNewDocumentToCreator(creatorEmail, dados);
+                    _emailService.SendEmailNewDocumentToCreator(creatorEmail, dados);
 
                 }
                 catch (Exception)

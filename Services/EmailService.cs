@@ -16,113 +16,89 @@ namespace DocumentinAPI.Services
             _repository = repository;
         }
 
-        public async Task SendEmailDocumentValidationStatusChange(string email, DocumentValidationStatusEmailTemplateDTO dto)
+        public void SendEmailDocumentValidationStatusChange(string email, DocumentValidationStatusEmailTemplateDTO dto)
         {
 
-            try
+            Task.Run(async () =>
             {
 
-                var status = dto.Status == (short)Enums.StatusValidacao.Validado ? "APROVADO" : "REJEITADO";
+                var status = dto.Status == (short)Enums.StatusValidacao.Validado ? "APROVADO" : dto.Status == (short)Enums.StatusValidacao.Retornado ? "REJEITADO" : "EM VALIDAÇÃO";
 
                 var body = await MontarEmailBodyStatusValidacaoDocumento(dto);
 
                 await _repository.SendEmailAsync(email, $"Documento {status}", body);
 
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            });
 
         }
 
-        public async Task SendEmailNewCommentToDocumentCreator(string email, CommentEmailTemplateDTO dto)
+        public void SendEmailNewCommentToDocumentCreator(string email, CommentEmailTemplateDTO dto)
         {
 
-            try
+            Task.Run(async () =>
             {
 
                 var body = await MontarEmailBodyNovoComentarioNoDocumento(dto);
 
                 await _repository.SendEmailAsync(email, "Novo Comentário no Documento", body);
 
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            });
 
         }
 
-        public async Task SendEmailNewDocumentToCreator(string email, DocumentEmailTemplateDTO dto)
+        public void SendEmailNewDocumentToCreator(string email, DocumentEmailTemplateDTO dto)
         {
 
-            try
+            Task.Run(async () =>
             {
 
                 var body = await MontarEmailBodyNovoDocumento_Criador(dto);
 
                 await _repository.SendEmailAsync(email, "Novo Documento - Aguardando aprovação", body);
 
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            });
 
         }
 
-        public async Task SendEmailNewDocumentToValidator(string email, DocumentEmailTemplateDTO dto)
+        public void SendEmailNewDocumentToValidator(string email, DocumentEmailTemplateDTO dto)
         {
 
-            try
+            Task.Run(async () =>
             {
 
                 var body = await MontarEmailBodyNovoDocumento_Validador(dto);
 
                 await _repository.SendEmailAsync(email, "Novo Documento - Aguardando aprovação", body);
 
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            });
 
         }
 
-        public async Task SendEmailNewTaskToAssignee(string email, TaskEmailTemplateDTO dto)
+        public void SendEmailNewTaskToAssignee(string email, TaskEmailTemplateDTO dto)
         {
 
-            try
+            Task.Run(async () =>
             {
 
                 var body = await MontarEmailBodyNovaTarefa(dto);
 
                 await _repository.SendEmailAsync(email, "Nova Tarefa", body);
 
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            });
 
         }
 
-        public async Task SendEmailPasswordRecovery(string email, PasswordRecoveryEmailTemplateDTO dto)
+        public void SendEmailPasswordRecovery(string email, PasswordRecoveryEmailTemplateDTO dto)
         {
 
-            try
+            Task.Run(async () =>
             {
 
                 var body = await MontarEmailPasswordRecovery(dto);
 
                 await _repository.SendEmailAsync(email, "Recuperação de Senha - Token", body);
 
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            });
 
         }
     }
