@@ -1,4 +1,6 @@
 ﻿using DocumentinAPI.Domain.DTOs.Auth;
+using DocumentinAPI.Domain.DTOs.Document;
+using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IServices;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,6 +25,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se a autenticação falhou.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPost("Authenticate")]
+        [ProducesResponseType(typeof(Retorno<AuthResponseDTO>), 200)]
         public async Task<IActionResult> AuthenticateAsync([FromBody] AuthRequestDTO model)
         {
 

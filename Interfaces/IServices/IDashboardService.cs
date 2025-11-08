@@ -4,6 +4,7 @@ using DocumentinAPI.Domain.DTOs.Dashboard;
 using DocumentinAPI.Domain.DTOs.Document;
 using DocumentinAPI.Domain.DTOs.DocumentValidation;
 using DocumentinAPI.Domain.DTOs.Task;
+using DocumentinAPI.Domain.DTOs.User;
 using DocumentinAPI.Domain.Utils;
 
 namespace DocumentinAPI.Interfaces.IServices
@@ -19,6 +20,7 @@ namespace DocumentinAPI.Interfaces.IServices
         public Task<Retorno<List<TaskPriorityDashResponseDTO>>> GetTaskPriorityDashInfoAsync(DashboardRequestDTO dto, UserClaimDTO ssn);
         public Task<Retorno<DocumentValidationDashResponseDTO>> GetDocumentValidationDashInfoAsync(DashboardRequestDTO dto, UserClaimDTO ssn);
         public Task<Retorno<List<DocumentValidationUserDashResponseDTO>>> GetDocumentValidationUsersDashInfoAsync(DashboardRequestDTO dto, UserClaimDTO ssn);
+        public Task<Retorno<List<UserActivityDashResponseDTO>>> GetUserActivityDashAsync(DashboardRequestDTO dto, UserClaimDTO ssn);
 
     }
 }
