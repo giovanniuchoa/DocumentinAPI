@@ -123,6 +123,7 @@ namespace DocumentinAPI.Repository
                 documentoDB.CreatedAt = DateTime.Now;
                 documentoDB.UpdatedAt = DateTime.Now;
                 documentoDB.IsActive = true;
+                documentoDB.IsValid = false;
 
                 /* Gera o Embedding */
                 Retorno<List<float>> embedding = await _embeddingService.GetEmbeddingAsync(documentoDB.Content, ssn);
@@ -341,6 +342,22 @@ namespace DocumentinAPI.Repository
 
                 documentoDB.IsActive = !documentoDB.IsActive;
                 documentoDB.UpdatedAt = DateTime.Now;
+
+                var documentValidation = await _context.DocumentValidations
+                    .Include(v => v.Folder)
+                    .Where(v => v.DocumentId == documentId)
+                    .FirstOrDefaultAsync();
+
+                if (documentValidation.Status == (int)Enums.StatusValidacao.EmAndamento)
+                {
+                    if (documentValidation.Folder.ValidatorId == ssn.UserId)
+                    {
+                        documentValidation.Status = (int)Enums.StatusValidacao.Retornado;
+                    }
+
+                    documentoDB.IsValid = false;
+                    
+                }
 
                 await _context.SaveChangesAsync();
 
