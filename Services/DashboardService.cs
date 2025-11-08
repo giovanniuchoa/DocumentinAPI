@@ -7,6 +7,7 @@ using DocumentinAPI.Domain.DTOs.Dashboard;
 using DocumentinAPI.Domain.DTOs.AI;
 using DocumentinAPI.Domain.DTOs.Task;
 using DocumentinAPI.Domain.DTOs.DocumentValidation;
+using DocumentinAPI.Domain.DTOs.User;
 
 namespace DocumentinAPI.Services
 {
@@ -60,5 +61,7 @@ namespace DocumentinAPI.Services
         public Task<Retorno<List<TaskPriorityDashResponseDTO>>> GetTaskPriorityDashInfoAsync(DashboardRequestDTO dto, UserClaimDTO ssn)
             => _repository.GetTaskPriorityDashInfoAsync(dto, ssn);
 
+        public Task<Retorno<List<UserActivityDashResponseDTO>>> GetUserActivityDashAsync(DashboardRequestDTO dto, UserClaimDTO ssn)
+            => _repository.GetUserActivityDashAsync(dto, ssn);
     }
 }
