@@ -5,6 +5,7 @@ using DocumentinAPI.Domain.DTOs.Dashboard;
 using DocumentinAPI.Domain.DTOs.Document;
 using DocumentinAPI.Domain.DTOs.DocumentValidation;
 using DocumentinAPI.Domain.DTOs.Task;
+using DocumentinAPI.Domain.DTOs.User;
 using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IRepository;
 using Microsoft.Data.SqlClient;
@@ -257,6 +258,38 @@ namespace DocumentinAPI.Repository
                 var ret = await _context.Database
                     .SqlQueryRaw<TaskPriorityDashResponseDTO>(
                         "EXEC spTasksPrioritiesDashboard @CompanyId, @DataInicio, @DataFim",
+                        companyIdParam,
+                        createdAtFromParam,
+                        createdAtToParam
+                    )
+                    .ToListAsync();
+
+                oRetorno.Objeto = ret;
+                oRetorno.SetSucesso();
+            }
+            catch (Exception ex)
+            {
+                oRetorno.SetErro(ex.Message);
+            }
+
+            return oRetorno;
+
+        }
+
+        public async Task<Retorno<List<UserActivityDashResponseDTO>>> GetUserActivityDashAsync(DashboardRequestDTO dto, UserClaimDTO ssn)
+        {
+
+            Retorno<List<UserActivityDashResponseDTO>> oRetorno = new();
+
+            try
+            {
+                var companyIdParam = new SqlParameter("@CompanyId", ssn.CompanyId);
+                var createdAtFromParam = new SqlParameter("@DataInicio", dto.CreatedAtFrom ?? (object)DBNull.Value);
+                var createdAtToParam = new SqlParameter("@DataFim", dto.CreatedAtTo ?? (object)DBNull.Value);
+
+                var ret = await _context.Database
+                    .SqlQueryRaw<UserActivityDashResponseDTO>(
+                        "EXEC spUserActivityDashboard @CompanyId, @DataInicio, @DataFim",
                         companyIdParam,
                         createdAtFromParam,
                         createdAtToParam
