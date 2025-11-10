@@ -1,5 +1,7 @@
 ﻿using DocumentinAPI.Domain.DTOs.AI;
+using DocumentinAPI.Domain.DTOs.Auth;
 using DocumentinAPI.Domain.DTOs.OpenAIConfig;
+using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +30,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPost("GenerateSummary")]
+        [ProducesResponseType(typeof(Retorno<AIResponseDTO>), 200)]
         public async Task<IActionResult> GenerateSummaryAsync([FromBody] AIRequestDTO dto)
         {
 
@@ -52,6 +55,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetOpenAIConfigByCompany")]
+        [ProducesResponseType(typeof(Retorno<OpenAIConfigResponseDTO>), 200)]
         public async Task<IActionResult> GetOpenAIConfigByCompanyAsync()
         {
 
@@ -76,6 +80,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPost("AddOpenAIConfig")]
+        [ProducesResponseType(typeof(Retorno<OpenAIConfigResponseDTO>), 200)]
         public async Task<IActionResult> AddOpenAIConfigAsync([FromBody] OpenAIConfigRequestDTO dto)
         {
 
@@ -100,6 +105,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPut("UpdateOpenAIConfig")]
+        [ProducesResponseType(typeof(Retorno<OpenAIConfigResponseDTO>), 200)]
         public async Task<IActionResult> UpdateOpenAIConfigAsync([FromBody] OpenAIConfigRequestDTO dto)
         {
 

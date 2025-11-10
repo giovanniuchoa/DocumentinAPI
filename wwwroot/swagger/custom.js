@@ -8,6 +8,8 @@
     link.href = '/swagger/favicon.ico';
     document.head.appendChild(link);
 
+    const delay = window.location.href.includes("localhost") ? 250 : 3000;
+
     const interval = setInterval(() => {
         const topbar = document.querySelector('.topbar-wrapper');
         const topbarcolor = document.querySelector('.topbar');
@@ -53,5 +55,5 @@
             if (schemeContainer) schemeContainer.remove();
 
         }
-    }, 300);
+    }, delay);
 });

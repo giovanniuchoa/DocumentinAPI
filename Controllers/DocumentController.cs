@@ -1,4 +1,6 @@
-﻿using DocumentinAPI.Domain.DTOs.Document;
+﻿using DocumentinAPI.Domain.DTOs.Company;
+using DocumentinAPI.Domain.DTOs.Document;
+using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +28,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetDocumentById/{documentId}")]
+        [ProducesResponseType(typeof(Retorno<DocumentResponseDTO>), 200)]
         public async Task<IActionResult> GetDocumentByIdAsync(int documentId)
         {
 
@@ -49,6 +52,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetListDocument")]
+        [ProducesResponseType(typeof(Retorno<List<DocumentResponseDTO>>), 200)]
         public async Task<IActionResult> GetListDocumentAsync()
         {
             var ret = await _service.GetListDocumentAsync(ssn);
@@ -70,6 +74,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPost("AddDocument")]
+        [ProducesResponseType(typeof(Retorno<DocumentResponseDTO>), 200)]
         public async Task<IActionResult> AddDocumentAsync([FromBody] DocumentRequestDTO document)
         {
 
@@ -103,6 +108,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPut("UpdateDocument")]
+        [ProducesResponseType(typeof(Retorno<DocumentResponseDTO>), 200)]
         public async Task<IActionResult> UpdateDocumentAsync([FromBody] DocumentRequestDTO document)
         {
 
@@ -136,6 +142,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPut("ToogleStatusDocument/{documentId}")]
+        [ProducesResponseType(typeof(Retorno<DocumentResponseDTO>), 200)]
         public async Task<IActionResult> ToogleStatusDocumentAsync(int documentId)
         {
 
@@ -170,6 +177,7 @@ namespace DocumentinAPI.Controllers
         }
 
         [HttpGet("GetUserDocuments")]
+        [ProducesResponseType(typeof(Retorno<List<DocumentResponseDTO>>), 200)]
         public async Task<IActionResult> GetUserDocumentsAsync()
         {
             var ret = await _service.GetUserDocumentsAsync(ssn);
