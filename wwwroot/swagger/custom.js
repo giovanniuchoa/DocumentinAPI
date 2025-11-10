@@ -8,7 +8,7 @@
     link.href = '/swagger/favicon.ico';
     document.head.appendChild(link);
 
-    const delay = window.location.href.includes("localhost") ? 250 : 3000;
+    const delay = window.location.href.includes("localhost") ? 300 : 3000;
 
     const interval = setInterval(() => {
         const topbar = document.querySelector('.topbar-wrapper');
