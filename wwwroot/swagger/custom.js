@@ -53,5 +53,5 @@
             if (schemeContainer) schemeContainer.remove();
 
         }
-    }, 300);
+    }, 1000);
 });
