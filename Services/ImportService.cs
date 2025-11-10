@@ -85,8 +85,15 @@ namespace DocumentinAPI.Services
 
                     var ret = await _documentService.AddDocumentAsync(documentDTO, ssn);
 
-                    oRetorno.Objeto = ret.Objeto;
-
+                    if (ret.Erro)
+                    {
+                        throw new Exception("importError");
+                    }
+                    else
+                    {
+                        oRetorno.Objeto = ret.Objeto;
+                    }
+                        
                     oRetorno.SetSucesso();
 
                 }

@@ -48,9 +48,17 @@ namespace DocumentinAPI.Repository
                     .Distinct()
                     .ToListAsync();
 
+                var foldersCreated = await _context.Folders
+                    .Where(f => f.UserId == usuario.UserId
+                        && f.IsActive)
+                    .Select(f => f.FolderId)
+                    .ToListAsync();
+
+                var allFolders = userFolders.Union(foldersCreated).ToList();
+
                 userClaims.GroupsIds = userGroups?.Any() == true ? string.Join(",", userGroups) : null;
 
-                userClaims.FoldersIds = userFolders?.Any() == true ? string.Join(",", userFolders) : null;
+                userClaims.FoldersIds = allFolders?.Any() == true ? string.Join(",", allFolders) : null;
 
                 usuario.LastLoginAt = DateTime.Now;
 
