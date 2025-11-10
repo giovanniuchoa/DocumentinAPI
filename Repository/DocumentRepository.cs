@@ -93,6 +93,8 @@ namespace DocumentinAPI.Repository
             
             Retorno<DocumentResponseDTO> oRetorno = new();
 
+            bool enviaEmail = true;
+
             try
             {
 
@@ -183,6 +185,7 @@ namespace DocumentinAPI.Repository
                     {
                         documentValidationDB.Status = (short)Enums.StatusValidacao.Validado;
                         documentoDB.IsValid = true;
+                        enviaEmail = false;
                     }
 
                     await _context.DocumentValidations.AddAsync(documentValidationDB);
@@ -198,31 +201,36 @@ namespace DocumentinAPI.Repository
                 try
                 {
 
-                    /* Envia email para o validador e criador */
-
-                    var validatorEmail = await _context.Users
-                        .Where(u => u.UserId == folderDB.ValidatorId)
-                        .Select(u => u.Email)
-                        .FirstOrDefaultAsync();
-
-                    var dados = new DocumentEmailTemplateDTO
+                    if (enviaEmail)
                     {
-                        Title = documentoDB.Title,
-                        Username = ssn.Name,
-                        FolderName = folderDB.Name,
-                        CreatedAt = documentoDB.CreatedAt
-                    };
 
-                    _emailService.SendEmailNewDocumentToValidator(validatorEmail, dados);
+                        /* Envia email para o validador e criador */
 
-                    var creatorEmail = await _context.Users
-                        .Where(u => u.UserId == ssn.UserId)
-                        .Select(u => u.Email)
-                        .FirstOrDefaultAsync();
+                        var validatorEmail = await _context.Users
+                            .Where(u => u.UserId == folderDB.ValidatorId)
+                            .Select(u => u.Email)
+                            .FirstOrDefaultAsync();
 
-                    dados.Username = folderDB.Validator.Name;
+                        var dados = new DocumentEmailTemplateDTO
+                        {
+                            Title = documentoDB.Title,
+                            Username = ssn.Name,
+                            FolderName = folderDB.Name,
+                            CreatedAt = documentoDB.CreatedAt
+                        };
 
-                    _emailService.SendEmailNewDocumentToCreator(creatorEmail, dados);
+                        _emailService.SendEmailNewDocumentToValidator(validatorEmail, dados);
+
+                        var creatorEmail = await _context.Users
+                            .Where(u => u.UserId == ssn.UserId)
+                            .Select(u => u.Email)
+                            .FirstOrDefaultAsync();
+
+                        dados.Username = folderDB.Validator.Name;
+
+                        _emailService.SendEmailNewDocumentToCreator(creatorEmail, dados);
+
+                    }
 
                 }
                 catch (Exception)
@@ -289,6 +297,18 @@ namespace DocumentinAPI.Repository
                 documentoDB.UpdatedAt = DateTime.Now;
                 documentoDB.FolderId = document.FolderId;
                 documentoDB.IsValid = false;
+
+                /* Verifica se o aprovador da pasta está criando já aprova o documento */
+                if (folderDB.ValidatorId == ssn.UserId)
+                {
+
+                    var documentValidationDB = await _context.DocumentValidations
+                        .Where(v => v.DocumentId == documentoDB.DocumentId)
+                        .FirstOrDefaultAsync();
+
+                    documentValidationDB.Status = (short)Enums.StatusValidacao.Validado;
+                    documentoDB.IsValid = true;
+                }
 
                 await _context.SaveChangesAsync();
 
