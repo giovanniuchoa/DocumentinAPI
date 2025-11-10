@@ -69,9 +69,10 @@ namespace DocumentinAPI.Repository
 
                 var documentListDB = await _context.Documents
                     .Include(d => d.User)
+                    .Include(d => d.Folder)
                     .Where(d => d.User.CompanyId == ssn.CompanyId
                         && d.IsValid == true
-                        && ssn.FoldersIdsList.Contains(d.FolderId))
+                        && (ssn.FoldersIdsList.Contains(d.FolderId) || d.Folder.UserId == ssn.UserId))
                     .ToListAsync();
 
                 oRetorno.Objeto = documentListDB.Adapt<List<DocumentResponseDTO>>();
@@ -130,7 +131,7 @@ namespace DocumentinAPI.Repository
 
                 if (embedding.Erro)
                 {
-                    throw new Exception("embeddingGenerationFailed");
+                    //throw new Exception("embeddingGenerationFailed");
                 }
 
                 documentoDB.Embedding = embedding.Objeto;
@@ -176,6 +177,13 @@ namespace DocumentinAPI.Repository
                         UpdatedAt = DateTime.Now,
                         UserId = ssn.UserId
                     };
+
+                    /* Verifica se o aprovador da pasta está criando já aprova o documento */
+                    if (folderDB.ValidatorId == ssn.UserId)
+                    {
+                        documentValidationDB.Status = (short)Enums.StatusValidacao.Validado;
+                        documentoDB.IsValid = true;
+                    }
 
                     await _context.DocumentValidations.AddAsync(documentValidationDB);
 
