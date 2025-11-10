@@ -83,23 +83,14 @@ namespace DocumentinAPI.Repository
         public async System.Threading.Tasks.Task LogAIRequestAsync(LogAIRequestDTO dto, UserClaimDTO ssn)
         {           
 
-            try
-            {
+            var logDB = dto.Adapt<LogAIRequest>();
 
-                var logDB = dto.Adapt<LogAIRequest>();
+            logDB.UserId = ssn.UserId;
+            logDB.CreatedAt = DateTime.UtcNow;
 
-                logDB.UserId = ssn.UserId;
-                logDB.CreatedAt = DateTime.UtcNow;
+            await _context.LogAIRequests.AddAsync(logDB);
 
-                await _context.LogAIRequests.AddAsync(logDB);
-
-                await _context.SaveChangesAsync();
-
-            }
-            catch (Exception ex)
-            {
-                
-            }
+            await _context.SaveChangesAsync();
 
         }
 
