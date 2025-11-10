@@ -1,5 +1,8 @@
 ﻿using DocumentinAPI.Authentication;
+using DocumentinAPI.Domain.DTOs.Folder;
 using DocumentinAPI.Domain.DTOs.Group;
+using DocumentinAPI.Domain.DTOs.User;
+using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +30,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetGroupById/{groupId}")]
+        [ProducesResponseType(typeof(Retorno<GroupResponseDTO>), 200)]
         public async Task<IActionResult> GetGroupByIdAsync(int groupId)
         {
             var ret = await _service.GetGroupByIdAsync(groupId, ssn);
@@ -49,6 +53,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetListGroup")]
+        [ProducesResponseType(typeof(Retorno<List<GroupResponseDTO>>), 200)]
         public async Task<IActionResult> GetListGroupAsync()
         {
             var ret = await _service.GetListGroupAsync(ssn);
@@ -71,6 +76,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPost("AddGroup")]
+        [ProducesResponseType(typeof(Retorno<GroupResponseDTO>), 200)]
         public async Task<IActionResult> AddGroupAsync([FromBody] GroupRequestDTO group)
         {
             
@@ -112,6 +118,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPut("UpdateGroup")]
+        [ProducesResponseType(typeof(Retorno<GroupResponseDTO>), 200)]
         public async Task<IActionResult> UpdateGroupAsync([FromBody] GroupRequestDTO group)
         {
             
@@ -153,6 +160,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPut("ToggleStatusGroup/{groupId}")]
+        [ProducesResponseType(typeof(Retorno<GroupResponseDTO>), 200)]
         public async Task<IActionResult> ToggleStatusGroupAsync(int groupId)
         {
             
@@ -194,6 +202,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetListUserByGroup/{groupId}")]
+        [ProducesResponseType(typeof(Retorno<List<UserResponseDTO>>), 200)]
         public async Task<IActionResult> GetListUserXGroupByGroupAsync(int groupId)
         {
 
@@ -217,6 +226,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetListFolderByGroup/{groupId}")]
+        [ProducesResponseType(typeof(Retorno<List<FolderResponseDTO>>), 200)]
         public async Task<IActionResult> GetListFolderXGroupByGroupAsync(int groupId)
         {
 

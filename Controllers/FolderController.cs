@@ -1,5 +1,8 @@
 ﻿using DocumentinAPI.Domain.DTOs.Folder;
 using DocumentinAPI.Domain.DTOs.FolderXGroup;
+using DocumentinAPI.Domain.DTOs.Group;
+using DocumentinAPI.Domain.DTOs.Task;
+using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +30,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetFolderById/{folderId}")]
+        [ProducesResponseType(typeof(Retorno<FolderResponseDTO>), 200)]
         public async Task<IActionResult> GetFolderByIdAsync(int folderId)
         {
 
@@ -51,6 +55,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetListFolder")]
+        [ProducesResponseType(typeof(Retorno<List<FolderResponseDTO>>), 200)]
         public async Task<IActionResult> GetListFolderAsync()
         {
 
@@ -75,6 +80,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPost("AddFolder")]
+        [ProducesResponseType(typeof(Retorno<FolderResponseDTO>), 200)]
         public async Task<IActionResult> AddFolderAsync([FromBody] FolderRequestDTO dto)
         {
 
@@ -99,6 +105,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPut("UpdateFolder")]
+        [ProducesResponseType(typeof(Retorno<FolderResponseDTO>), 200)]
         public async Task<IActionResult> UpdateFolderAsync([FromBody] FolderRequestDTO dto)
         {
 
@@ -123,6 +130,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPut("ToogleStatusFolder/{folderId}")]
+        [ProducesResponseType(typeof(Retorno<FolderResponseDTO>), 200)]
         public async Task<IActionResult> ToogleStatusFolderAsync(int folderId)
         {
 
@@ -147,6 +155,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPut("MoveFolder")]
+        [ProducesResponseType(typeof(Retorno<FolderResponseDTO>), 200)]
         public async Task<IActionResult> MoveFolderAsync([FromBody] MoveFolderRequestDTO dto)
         {
 
@@ -171,6 +180,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPost("AddFolderXGroup")]
+        [ProducesResponseType(typeof(Retorno<List<GroupResponseDTO>>), 200)]
         public async Task<IActionResult> AddFolderXGroupAsync([FromBody] FolderXGroupRequestDTO dto)
         {
 
@@ -205,6 +215,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpDelete("DeleteFolderXGroup")]
+        [ProducesResponseType(typeof(Retorno<List<GroupResponseDTO>>), 200)]
         public async Task<IActionResult> DeleteFolderXGroupAsync([FromBody] FolderXGroupRequestDTO dto)
         {
 
@@ -239,6 +250,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetListFolderXGroupByFolder/{folderId}")]
+        [ProducesResponseType(typeof(Retorno<List<GroupResponseDTO>>), 200)]
         public async Task<IActionResult> GetListFolderXGroupByFolderAsync(int folderId)
         {
 

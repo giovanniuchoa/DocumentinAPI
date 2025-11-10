@@ -1,4 +1,6 @@
-﻿using DocumentinAPI.Domain.DTOs.DocumentValidation;
+﻿using DocumentinAPI.Domain.DTOs.Document;
+using DocumentinAPI.Domain.DTOs.DocumentValidation;
+using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +28,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetListDocumentValidationByValidator")]
+        [ProducesResponseType(typeof(Retorno<List<DocumentResponseDTO>>), 200)]
         public async Task<IActionResult> GetListDocumentValidationByValidatorAsync()
         {
 
@@ -49,6 +52,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetListDocumentValidationToEdit")]
+        [ProducesResponseType(typeof(Retorno<List<DocumentResponseDTO>>), 200)]
         public async Task<IActionResult> GetListDocumentValidationToEditAsync()
         {
 
@@ -72,6 +76,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPut("UpdateDocumentValidationStatus")]
+        [ProducesResponseType(typeof(Retorno<DocumentValidationResponseDTO>), 200)]
         public async Task<IActionResult> UpdateDocumentValidationStatusAsync([FromBody] DocumentValidationRequestDTO dto)
         {
 
@@ -95,6 +100,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetDocumentValidationById/{documentId}")]
+        [ProducesResponseType(typeof(Retorno<DocumentValidationResponseDTO>), 200)]
         public async Task<IActionResult> GetDocumentValidationByIdAsync(int documentId)
         {
 

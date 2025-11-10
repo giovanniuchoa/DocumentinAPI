@@ -1,4 +1,6 @@
-﻿using DocumentinAPI.Domain.DTOs.Comment;
+﻿using DocumentinAPI.Domain.DTOs.Auth;
+using DocumentinAPI.Domain.DTOs.Comment;
+using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +28,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetCommentById/{commentId}")]
+        [ProducesResponseType(typeof(Retorno<CommentResponseDTO>), 200)]
         public async Task<IActionResult> GetCommentByIdAsync(int commentId)
         {
 
@@ -50,6 +53,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetListComment")]
+        [ProducesResponseType(typeof(Retorno<List<CommentResponseDTO>>), 200)]
         public async Task<IActionResult> GetListCommentAsync()
         {
 
@@ -75,6 +79,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetListCommentByDocumentId/{documentId}")]
+        [ProducesResponseType(typeof(Retorno<List<CommentResponseDTO>>), 200)]
         public async Task<IActionResult> GetListCommentByDocumentIdAsync(int documentId)
         {
 
@@ -99,6 +104,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPost("AddComment")]
+        [ProducesResponseType(typeof(Retorno<CommentResponseDTO>), 200)]
         public async Task<IActionResult> AddCommentAsync([FromBody] CommentRequestDTO dto)
         {
 
@@ -123,6 +129,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPut("UpdateComment")]
+        [ProducesResponseType(typeof(Retorno<CommentResponseDTO>), 200)]
         public async Task<IActionResult> UpdateCommentAsync([FromBody] CommentRequestDTO dto)
         {
 
@@ -147,6 +154,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPut("ToogleStatusComment/{commentId}")]
+        [ProducesResponseType(typeof(Retorno<CommentResponseDTO>), 200)]
         public async Task<IActionResult> ToogleStatusCommentAsync(int commentId)
         {
 
