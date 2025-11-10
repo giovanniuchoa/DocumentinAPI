@@ -1,4 +1,6 @@
 ﻿using DocumentinAPI.Domain.DTOs.Task;
+using DocumentinAPI.Domain.DTOs.Template;
+using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +28,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetTaskById/{taskId}")]
+        [ProducesResponseType(typeof(Retorno<TaskResponseDTO>), 200)]
         public async Task<IActionResult> GetTaskByIdAsync(int taskId)
         {
 
@@ -50,6 +53,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetListTask")]
+        [ProducesResponseType(typeof(Retorno<List<TaskResponseDTO>>), 200)]
         public async Task<IActionResult> GetListTaskAsync()
         {
 
@@ -74,6 +78,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPost("AddTask")]
+        [ProducesResponseType(typeof(Retorno<TaskResponseDTO>), 200)]
         public async Task<IActionResult> AddTaskAsync([FromBody] TaskRequestDTO dto)
         {
 
@@ -107,6 +112,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPut("UpdateTask")]
+        [ProducesResponseType(typeof(Retorno<TaskResponseDTO>), 200)]
         public async Task<IActionResult> UpdateTaskAsync([FromBody] TaskRequestDTO dto)
         {
 
@@ -140,6 +146,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPut("ToogleStatusTask/{taskId}")]
+        [ProducesResponseType(typeof(Retorno<TaskResponseDTO>), 200)]
         public async Task<IActionResult> ToogleStatusTaskAsync(int taskId)
         {
 

@@ -1,7 +1,10 @@
 ﻿using DocumentinAPI.Authentication;
+using DocumentinAPI.Domain.DTOs.DocumentVersion;
+using DocumentinAPI.Domain.DTOs.Group;
 using DocumentinAPI.Domain.DTOs.PasswordRecovery;
 using DocumentinAPI.Domain.DTOs.User;
 using DocumentinAPI.Domain.DTOs.UserXGroup;
+using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +32,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetUserById/{userId}")]
+        [ProducesResponseType(typeof(Retorno<UserResponseDTO>), 200)]
         public async Task<IActionResult> GetUserByIdAsync(int userId)
         {
 
@@ -53,6 +57,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetListUser")]
+        [ProducesResponseType(typeof(Retorno<List<UserResponseDTO>>), 200)]
         public async Task<IActionResult> GetListUserAsync()
         {
 
@@ -77,6 +82,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPost("AddUser")]
+        [ProducesResponseType(typeof(Retorno<UserResponseDTO>), 200)]
         public async Task<IActionResult> AddUserAsync([FromBody] UserRequestDTO dto)
         {
 
@@ -119,6 +125,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPut("UpdateUser")]
+        [ProducesResponseType(typeof(Retorno<UserResponseDTO>), 200)]
         public async Task<IActionResult> UpdateUserAsync([FromBody] UserRequestDTO dto)
         {
 
@@ -160,6 +167,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPut("ToggleStatusUser/{userId}")]
+        [ProducesResponseType(typeof(Retorno<UserResponseDTO>), 200)]
         public async Task<IActionResult> ToggleStatusUserAsync(int userId)
         {
 
@@ -201,6 +209,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetListGroupByUser/{userId}")]
+        [ProducesResponseType(typeof(Retorno<List<GroupResponseDTO>>), 200)]
         public async Task<IActionResult> GetListUserXGroupByUserAsync(int userId)
         {
 
@@ -225,6 +234,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPost("AddUserXGroup")]
+        [ProducesResponseType(typeof(Retorno<List<GroupResponseDTO>>), 200)]
         public async Task<IActionResult> AddUserXGroupAsync([FromBody] UserXGroupRequestDTO model)
         {
 
@@ -266,6 +276,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpDelete("DeleteUserXGroup")]
+        [ProducesResponseType(typeof(Retorno<List<GroupResponseDTO>>), 200)]
         public async Task<IActionResult> DeleteUserXGroupAsync([FromBody] UserXGroupRequestDTO model)
         {
 
@@ -306,6 +317,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPost("RequestPasswordRecovery")]
+        [ProducesResponseType(typeof(Retorno<PasswordRecoveryResponseDTO>), 200)]
         [AllowAnonymous]
         public async Task<IActionResult> RequestPasswordRecoveryAsyncAsync([FromBody] PasswordRecoveryRequestDTO model)
         {
@@ -330,6 +342,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPost("ValidateTokenPasswordRecovery")]
+        [ProducesResponseType(typeof(Retorno<ValidatePasswordRecoveryResponseDTO>), 200)]
         [AllowAnonymous]
         public async Task<IActionResult> ValidateTokenPasswordRecoveryAsync([FromBody] ValidatePasswordRecoveryRequestDTO model)
         {
@@ -354,6 +367,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPut("UpdatePasswordRecovery")]
+        [ProducesResponseType(typeof(Retorno<UserResponseDTO>), 200)]
         [AllowAnonymous]
         public async Task<IActionResult> UpdatePasswordRecoveryAsync([FromBody] UpdatePasswordRecoveryRequestDTO model)
         {

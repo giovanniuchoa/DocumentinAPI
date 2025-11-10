@@ -1,4 +1,7 @@
-﻿using DocumentinAPI.Domain.DTOs.Tag;
+﻿using DocumentinAPI.Domain.DTOs.Document;
+using DocumentinAPI.Domain.DTOs.Group;
+using DocumentinAPI.Domain.DTOs.Tag;
+using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +29,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetTagById/{tagId}")]
+        [ProducesResponseType(typeof(Retorno<TagResponseDTO>), 200)]
         public async Task<IActionResult> GetTagByIdAsync(int tagId)
         {
 
@@ -50,6 +54,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetListTag")]
+        [ProducesResponseType(typeof(Retorno<List<TagResponseDTO>>), 200)]
         public async Task<IActionResult> GetListTagAsync()
         {
 
@@ -74,6 +79,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPost("AddTag")]
+        [ProducesResponseType(typeof(Retorno<TagResponseDTO>), 200)]
         public async Task<IActionResult> AddTagAsync([FromBody] TagRequestDTO dto)
         {
 
@@ -98,6 +104,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPut("UpdateTag")]
+        [ProducesResponseType(typeof(Retorno<TagResponseDTO>), 200)]
         public async Task<IActionResult> UpdateTagAsync([FromBody] TagRequestDTO dto)
         {
 
@@ -122,6 +129,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPut("ToogleStatusTag/{tagId}")]
+        [ProducesResponseType(typeof(Retorno<TagResponseDTO>), 200)]
         public async Task<IActionResult> ToogleStatusTagAsync(int tagId)
         {
 
@@ -146,6 +154,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetDocumentXTagByTagId")]
+        [ProducesResponseType(typeof(Retorno<List<DocumentResponseDTO>>), 200)]
         public async Task<IActionResult> GetDocumentXTagByTagIdAsync(int idTag)
         {
 
@@ -170,6 +179,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetDocumentXTagByDocumentId")]
+        [ProducesResponseType(typeof(Retorno<List<TagResponseDTO>>), 200)]
         public async Task<IActionResult> GetDocumentXTagByDocumentIdAsync(int idDocument)
         {
 
@@ -194,6 +204,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPost("AddDocumentXTag")]
+        [ProducesResponseType(typeof(Retorno<DocumentXTagResponseDTO>), 200)]
         public async Task<IActionResult> AddDocumentXTagAsync([FromBody] DocumentXTagRequestDTO dto)
         {
 
@@ -218,6 +229,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpDelete("DeleteDocumentXTag")]
+        [ProducesResponseType(typeof(Retorno<List<TagResponseDTO>>), 200)]
         public async Task<IActionResult> DeleteDocumentXTagAsync([FromBody] DocumentXTagRequestDTO dto)
         {
 

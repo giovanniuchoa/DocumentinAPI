@@ -1,4 +1,6 @@
 ﻿using DocumentinAPI.Domain.DTOs.Supabase;
+using DocumentinAPI.Domain.DTOs.Task;
+using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +29,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPost("UploadImage")]
+        [ProducesResponseType(typeof(Retorno<UploadImageResponseDTO>), 200)]
         public async Task<IActionResult> UploadImageAsync([FromForm] UploadImageRequestDTO dto)
         {
 

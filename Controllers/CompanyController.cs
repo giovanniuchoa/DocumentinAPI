@@ -1,5 +1,7 @@
 ﻿using DocumentinAPI.Authentication;
+using DocumentinAPI.Domain.DTOs.Comment;
 using DocumentinAPI.Domain.DTOs.Company;
+using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +29,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetCompaniesById/{companyId}")]
+        [ProducesResponseType(typeof(Retorno<CompanyResponseDTO>), 200)]
         public async Task<IActionResult> GetCompaniesByIdAsync(int companyId)
         {
 
@@ -51,6 +54,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetListCompanies")]
+        [ProducesResponseType(typeof(Retorno<List<CompanyResponseDTO>>), 200)]
         public async Task<IActionResult> GetListCompaniesAsync()
         {
             
@@ -93,6 +97,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPost("AddCompany")]
+        [ProducesResponseType(typeof(Retorno<CompanyResponseDTO>), 200)]
         public async Task<IActionResult> AddCompanyAsync([FromBody] CompanyRequestDTO company)
         {
 
@@ -135,6 +140,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPut("UpdateCompany")]
+        [ProducesResponseType(typeof(Retorno<CompanyResponseDTO>), 200)]
         public async Task<IActionResult> UpdateCompanyAsync([FromBody] CompanyRequestDTO company)
         {
 
@@ -177,6 +183,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPut("ToggleStatusCompany/{companyId}")]
+        [ProducesResponseType(typeof(Retorno<CompanyResponseDTO>), 200)]
         public async Task<IActionResult> ToggleStatusCompanyAsync(int companyId)
         {
             

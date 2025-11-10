@@ -1,5 +1,8 @@
-﻿using DocumentinAPI.Domain.DTOs.Import;
+﻿using DocumentinAPI.Domain.DTOs.Document;
+using DocumentinAPI.Domain.DTOs.Import;
 using DocumentinAPI.Domain.DTOs.Supabase;
+using DocumentinAPI.Domain.DTOs.Task;
+using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +30,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPost("ImportDocument")]
+        [ProducesResponseType(typeof(Retorno<DocumentResponseDTO>), 200)]
         public async Task<IActionResult> ImportDocumentAsync([FromForm] ImportRequestDTO dto)
         {
 

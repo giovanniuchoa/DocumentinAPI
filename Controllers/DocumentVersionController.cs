@@ -1,4 +1,6 @@
-﻿using DocumentinAPI.Domain.DTOs.DocumentVersion;
+﻿using DocumentinAPI.Domain.DTOs.DocumentValidation;
+using DocumentinAPI.Domain.DTOs.DocumentVersion;
+using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +28,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetDocumentVersionById/{documentVersionId}")]
+        [ProducesResponseType(typeof(Retorno<DocumentVersionResponseDTO>), 200)]
         public async Task<IActionResult> GetDocumentVersionByIdAsync(int documentVersionId)
         {
 
@@ -50,6 +53,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetListDocumentVersionByDocumentId/{documentId}")]
+        [ProducesResponseType(typeof(Retorno<List<DocumentVersionResponseDTO>>), 200)]
         public async Task<IActionResult> GetDocumentVersionsByDocumentIdAsync(int documentId)
         {
 
@@ -74,6 +78,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPost("AddCommentDocumentVersion")]
+        [ProducesResponseType(typeof(Retorno<DocumentVersionResponseDTO>), 200)]
         public async Task<IActionResult> AddCommentDocumentVersionAsync([FromBody] DocumentVersionAddCommentRequestDTO dto)
         {
 

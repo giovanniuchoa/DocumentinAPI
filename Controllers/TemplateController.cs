@@ -1,4 +1,6 @@
 ﻿using DocumentinAPI.Domain.DTOs.Template;
+using DocumentinAPI.Domain.DTOs.User;
+using DocumentinAPI.Domain.Utils;
 using DocumentinAPI.Interfaces.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +28,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetTemplateById/{templateId}")]
+        [ProducesResponseType(typeof(Retorno<TemplateResponseDTO>), 200)]
         public async Task<IActionResult> GetTemplateByIdAsync(int templateId)
         {
 
@@ -50,6 +53,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpGet("GetListTemplate")]
+        [ProducesResponseType(typeof(Retorno<List<TemplateResponseDTO>>), 200)]
         public async Task<IActionResult> GetListTemplateAsync()
         {
 
@@ -74,6 +78,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPost("AddTemplate")]
+        [ProducesResponseType(typeof(Retorno<TemplateResponseDTO>), 200)]
         public async Task<IActionResult> AddTemplateAsync([FromBody] TemplateRequestDTO dto)
         {
 
@@ -98,6 +103,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPut("UpdateTemplate")]
+        [ProducesResponseType(typeof(Retorno<TemplateResponseDTO>), 200)]
         public async Task<IActionResult> UpdateTemplateAsync([FromBody] TemplateRequestDTO dto)
         {
 
@@ -122,6 +128,7 @@ namespace DocumentinAPI.Controllers
         /// <response code="400">Se ocorrer algum erro inesperado.</response>
         /// <response code="500">Erro interno do servidor.</response>
         [HttpPut("ToggleStatusTemplate/{templateId}")]
+        [ProducesResponseType(typeof(Retorno<TemplateResponseDTO>), 200)]
         public async Task<IActionResult> ToggleStatusTemplateAsync(int templateId)
         {
 
