@@ -189,10 +189,14 @@ var app = builder.Build();
 
 app.UseCors("AllowAll");
 
+app.UseStaticFiles();
+
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "DocumentinAPI v1");
+    c.HeadContent = "<link rel='icon' type='image/x-icon' href='/swagger/favicon.ico' />";
+    c.InjectJavascript("/swagger/custom.js");
     c.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.None);
     c.DefaultModelsExpandDepth(2);
 
@@ -239,7 +243,5 @@ app.MapGet("/health", async (DBContext db) =>
         );
     }
 });
-
-app.Run();
 
 app.Run();
